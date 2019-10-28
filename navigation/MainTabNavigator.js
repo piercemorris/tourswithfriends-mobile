@@ -1,0 +1,103 @@
+import React from "react";
+import { Platform } from "react-native";
+import {
+  createStackNavigator,
+  createBottomTabNavigator
+} from "react-navigation";
+
+import TabBarIcon from "../components/TabBarIcon";
+import HomeScreen from "../screens/HomeScreen";
+import LinksScreen from "../screens/LinksScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+
+const config = Platform.select({
+  web: { headerMode: "screen" },
+  default: {}
+});
+
+const HomeStack = createStackNavigator(
+  {
+    Home: { screen: HomeScreen, navigationOptions: {} }
+  },
+  config
+);
+
+HomeStack.navigationOptions = {
+  tabBarLabel: "Home",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-home" : "md-home"}
+    />
+  )
+};
+
+HomeStack.path = "";
+
+const CreateStack = createStackNavigator(
+  {
+    Create: LinksScreen
+  },
+  config
+);
+
+CreateStack.navigationOptions = {
+  tabBarLabel: "Create",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-cube" : "md-cube"}
+    />
+  )
+};
+
+CreateStack.path = "";
+
+const ReceivedStack = createStackNavigator(
+  {
+    Received: LinksScreen
+  },
+  config
+);
+
+ReceivedStack.navigationOptions = {
+  tabBarLabel: "Create",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-gift" : "md-gift"}
+    />
+  )
+};
+
+ReceivedStack.path = "";
+
+const SettingsStack = createStackNavigator(
+  {
+    Settings: SettingsScreen
+  },
+  config
+);
+
+SettingsStack.navigationOptions = {
+  tabBarLabel: "Settings",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-options" : "md-options"}
+    />
+  )
+};
+
+SettingsStack.path = "";
+
+const tabNavigator = createBottomTabNavigator({
+  HomeStack: { screen: HomeStack, navigationOptions: { tabBarVisible: true } },
+  CreateStack,
+  ReceivedStack,
+  SettingsStack
+});
+
+tabNavigator.path = "";
+
+export default tabNavigator;
