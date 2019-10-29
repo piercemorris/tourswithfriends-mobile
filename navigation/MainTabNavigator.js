@@ -4,22 +4,36 @@ import {
   createStackNavigator,
   createBottomTabNavigator
 } from "react-navigation";
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
 import TabBarIcon from "../components/TabBarIcon";
-import HomeScreen from "../screens/HomeScreen";
-import LinksScreen from "../screens/LinksScreen";
-import SettingsScreen from "../screens/SettingsScreen";
 
-const config = Platform.select({
-  web: { headerMode: "screen" },
-  default: {}
-});
+import HomeScreen from "../screens/HomeScreen";
+import CreateScreen from "../screens/CreateScreen";
+import ReceivedScreen from "../screens/ReceivedScreen";
+import AccountScreen from "../screens/AccountScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+import LinksScreen from "../screens/LinksScreen";
+import Colors from "../constants/Colors";
+
+const defaultStackNavigationOptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === "android" ? Colors.primary : "white"
+  },
+  headerTitleStyle: {
+    fontFamily: Platform.OS === "ios" ? "sf-bold" : "roboto-bold"
+  },
+  headerBackTitleStyle: {
+    fontFamily: Platform.OS === "ios" ? "sf-regular" : "roboto-regular"
+  },
+  headerTintColor: Platform.OS === "android" ? "white" : Colors.primary
+};
 
 const HomeStack = createStackNavigator(
   {
     Home: { screen: HomeScreen, navigationOptions: {} }
   },
-  config
+  defaultStackNavigationOptions
 );
 
 HomeStack.navigationOptions = {
@@ -36,9 +50,9 @@ HomeStack.path = "";
 
 const CreateStack = createStackNavigator(
   {
-    Create: LinksScreen
+    Create: { screen: CreateScreen, navigationOptions: { header: null } }
   },
-  config
+  defaultStackNavigationOptions
 );
 
 CreateStack.navigationOptions = {
@@ -55,13 +69,13 @@ CreateStack.path = "";
 
 const ReceivedStack = createStackNavigator(
   {
-    Received: LinksScreen
+    Received: { screen: ReceivedScreen, navigationOptions: { header: null } }
   },
-  config
+  defaultStackNavigationOptions
 );
 
 ReceivedStack.navigationOptions = {
-  tabBarLabel: "Create",
+  tabBarLabel: "Received",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -72,11 +86,30 @@ ReceivedStack.navigationOptions = {
 
 ReceivedStack.path = "";
 
+const AccountStack = createStackNavigator(
+  {
+    Account: { screen: AccountScreen, navigationOptions: { header: null } }
+  },
+  defaultStackNavigationOptions
+);
+
+AccountStack.navigationOptions = {
+  tabBarLabel: "Account",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-person" : "md-person"}
+    />
+  )
+};
+
+AccountStack.path = "";
+
 const SettingsStack = createStackNavigator(
   {
-    Settings: SettingsScreen
+    Settings: { screen: SettingsScreen, navigationOptions: { header: null } }
   },
-  config
+  defaultStackNavigationOptions
 );
 
 SettingsStack.navigationOptions = {
@@ -91,12 +124,28 @@ SettingsStack.navigationOptions = {
 
 SettingsStack.path = "";
 
-const tabNavigator = createBottomTabNavigator({
+const tabScreenConfig = {
   HomeStack: { screen: HomeStack, navigationOptions: { tabBarVisible: true } },
   CreateStack,
   ReceivedStack,
+  AccountStack,
   SettingsStack
-});
+};
+
+const tabNavigator =
+  Platform.OS === "android"
+    ? createMaterialBottomTabNavigator(tabScreenConfig, {
+        activeTintColor: Colors.primary,
+        shifting: true
+      })
+    : createBottomTabNavigator(tabScreenConfig, {
+        tabBarOptions: {
+          labelStyle: {
+            fontFamily: "sf-regular"
+          },
+          activeTintColor: Colors.primary
+        }
+      });
 
 tabNavigator.path = "";
 

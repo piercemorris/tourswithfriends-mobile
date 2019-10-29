@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 
 import Header from "../components/UI/Header";
 
-const SettingsScreen = () => {
+const ReceivedScreen = () => {
   return (
     <SafeAreaView>
-      <Header title="Settings" />
+      <Header title="Received Gifts" />
     </SafeAreaView>
   );
 };
 
-export default SettingsScreen;
+export default ReceivedScreen;
