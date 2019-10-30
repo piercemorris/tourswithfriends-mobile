@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { View, Text, StyleSheet, Platform } from "react-native";
 
 import Colors from "../../constants/Colors";
@@ -10,6 +11,11 @@ const Header = props => {
       {props.subtitle && <Text style={styles.subtitle}>{props.subtitle}</Text>}
     </View>
   );
+};
+
+Header.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string
 };
 
 const styles = StyleSheet.create({

@@ -1,9 +1,20 @@
-import { AppLoading } from "expo";
-import { Asset } from "expo-asset";
-import * as Font from "expo-font";
 import React, { useState } from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import ReduxThunk from "redux-thunk";
+import { AppLoading } from "expo";
+import { Asset } from "expo-asset";
 import { Ionicons } from "@expo/vector-icons";
+import { useScreens } from "react-native-screens";
+import * as Font from "expo-font";
+useScreens();
+
+import authReducer from "./store/reducers/auth";
+
+const rootReducer = combineReducers({ auth: authReducer });
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 import AppNavigator from "./navigation/AppNavigator";
 
@@ -20,10 +31,12 @@ export default function App(props) {
     );
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+          <AppNavigator />
+        </View>
+      </Provider>
     );
   }
 }
@@ -35,7 +48,6 @@ async function loadResourcesAsync() {
       require("./assets/images/maskedGroup2.png")
     ]),
     Font.loadAsync({
-      // This is the font that we are using for our tab bar
       ...Ionicons.font,
       "sf-bold": require("./assets/fonts/SFProText-Bold.ttf"),
       "sf-regular": require("./assets/fonts/SFProText-Regular.ttf"),
@@ -48,8 +60,6 @@ async function loadResourcesAsync() {
 }
 
 function handleLoadingError(error) {
-  // In this case, you might want to report the error to your error reporting
-  // service, for example Sentry
   console.warn(error);
 }
 

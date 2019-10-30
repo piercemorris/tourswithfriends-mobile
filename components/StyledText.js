@@ -1,8 +1,29 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, Platform } from "react-native";
 
-export function MonoText(props) {
+const StyledText = props => {
   return (
-    <Text {...props} style={[props.style, { fontFamily: "sf-regular" }]} />
+    <Text
+      style={{
+        ...{
+          fontFamily:
+            Platform.OS === "ios"
+              ? props.bold
+                ? "sf-bold"
+                : "sf-regular"
+              : props.bold
+              ? "roboto-bold"
+              : "roboto-regular",
+          fontSize: 18,
+          padding: 20,
+          lineHeight: 25
+        },
+        ...props.style
+      }}
+    >
+      {props.children}
+    </Text>
   );
-}
+};
+
+export default StyledText;

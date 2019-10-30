@@ -7,13 +7,11 @@ import {
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
 import TabBarIcon from "../components/TabBarIcon";
-
 import HomeScreen from "../screens/HomeScreen";
 import CreateScreen from "../screens/CreateScreen";
 import ReceivedScreen from "../screens/ReceivedScreen";
 import AccountScreen from "../screens/AccountScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-import LinksScreen from "../screens/LinksScreen";
 import Colors from "../constants/Colors";
 
 const defaultStackNavigationOptions = {

@@ -1,18 +1,24 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
-  View,
   ImageBackground,
   Text,
   StyleSheet,
-  Dimensions,
+  TouchableOpacity,
   Platform
 } from "react-native";
 
+import Layout from "../../constants/Layout";
 import Colors from "../../constants/Colors";
 
 const MaskedComponent = props => {
   return (
-    <View style={{ ...props.style, ...styles.container }}>
+    <TouchableOpacity
+      style={{ ...props.style, ...styles.container }}
+      onPress={() => {
+        props.navigation.navigate(props.screen);
+      }}
+    >
       <ImageBackground
         imageStyle={styles.image}
         style={styles.imageBackground}
@@ -20,8 +26,15 @@ const MaskedComponent = props => {
       >
         <Text style={styles.text}>{props.text}</Text>
       </ImageBackground>
-    </View>
+    </TouchableOpacity>
   );
+};
+
+MaskedComponent.propTypes = {
+  navigation: PropTypes.object,
+  screen: PropTypes.string,
+  source: PropTypes.number,
+  text: PropTypes.string
 };
 
 const styles = StyleSheet.create({
@@ -30,18 +43,16 @@ const styles = StyleSheet.create({
     borderRadius: 15
   },
   imageBackground: {
-    marginTop: 30,
-    width: Dimensions.get("window").width - 40,
-    height: 250,
-    resizeMode: "cover",
-    borderRadius: 15,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: Colors.grey,
-    shadowRadius: 8,
-    shadowOffset: { height: 3, width: 0 },
-    shadowOpacity: 10,
-    elevation: 15
+    ...Layout.shadow,
+    ...{
+      marginTop: 30,
+      width: Layout.window.width - 40,
+      height: 250,
+      resizeMode: "cover",
+      borderRadius: 15,
+      justifyContent: "center",
+      alignItems: "center"
+    }
   },
   text: {
     fontFamily: Platform.OS === "ios" ? "sf-bold" : "roboto-bold",
