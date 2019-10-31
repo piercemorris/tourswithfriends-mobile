@@ -15,7 +15,10 @@ import Colors from "../../constants/Colors";
 
 const Button = props => {
   return (
-    <TouchableOpacity style={styles.container} onPress={() => props.onPress}>
+    <TouchableOpacity
+      style={{ ...styles.container, ...props.style }}
+      onPress={props.onPress}
+    >
       <LinearGradient
         style={styles.gradient}
         colors={[Colors.primary, Colors.secondary]}

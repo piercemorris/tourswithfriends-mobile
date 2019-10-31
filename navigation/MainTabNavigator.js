@@ -6,6 +6,8 @@ import {
 } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
+import CreateGiftStack from "./CreateGiftStack";
+
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import CreateScreen from "../screens/CreateScreen";
@@ -46,21 +48,32 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = "";
 
-const CreateStack = createStackNavigator(
-  {
-    Create: { screen: CreateScreen, navigationOptions: { header: null } }
-  },
-  defaultStackNavigationOptions
-);
+const CreateStack = createStackNavigator({
+  Create: { screen: CreateScreen, navigationOptions: { header: null } },
+  CreateStack: {
+    screen: CreateGiftStack,
+    navigationOptions: { header: null }
+  }
+});
 
-CreateStack.navigationOptions = {
-  tabBarLabel: "Create",
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === "ios" ? "ios-cube" : "md-cube"}
-    />
-  )
+CreateStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  let routeName = navigation.state.routes[navigation.state.index].routeName;
+
+  if (routeName === "CreateStack") {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible,
+    tabBarLabel: "Create",
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === "ios" ? "ios-cube" : "md-cube"}
+      />
+    )
+  };
 };
 
 CreateStack.path = "";

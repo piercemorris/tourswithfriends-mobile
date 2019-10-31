@@ -6,7 +6,7 @@ import Button from "../components/UI/Button";
 import Info from "../components/UI/Info";
 import StyledText from "../components/StyledText";
 
-const CreateScreen = () => {
+const CreateScreen = props => {
   return (
     <SafeAreaView>
       <Header title="Creating a Gift" subtitle="How to make a great gift" />
@@ -17,7 +17,13 @@ const CreateScreen = () => {
         example:
       </StyledText>
       <Info text="You can only add 3 gifts so make them count!" />
-      <Button onPress={() => {}}>Begin</Button>
+      <Button
+        onPress={() => {
+          props.navigation.navigate("CreateStack");
+        }}
+      >
+        Begin
+      </Button>
     </SafeAreaView>
   );
 };

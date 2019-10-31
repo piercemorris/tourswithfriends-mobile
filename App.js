@@ -7,6 +7,7 @@ import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
 import { Ionicons } from "@expo/vector-icons";
 import { useScreens } from "react-native-screens";
+import { initFirebase } from "./firebase/index";
 import * as Font from "expo-font";
 useScreens();
 
@@ -17,6 +18,10 @@ const rootReducer = combineReducers({ auth: authReducer });
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 import AppNavigator from "./navigation/AppNavigator";
+
+initFirebase()
+  .then(res => console.log("firebase initialised"))
+  .catch(err => console.log(err));
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -45,7 +50,8 @@ async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
       require("./assets/images/maskedGroup.png"),
-      require("./assets/images/maskedGroup2.png")
+      require("./assets/images/maskedGroup2.png"),
+      require("./assets/images/iconInv.png")
     ]),
     Font.loadAsync({
       ...Ionicons.font,
