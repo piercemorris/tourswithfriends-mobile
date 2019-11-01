@@ -13,10 +13,7 @@ const FriendDetailsScreen = props => {
       }}
     >
       <Header title="Your friends' details" />
-      <Button
-        style={styles.button}
-        onPress={() => props.navigation.navigate("TourDetails")}
-      >
+      <Button onPress={() => props.navigation.navigate("TourDetails")}>
         Next
       </Button>
     </SafeAreaView>
