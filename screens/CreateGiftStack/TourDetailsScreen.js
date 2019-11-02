@@ -3,10 +3,12 @@ import { View, StyleSheet, SafeAreaView } from "react-native";
 
 import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
+import BackButton from "../../components/UI/BackButton";
 
 const TourDetailsScreen = props => {
   return (
     <SafeAreaView>
+      <BackButton {...props} />
       <Header title="Tour Details" />
     </SafeAreaView>
   );

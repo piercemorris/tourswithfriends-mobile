@@ -51,7 +51,8 @@ async function loadResourcesAsync() {
     Asset.loadAsync([
       require("./assets/images/maskedGroup.png"),
       require("./assets/images/maskedGroup2.png"),
-      require("./assets/images/iconInv.png")
+      require("./assets/images/iconInv.png"),
+      require("./assets/images/ellipse.png")
     ]),
     Font.loadAsync({
       ...Ionicons.font,

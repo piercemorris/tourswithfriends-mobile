@@ -12,7 +12,6 @@ const InitialScreen = props => {
 
     return () => {
       unsubscribe();
-      console.log("unsubscribed");
     };
   }, []);
 

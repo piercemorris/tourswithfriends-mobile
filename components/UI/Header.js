@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: Platform.OS === "ios" ? "sf-bold" : "roboto-bold",
-    fontSize: 36,
-    paddingTop: 25
+    fontSize: 36
   },
   subtitle: {
     fontFamily: Platform.OS === "ios" ? "sf-bold" : "roboto-bold",
