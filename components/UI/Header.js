@@ -6,7 +6,13 @@ import Colors from "../../constants/Colors";
 
 const Header = props => {
   return (
-    <View style={{ ...props.style, ...styles.container }}>
+    <View
+      style={{
+        paddingLeft: 20,
+        paddingTop: props.main ? 15 : -10,
+        ...props.style
+      }}
+    >
       <Text style={styles.title}>{props.title}</Text>
       {props.subtitle && <Text style={styles.subtitle}>{props.subtitle}</Text>}
     </View>
@@ -19,9 +25,6 @@ Header.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingLeft: 20
-  },
   title: {
     fontFamily: Platform.OS === "ios" ? "sf-bold" : "roboto-bold",
     fontSize: 36

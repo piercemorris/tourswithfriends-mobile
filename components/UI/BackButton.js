@@ -8,9 +8,7 @@ const BackButton = props => {
   return (
     <TouchableOpacity onPress={() => props.navigation.pop()}>
       <Ionicons
-        name={
-          Platform.OS === "ios" ? "ios-arrow-round-back" : "md-arrow-round-back"
-        }
+        name={Platform.OS === "ios" ? "ios-arrow-back" : "md-arrow-back"}
         size={42}
         style={{ marginHorizontal: 20 }}
         color={Colors.primary}

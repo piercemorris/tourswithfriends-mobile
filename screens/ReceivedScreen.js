@@ -6,7 +6,7 @@ import Header from "../components/UI/Header";
 const ReceivedScreen = () => {
   return (
     <SafeAreaView>
-      <Header title="Received Gifts" />
+      <Header main title="Received Gifts" />
     </SafeAreaView>
   );
 };

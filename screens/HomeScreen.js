@@ -8,7 +8,7 @@ const HomeScreen = props => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Header title="Welcome" subtitle="Start by selecting an action" />
+        <Header main title="Welcome" subtitle="Start by selecting an action" />
         <View style={{ alignSelf: "center" }}>
           <MaskedComponent
             navigation={props.navigation}

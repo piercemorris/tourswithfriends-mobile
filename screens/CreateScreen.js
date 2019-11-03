@@ -10,7 +10,11 @@ import BulletPoint from "../components/UI/BulletPoint";
 const CreateScreen = props => {
   return (
     <SafeAreaView>
-      <Header title="Creating a Gift" subtitle="How to make a great gift" />
+      <Header
+        main
+        title="Creating a Gift"
+        subtitle="How to make a great gift"
+      />
       <StyledText>
         Start by thinking about the person you wish to make the gift for - the
         better you know the person, the better suited the gift will be. Why

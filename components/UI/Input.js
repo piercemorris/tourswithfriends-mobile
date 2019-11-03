@@ -54,17 +54,21 @@ const Input = props => {
         <Text style={styles.title}>{props.title}</Text>
       </View>
       <TextInput
+        {...props}
         value={inputState.value}
         onChangeText={textChangeHandler}
         secureTextEntry={props.password ? true : false}
-        style={styles.input}
+        style={props.multiline ? styles.multiline : styles.input}
       />
     </View>
   );
 };
 
 Input.propTypes = {
-  title: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  password: PropTypes.bool
 };
 
 const styles = StyleSheet.create({
@@ -83,6 +87,14 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: Colors.inputShade,
     height: 40,
+    borderRadius: 10,
+    paddingLeft: 10,
+    fontFamily: "sf-regular",
+    fontSize: 18
+  },
+  multiline: {
+    backgroundColor: Colors.inputShade,
+    height: 120,
     borderRadius: 10,
     paddingLeft: 10,
     fontFamily: "sf-regular",

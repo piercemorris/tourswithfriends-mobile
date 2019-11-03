@@ -6,7 +6,7 @@ import Header from "../components/UI/Header";
 const AccountScreen = () => {
   return (
     <SafeAreaView>
-      <Header title="Account" subtitle="Details" />
+      <Header main title="Account" subtitle="Details" />
     </SafeAreaView>
   );
 };
