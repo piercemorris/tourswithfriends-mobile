@@ -49,7 +49,7 @@ const Input = props => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...props.style }}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{props.title}</Text>
       </View>
