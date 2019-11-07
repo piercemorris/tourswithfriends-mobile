@@ -1,13 +1,34 @@
-import React from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, SafeAreaView, Text } from "react-native";
 
 import Input from "../../components/UI/Input";
 import Title from "../../components/UI/Title";
 import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
+import Layout from "../../constants/Layout";
+
+import { getLocation, getRegionFrom } from "../../helper/reusableFunctions";
 
 const LocationScreen = props => {
+  [currentLocation, setCurrentLocation] = useState(null);
+
+  _getLocation = async () => {
+    const location = await getLocation();
+    setCurrentLocation(location);
+  };
+
+  _navigateToSelectLocation = async () => {
+    await _getLocation();
+    props.navigation.navigate("SelectLocation", {
+      location: getRegionFrom(
+        currentLocation.coords.latitude,
+        currentLocation.coords.longitude,
+        currentLocation.coords.accuracy
+      )
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -20,6 +41,22 @@ const LocationScreen = props => {
           onInputChange={() => {}}
         />
         <Title title="Location Coordinates" />
+        <View style={styles.buttonContainer}>
+          <Button
+            style={styles.button}
+            viewStyle={styles.view}
+            onPress={() => _getLocation()}
+          >
+            Current Location
+          </Button>
+          <Button
+            style={styles.button}
+            viewStyle={styles.view}
+            onPress={() => _navigateToSelectLocation()}
+          >
+            Select Location
+          </Button>
+        </View>
       </View>
       <Button onPress={() => {}}>Next</Button>
     </SafeAreaView>
@@ -30,6 +67,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between"
+  },
+  buttonContainer: {
+    marginTop: 15,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: Layout.window.width,
+    paddingHorizontal: 20
+  },
+  button: {
+    width: "45%",
+    padding: 0
+  },
+  view: {
+    paddingHorizontal: 0
   }
 });
 
