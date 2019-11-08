@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
 import Header from "../../components/UI/Header";
@@ -8,13 +8,17 @@ import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
 import StyledText from "../../components/StyledText";
 import Layout from "../../constants/Layout";
-import { getReverseGeocode } from "../../helper/reusableFunctions";
+import {
+  getReverseGeocode,
+  getRegionFrom
+} from "../../helper/reusableFunctions";
 
 const SelectLocationScreen = props => {
   [currentLocation, setCurrentLocation] = useState(
     props.navigation.getParam("location")
   );
   [currentAddress, setCurrentAddress] = useState(null);
+  [isMapPressed, setIsMapPressed] = useState(false);
 
   useEffect(() => {
     const getAddress = async () => {
@@ -23,31 +27,42 @@ const SelectLocationScreen = props => {
     };
 
     getAddress();
-  }, []);
+  }, [currentLocation]);
+
+  const onMapPress = data => {
+    setIsMapPressed(true);
+    const location = getRegionFrom(
+      data.nativeEvent.coordinate.latitude,
+      data.nativeEvent.coordinate.longitude,
+      70
+    );
+    setCurrentLocation(location);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <BackButton {...props} />
         <Header title="Select Location" />
-        <MapView region={currentLocation} style={styles.mapStyle} />
+        <MapView
+          onPress={data => onMapPress(data)}
+          initialRegion={currentLocation}
+          style={styles.mapStyle}
+        >
+          {isMapPressed && currentLocation && (
+            <Marker coordinate={currentLocation} />
+          )}
+        </MapView>
         {currentAddress && (
           <View>
             <StyledText style={styles.addressText}>
               {currentAddress.name}
             </StyledText>
             <StyledText style={styles.addressText}>
-              {currentAddress.street}
-            </StyledText>
-            <StyledText style={styles.addressText}>
               {currentAddress.city}
             </StyledText>
           </View>
         )}
-        <StyledText>
-          Place a single marker on the marker then hit confirm to make your
-          selection
-        </StyledText>
       </View>
       <Button onPress={() => {}}>Confirm</Button>
     </SafeAreaView>

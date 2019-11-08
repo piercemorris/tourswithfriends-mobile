@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { View, StyleSheet, SafeAreaView, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator
+} from "react-native";
 
 import Input from "../../components/UI/Input";
 import Title from "../../components/UI/Title";
@@ -7,11 +12,13 @@ import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
 import Layout from "../../constants/Layout";
+import Colors from "../../constants/Colors";
 
 import { getLocation, getRegionFrom } from "../../helper/reusableFunctions";
 
 const LocationScreen = props => {
   [currentLocation, setCurrentLocation] = useState(null);
+  [isLoading, setIsLoading] = useState(false);
 
   _getLocation = async () => {
     const location = await getLocation();
@@ -19,7 +26,9 @@ const LocationScreen = props => {
   };
 
   _navigateToSelectLocation = async () => {
+    setIsLoading(true);
     await _getLocation();
+    setIsLoading(false);
     props.navigation.navigate("SelectLocation", {
       location: getRegionFrom(
         currentLocation.coords.latitude,
@@ -49,13 +58,17 @@ const LocationScreen = props => {
           >
             Current Location
           </Button>
-          <Button
-            style={styles.button}
-            viewStyle={styles.view}
-            onPress={() => _navigateToSelectLocation()}
-          >
-            Select Location
-          </Button>
+          {isLoading ? (
+            <ActivityIndicator color={Colors.white} />
+          ) : (
+            <Button
+              style={styles.button}
+              viewStyle={styles.view}
+              onPress={() => _navigateToSelectLocation()}
+            >
+              Select Location
+            </Button>
+          )}
         </View>
       </View>
       <Button onPress={() => {}}>Next</Button>
