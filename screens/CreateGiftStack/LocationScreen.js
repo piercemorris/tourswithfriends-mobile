@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
   SafeAreaView,
   ActivityIndicator
 } from "react-native";
+import { withNavigationFocus } from "react-navigation";
 
 import Input from "../../components/UI/Input";
 import Title from "../../components/UI/Title";
@@ -14,15 +15,30 @@ import BackButton from "../../components/UI/BackButton";
 import Layout from "../../constants/Layout";
 import Colors from "../../constants/Colors";
 
-import { getLocation, getRegionFrom } from "../../helper/reusableFunctions";
+import {
+  getLocation,
+  getRegionFrom,
+  usePrevious,
+  useCompare
+} from "../../helper/reusableFunctions";
 
 const LocationScreen = props => {
   [currentLocation, setCurrentLocation] = useState(null);
   [isLoading, setIsLoading] = useState(false);
 
+  const isFocused = useCompare(props.isFocused);
+
+  useEffect(() => {
+    if (isFocused === props.isFocused) {
+      console.log(props.navigation.getProps());
+    }
+  });
+
   _getLocation = async () => {
-    const location = await getLocation();
-    setCurrentLocation(location);
+    try {
+      const location = await getLocation();
+      setCurrentLocation(location);
+    } catch (ex) {}
   };
 
   _navigateToSelectLocation = async () => {
@@ -97,4 +113,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LocationScreen;
+export default withNavigationFocus(LocationScreen);

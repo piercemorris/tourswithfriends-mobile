@@ -14,20 +14,24 @@ import {
 } from "../../helper/reusableFunctions";
 
 const SelectLocationScreen = props => {
-  [currentLocation, setCurrentLocation] = useState(
-    props.navigation.getParam("location")
-  );
+  [current, setCurrent] = useState(props.navigation.getParam("location"));
   [currentAddress, setCurrentAddress] = useState(null);
   [isMapPressed, setIsMapPressed] = useState(false);
 
   useEffect(() => {
+    let isSubscribed = true;
     const getAddress = async () => {
-      const address = await getReverseGeocode(currentLocation);
-      setCurrentAddress(address[0]);
+      if (isSubscribed) {
+        const address = await getReverseGeocode(current);
+        setCurrentAddress(address[0]);
+      }
     };
+    if (isSubscribed) {
+      getAddress();
+    }
 
-    getAddress();
-  }, [currentLocation]);
+    return () => (isSubscribed = false);
+  }, [current]);
 
   const onMapPress = data => {
     setIsMapPressed(true);
@@ -36,7 +40,15 @@ const SelectLocationScreen = props => {
       data.nativeEvent.coordinate.longitude,
       70
     );
-    setCurrentLocation(location);
+    setCurrent(location);
+  };
+
+  const confirmAddress = () => {
+    props.navigation.setParams({
+      loc: current,
+      address: currentAddress
+    });
+    props.navigation.goBack();
   };
 
   return (
@@ -46,12 +58,10 @@ const SelectLocationScreen = props => {
         <Header title="Select Location" />
         <MapView
           onPress={data => onMapPress(data)}
-          initialRegion={currentLocation}
+          initialRegion={current}
           style={styles.mapStyle}
         >
-          {isMapPressed && currentLocation && (
-            <Marker coordinate={currentLocation} />
-          )}
+          {isMapPressed && current && <Marker coordinate={current} />}
         </MapView>
         {currentAddress && (
           <View>

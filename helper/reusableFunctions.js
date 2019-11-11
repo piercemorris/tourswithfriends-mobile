@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { Platform } from "react-native";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
@@ -47,4 +48,17 @@ export const getRegionFrom = (lat, lon, accuracy) => {
     latitudeDelta,
     longitudeDelta
   });
+};
+
+export const useCompare = value => {
+  const prevVal = usePrevious(value);
+  return prevVal !== value;
+};
+
+export const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
 };
