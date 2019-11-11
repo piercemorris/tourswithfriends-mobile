@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
+  Text,
   StyleSheet,
   SafeAreaView,
   ActivityIndicator
@@ -9,28 +10,30 @@ import { withNavigationFocus } from "react-navigation";
 
 import Input from "../../components/UI/Input";
 import Title from "../../components/UI/Title";
+import Layout from "../../constants/Layout";
 import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
-import Layout from "../../constants/Layout";
 import Colors from "../../constants/Colors";
 
 import {
   getLocation,
   getRegionFrom,
-  usePrevious,
   useCompare
 } from "../../helper/reusableFunctions";
 
 const LocationScreen = props => {
   [currentLocation, setCurrentLocation] = useState(null);
+  [selectedAddress, setSelectedAddress] = useState(null);
   [isLoading, setIsLoading] = useState(false);
 
   const isFocused = useCompare(props.isFocused);
 
   useEffect(() => {
     if (isFocused === props.isFocused) {
-      console.log(props.navigation.getProps());
+      const address = props.navigation.getParam("address");
+      console.log(address);
+      if (address) setSelectedAddress(address);
     }
   });
 
@@ -44,13 +47,15 @@ const LocationScreen = props => {
   _navigateToSelectLocation = async () => {
     setIsLoading(true);
     await _getLocation();
+    const address = getRegionFrom(
+      currentLocation.coords.latitude,
+      currentLocation.coords.longitude,
+      currentLocation.coords.accuracy
+    );
     setIsLoading(false);
+    setSelectedAddress(address);
     props.navigation.navigate("SelectLocation", {
-      location: getRegionFrom(
-        currentLocation.coords.latitude,
-        currentLocation.coords.longitude,
-        currentLocation.coords.accuracy
-      )
+      location: address
     });
   };
 
@@ -86,6 +91,7 @@ const LocationScreen = props => {
             </Button>
           )}
         </View>
+        <View>{selectedAddress && <Text>{selectedAddress.name}</Text>}</View>
       </View>
       <Button onPress={() => {}}>Next</Button>
     </SafeAreaView>

@@ -74,7 +74,7 @@ const SelectLocationScreen = props => {
           </View>
         )}
       </View>
-      <Button onPress={() => {}}>Confirm</Button>
+      <Button onPress={() => confirmAddress()}>Confirm</Button>
     </SafeAreaView>
   );
 };
