@@ -8,6 +8,7 @@ import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
 import StyledText from "../../components/StyledText";
 import Layout from "../../constants/Layout";
+import Colors from "../../constants/Colors";
 import {
   getReverseGeocode,
   getRegionFrom
@@ -38,14 +39,14 @@ const SelectLocationScreen = props => {
     const location = getRegionFrom(
       data.nativeEvent.coordinate.latitude,
       data.nativeEvent.coordinate.longitude,
-      70
+      1000
     );
     setCurrent(location);
   };
 
   const confirmAddress = () => {
-    props.navigation.setParams({
-      loc: current,
+    props.navigation.state.params.returnData({
+      location: current,
       address: currentAddress
     });
     props.navigation.goBack();
@@ -65,11 +66,8 @@ const SelectLocationScreen = props => {
         </MapView>
         {currentAddress && (
           <View>
-            <StyledText style={styles.addressText}>
-              {currentAddress.name}
-            </StyledText>
-            <StyledText style={styles.addressText}>
-              {currentAddress.city}
+            <StyledText bold style={styles.addressText}>
+              {currentAddress.name},{currentAddress.city}
             </StyledText>
           </View>
         )}
@@ -92,7 +90,8 @@ const styles = StyleSheet.create({
     height: Layout.window.height / 2
   },
   addressText: {
-    paddingVertical: 0
+    paddingVertical: 0,
+    color: Colors.secondary
   }
 });
 
