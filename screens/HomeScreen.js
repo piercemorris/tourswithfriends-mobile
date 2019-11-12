@@ -18,6 +18,7 @@ const HomeScreen = props => {
           />
           <MaskedComponent
             navigation={props.navigation}
+            style={{ marginBottom: 30 }}
             screen="Received"
             source={require("../assets/images/maskedGroup2.png")}
             text="RECEIVED GIFTS"

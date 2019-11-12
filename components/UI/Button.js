@@ -13,30 +13,35 @@ import { LinearGradient } from "expo-linear-gradient";
 import Layout from "../../constants/Layout";
 import Colors from "../../constants/Colors";
 
+const Wrapper =
+  Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
+
 const Button = props => {
   return (
-    <TouchableOpacity
+    <Wrapper
       style={{ ...styles.container, ...props.style }}
       onPress={props.onPress}
     >
-      <LinearGradient
-        style={styles.gradient}
-        colors={[Colors.primary, Colors.secondary]}
-      >
-        <Text style={styles.text}>{props.children}</Text>
-      </LinearGradient>
-    </TouchableOpacity>
+      <View style={{ ...styles.viewContainer, ...props.viewStyle }}>
+        <LinearGradient
+          style={styles.gradient}
+          colors={[Colors.primary, Colors.secondary]}
+        >
+          <Text style={styles.text}>{props.children}</Text>
+        </LinearGradient>
+      </View>
+    </Wrapper>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    ...Layout.shadow,
-    ...{
-      height: 50,
-      paddingHorizontal: 20,
-      borderRadius: 15
-    }
+    ...Layout.shadow
+  },
+  viewContainer: {
+    height: 50,
+    paddingHorizontal: 20,
+    borderRadius: 15
   },
   gradient: {
     height: "100%",
