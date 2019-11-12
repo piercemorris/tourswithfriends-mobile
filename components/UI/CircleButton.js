@@ -13,11 +13,12 @@ import StyledText from "../StyledText";
 import Layout from "../../constants/Layout";
 import Colors from "../../constants/Colors";
 
-let Wrapper =
-  Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
-
 const CircleButton = props => {
-  if (props.disabled) {
+  let Wrapper =
+    Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
+
+  if (props.disabled === true) {
+    console.log(props.disabled, props.children);
     Wrapper = View;
   }
 

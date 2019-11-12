@@ -30,6 +30,7 @@ const LocationScreen = props => {
   [currentLocation, setCurrentLocation] = useState(null);
   [selectedAddress, setSelectedAddress] = useState(null);
   [isLoading, setIsLoading] = useState(false);
+  [method, setMethod] = useState(0);
 
   const dispatch = useDispatch();
   const isFocused = useCompare(props.isFocused);
@@ -52,6 +53,10 @@ const LocationScreen = props => {
   _returnAddressLocation = data => {
     setCurrentLocation(data.location);
     setSelectedAddress(data.address);
+  };
+
+  _returnMethod = method => {
+    setMethod(method);
   };
 
   _getLocation = async () => {
@@ -80,7 +85,9 @@ const LocationScreen = props => {
   };
 
   _navigateToRepresentation = () => {
-    props.navigation.navigate("Representation", {});
+    props.navigation.navigate("Representation", {
+      returnData: _returnMethod
+    });
   };
 
   return (

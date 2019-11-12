@@ -5,9 +5,16 @@ import Header from "../../components/UI/Header";
 import BackButton from "../../components/UI/BackButton";
 import Subsection from "../../components/UI/Subsection";
 import CircleButton from "../../components/UI/CircleButton";
-import Colors from "../../constants/Colors";
+import MethodEnum from "../../helper/representationEnum";
 
 const RepresentationScreen = props => {
+  const _setMethod = method => {
+    props.navigation.state.params.returnData({
+      method
+    });
+    props.navigation.goBack();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -18,23 +25,31 @@ const RepresentationScreen = props => {
           horizontal={true}
           contentContainerStyle={styles.buttonContainer}
         >
-          <CircleButton disabled>Video Recording</CircleButton>
+          <CircleButton disabled onPress={() => {}}>
+            Video Recording
+          </CircleButton>
         </ScrollView>
         <Subsection text="Image" />
         <ScrollView
           horizontal={true}
           contentContainerStyle={styles.buttonContainer}
         >
-          <CircleButton>Image</CircleButton>
-          <CircleButton disabled>Image & Text</CircleButton>
+          <CircleButton onPress={() => {}}>Image</CircleButton>
+          <CircleButton disabled onPress={() => {}}>
+            Image & Text
+          </CircleButton>
         </ScrollView>
         <Subsection text="Location" />
         <ScrollView
           horizontal={true}
           contentContainerStyle={styles.buttonContainer}
         >
-          <CircleButton disabled>Alert</CircleButton>
-          <CircleButton disabled>Music Alert</CircleButton>
+          <CircleButton disabled onPress={() => {}}>
+            Alert
+          </CircleButton>
+          <CircleButton disabled onPress={() => {}}>
+            Music Alert
+          </CircleButton>
         </ScrollView>
         <Subsection text="Audio" />
         <ScrollView

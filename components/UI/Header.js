@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontFamily: Platform.OS === "ios" ? "sf-bold" : "roboto-bold",
     fontSize: 20,
-    color: Colors.grey
+    color: Colors.lightGrey
   }
 });
 
