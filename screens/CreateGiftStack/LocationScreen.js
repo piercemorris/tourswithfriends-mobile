@@ -79,6 +79,10 @@ const LocationScreen = props => {
     });
   };
 
+  _navigateToRepresentation = () => {
+    props.navigation.navigate("Representation", {});
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -118,6 +122,13 @@ const LocationScreen = props => {
             </StyledText>
           )}
         </View>
+        <Title style={styles.title} title="Representation" />
+        <Button
+          style={styles.fullButton}
+          onPress={() => _navigateToRepresentation()}
+        >
+          Select method of representation
+        </Button>
       </View>
       <Button onPress={() => {}}>Next</Button>
     </SafeAreaView>
@@ -136,9 +147,16 @@ const styles = StyleSheet.create({
     width: Layout.window.width,
     paddingHorizontal: 20
   },
+  title: {
+    marginTop: 10
+  },
   button: {
     width: "45%",
     padding: 0
+  },
+  fullButton: {
+    marginTop: 15,
+    paddingHorizontal: 5
   },
   view: {
     paddingHorizontal: 0

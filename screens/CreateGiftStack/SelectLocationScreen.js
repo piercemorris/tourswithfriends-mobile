@@ -66,8 +66,11 @@ const SelectLocationScreen = props => {
         </MapView>
         {currentAddress && (
           <View>
+            <StyledText>
+              Select a location by pressing on the Map that will mark the area
+            </StyledText>
             <StyledText bold style={styles.addressText}>
-              {currentAddress.name},{currentAddress.city}
+              {currentAddress.name}, {currentAddress.city}
             </StyledText>
           </View>
         )}
