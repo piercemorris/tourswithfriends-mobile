@@ -8,6 +8,8 @@ import TourDetailsScreen from "../screens/CreateGiftStack/TourDetailsScreen";
 import RepresentationScreen from "../screens/CreateGiftStack/RepresentationScreen";
 import HelpfulTipsScreen from "../screens/CreateGiftStack/HelpfulTipsScreen";
 import LocationScreen from "../screens/CreateGiftStack/LocationScreen";
+import ImageScreen from "../screens/Representation/ImageScreen";
+import CameraScreen from "../screens/Representation/CameraScreen";
 
 const CreateGiftStack = createStackNavigator(
   {
@@ -16,7 +18,9 @@ const CreateGiftStack = createStackNavigator(
     TourDetails: TourDetailsScreen,
     Location: LocationScreen,
     SelectLocation: SelectLocationScreen,
-    Representation: RepresentationScreen
+    Representation: RepresentationScreen,
+    Image: ImageScreen,
+    Camera: CameraScreen
   },
   {
     navigationOptions: {

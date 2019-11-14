@@ -62,3 +62,7 @@ export const usePrevious = value => {
   });
   return ref.current;
 };
+
+export const getKeyByValue = (object, value) => {
+  return Object.keys(object).find(key => object[key] === value);
+};

@@ -17,20 +17,22 @@ import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
 import StyledText from "../../components/StyledText";
 import Colors from "../../constants/Colors";
+import MethodEnum from "../../helper/representationEnum";
 import * as locationActions from "../../store/actions/location";
 
 import {
   getLocation,
   getRegionFrom,
   getReverseGeocode,
-  useCompare
+  useCompare,
+  getKeyByValue
 } from "../../helper/reusableFunctions";
 
 const LocationScreen = props => {
   [currentLocation, setCurrentLocation] = useState(null);
   [selectedAddress, setSelectedAddress] = useState(null);
   [isLoading, setIsLoading] = useState(false);
-  [method, setMethod] = useState(0);
+  [selectedMethod, setSelectedMethod] = useState(0);
 
   const dispatch = useDispatch();
   const isFocused = useCompare(props.isFocused);
@@ -55,8 +57,9 @@ const LocationScreen = props => {
     setSelectedAddress(data.address);
   };
 
-  _returnMethod = method => {
-    setMethod(method);
+  _returnMethod = data => {
+    const method = getKeyByValue(MethodEnum, data.method);
+    setSelectedMethod(method);
   };
 
   _getLocation = async () => {
@@ -65,7 +68,7 @@ const LocationScreen = props => {
       const accurateLocation = getRegionFrom(
         location.coords.latitude,
         location.coords.longitude,
-        1000 // location.coords.accuracy
+        1000
       );
       const address = await getReverseGeocode(accurateLocation);
 
@@ -136,8 +139,17 @@ const LocationScreen = props => {
         >
           Select method of representation
         </Button>
+        <View style={styles.addressContainer}>
+          {selectedMethod ? (
+            <StyledText bold style={styles.address}>
+              {selectedMethod}
+            </StyledText>
+          ) : null}
+        </View>
       </View>
-      <Button onPress={() => {}}>Next</Button>
+      <Button onPress={() => props.navigation.navigate(selectedMethod)}>
+        Next
+      </Button>
     </SafeAreaView>
   );
 };
