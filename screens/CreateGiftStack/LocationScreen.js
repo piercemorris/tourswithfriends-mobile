@@ -58,7 +58,8 @@ const LocationScreen = props => {
   };
 
   _returnMethod = data => {
-    setSelectedMethod(data.method);
+    const method = getKeyByValue(MethodEnum, data.method);
+    setSelectedMethod(method);
   };
 
   _getLocation = async () => {
@@ -141,12 +142,14 @@ const LocationScreen = props => {
         <View style={styles.addressContainer}>
           {selectedMethod ? (
             <StyledText bold style={styles.address}>
-              {getKeyByValue(MethodEnum, selectedMethod)}
+              {selectedMethod}
             </StyledText>
           ) : null}
         </View>
       </View>
-      <Button onPress={() => {}}>Next</Button>
+      <Button onPress={() => props.navigation.navigate(selectedMethod)}>
+        Next
+      </Button>
     </SafeAreaView>
   );
 };

@@ -52,15 +52,15 @@ const styles = StyleSheet.create({
     padding: 20
   },
   gradient: {
-    height: Layout.window.width / 3,
-    width: Layout.window.width / 3,
-    borderRadius: Layout.window.width / 6,
+    height: Layout.window.width / 4,
+    width: Layout.window.width / 4,
+    borderRadius: Layout.window.width / 8,
     justifyContent: "center",
     alignItems: "center"
   },
   text: {
     padding: 0,
-    fontSize: 20,
+    fontSize: 18,
     textAlign: "center",
     color: Colors.white
   }
