@@ -56,8 +56,16 @@ const ImageScreen = props => {
           </View>
         )}
       </View>
-
-      <Button onPress={() => {}}>Next</Button>
+      {selectedPicture ? (
+        <View style={styles.buttonContainer}>
+          <Button style={styles.button} onPress={() => _navigateToCamera()}>
+            Retake
+          </Button>
+          <Button style={styles.button} onPress={() => props.navigation.pop()}>
+            Confirm
+          </Button>
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -76,7 +84,12 @@ const styles = StyleSheet.create({
     height: "75%",
     borderRadius: 15,
     backgroundColor: Colors.inputShade
-  }
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  button: { width: "50%" }
 });
 
 export default ImageScreen;

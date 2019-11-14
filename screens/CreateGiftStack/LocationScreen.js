@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   View,
-  Text,
   StyleSheet,
   SafeAreaView,
   ActivityIndicator
@@ -15,6 +14,7 @@ import Layout from "../../constants/Layout";
 import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
+import IconButton from "../../components/UI/IconButton";
 import StyledText from "../../components/StyledText";
 import Colors from "../../constants/Colors";
 import MethodEnum from "../../helper/representationEnum";
@@ -27,6 +27,7 @@ import {
   useCompare,
   getKeyByValue
 } from "../../helper/reusableFunctions";
+import { Ionicons } from "@expo/vector-icons";
 
 const LocationScreen = props => {
   [currentLocation, setCurrentLocation] = useState(null);
@@ -105,47 +106,57 @@ const LocationScreen = props => {
           onInputChange={() => {}}
         />
         <Title title="Location Coordinates" />
-        <View style={styles.buttonContainer}>
-          <Button
-            style={styles.button}
-            viewStyle={styles.view}
-            onPress={() => _getLocation()}
-          >
-            Current Location
-          </Button>
-          {isLoading ? (
-            <ActivityIndicator color={Colors.primary} />
-          ) : (
+        {currentLocation && selectedAddress ? (
+          <View style={styles.addressContainer}>
+            <StyledText style={styles.address}>
+              {selectedAddress.name}, {selectedAddress.city}
+            </StyledText>
+            <IconButton
+              onPress={() => _navigateToSelectLocation()}
+              name="ios-color-wand"
+              color={Colors.primary}
+            />
+          </View>
+        ) : (
+          <View style={styles.buttonContainer}>
             <Button
               style={styles.button}
               viewStyle={styles.view}
-              onPress={() => _navigateToSelectLocation()}
+              onPress={() => _getLocation()}
             >
-              Select Location
+              Current Location
             </Button>
-          )}
-        </View>
-        <View style={styles.addressContainer}>
-          {selectedAddress && (
-            <StyledText bold style={styles.address}>
-              {selectedAddress.name}, {selectedAddress.city}
-            </StyledText>
-          )}
-        </View>
+            {isLoading ? (
+              <ActivityIndicator color={Colors.primary} />
+            ) : (
+              <Button
+                style={styles.button}
+                viewStyle={styles.view}
+                onPress={() => _navigateToSelectLocation()}
+              >
+                Select Location
+              </Button>
+            )}
+          </View>
+        )}
         <Title style={styles.title} title="Representation" />
-        <Button
-          style={styles.fullButton}
-          onPress={() => _navigateToRepresentation()}
-        >
-          Select method of representation
-        </Button>
-        <View style={styles.addressContainer}>
-          {selectedMethod ? (
-            <StyledText bold style={styles.address}>
-              {selectedMethod}
-            </StyledText>
-          ) : null}
-        </View>
+        {selectedMethod ? (
+          <View style={styles.addressContainer}>
+            <StyledText style={styles.address}>{selectedMethod}</StyledText>
+            <IconButton
+              onPress={() => _navigateToRepresentation()}
+              name="ios-color-wand"
+              color={Colors.primary}
+            />
+          </View>
+        ) : (
+          <Button
+            style={styles.fullButton}
+            onPress={() => _navigateToRepresentation()}
+          >
+            Select method of representation
+          </Button>
+        )}
       </View>
       <Button onPress={() => props.navigation.navigate(selectedMethod)}>
         Next
@@ -162,7 +173,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 15,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     width: Layout.window.width,
     paddingHorizontal: 20
   },
@@ -170,8 +181,8 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   button: {
-    width: "45%",
-    padding: 0
+    width: "50%",
+    paddingHorizontal: 5
   },
   fullButton: {
     marginTop: 15,
@@ -181,11 +192,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0
   },
   addressContainer: {
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center"
   },
   address: {
-    color: Colors.secondary,
-    fontSize: 18
+    color: "#000",
+    fontSize: 16
   }
 });
 
