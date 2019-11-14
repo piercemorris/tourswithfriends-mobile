@@ -16,7 +16,7 @@ const RepresentationScreen = props => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
         <BackButton {...props} />
         <Header title="Location 1" subtitle="Select method of representation" />
@@ -25,7 +25,7 @@ const RepresentationScreen = props => {
           horizontal={true}
           contentContainerStyle={styles.buttonContainer}
         >
-          <CircleButton disabled onPress={() => {}}>
+          <CircleButton disabled onPress={() => _setMethod(MethodEnum.Video)}>
             Video Recording
           </CircleButton>
         </ScrollView>
@@ -34,8 +34,13 @@ const RepresentationScreen = props => {
           horizontal={true}
           contentContainerStyle={styles.buttonContainer}
         >
-          <CircleButton onPress={() => {}}>Image</CircleButton>
-          <CircleButton disabled onPress={() => {}}>
+          <CircleButton onPress={() => _setMethod(MethodEnum.Image)}>
+            Image
+          </CircleButton>
+          <CircleButton
+            disabled
+            onPress={() => _setMethod(MethodEnum.ImageText)}
+          >
             Image & Text
           </CircleButton>
         </ScrollView>
@@ -44,10 +49,13 @@ const RepresentationScreen = props => {
           horizontal={true}
           contentContainerStyle={styles.buttonContainer}
         >
-          <CircleButton disabled onPress={() => {}}>
+          <CircleButton disabled onPress={() => _setMethod(MethodEnum.Alert)}>
             Alert
           </CircleButton>
-          <CircleButton disabled onPress={() => {}}>
+          <CircleButton
+            disabled
+            onPress={() => _setMethod(MethodEnum.MusicAlert)}
+          >
             Music Alert
           </CircleButton>
         </ScrollView>
@@ -56,16 +64,21 @@ const RepresentationScreen = props => {
           horizontal={true}
           contentContainerStyle={styles.buttonContainer}
         >
-          <CircleButton disabled>Voice Recording</CircleButton>
-          <CircleButton disabled>Audio Recording</CircleButton>
+          <CircleButton disabled onPress={() => _setMethod(MethodEnum.Voice)}>
+            Voice Recording
+          </CircleButton>
+          <CircleButton disabled onPress={() => _setMethod(MethodEnum.Audio)}>
+            Audio Recording
+          </CircleButton>
         </ScrollView>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     flex: 1,
     justifyContent: "space-between"
   },

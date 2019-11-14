@@ -18,7 +18,6 @@ const CircleButton = props => {
     Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
 
   if (props.disabled === true) {
-    console.log(props.disabled, props.children);
     Wrapper = View;
   }
 
