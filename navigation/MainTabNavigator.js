@@ -146,15 +146,17 @@ const tabScreenConfig = {
 const tabNavigator =
   Platform.OS === "android"
     ? createMaterialBottomTabNavigator(tabScreenConfig, {
-        activeTintColor: Colors.primary,
-        shifting: true
+        shifting: true,
+        barStyle: {
+          backgroundColor: Colors.primary
+        }
       })
     : createBottomTabNavigator(tabScreenConfig, {
         tabBarOptions: {
           labelStyle: {
             fontFamily: "sf-regular"
           },
-          activeTintColor: Colors.primary
+          activeTintColor: Colors.primary,
         }
       });
 
