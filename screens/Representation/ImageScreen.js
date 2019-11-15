@@ -8,11 +8,9 @@ import {
   Image
 } from "react-native";
 
-import Input from "../../components/UI/Input";
 import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
-import StyledText from "../../components/StyledText";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 import { Ionicons } from "@expo/vector-icons";

@@ -3,20 +3,24 @@ import { useDispatch } from "react-redux";
 import {
   View,
   StyleSheet,
-  SafeAreaView,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableOpacity,
+  Platform,
+  ScrollView,
+  Image
 } from "react-native";
 import { withNavigationFocus } from "react-navigation";
+import { Ionicons } from "@expo/vector-icons";
 
 import Input from "../../components/UI/Input";
 import Title from "../../components/UI/Title";
-import Layout from "../../constants/Layout";
 import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
 import IconButton from "../../components/UI/IconButton";
 import StyledText from "../../components/StyledText";
 import Colors from "../../constants/Colors";
+import Layout from "../../constants/Layout";
 import MethodEnum from "../../helper/representationEnum";
 import * as locationActions from "../../store/actions/location";
 
@@ -27,9 +31,9 @@ import {
   useCompare,
   getKeyByValue
 } from "../../helper/reusableFunctions";
-import { Ionicons } from "@expo/vector-icons";
 
 const LocationScreen = props => {
+  [selectedPicture, setSelectedPicture] = useState(null);
   [currentLocation, setCurrentLocation] = useState(null);
   [selectedAddress, setSelectedAddress] = useState(null);
   [isLoading, setIsLoading] = useState(false);
@@ -94,9 +98,22 @@ const LocationScreen = props => {
     });
   };
 
+  _returnPicture = pic => {
+    setSelectedPicture(pic);
+  };
+
+  _navigateToCamera = () => {
+    props.navigation.navigate("Camera", {
+      returnData: _returnPicture
+    });
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
+    <View style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentStyle}
+      >
         <BackButton {...props} />
         <Header title="Location 1" />
         <Input
@@ -157,18 +174,52 @@ const LocationScreen = props => {
             Select method of representation
           </Button>
         )}
-      </View>
-      <Button onPress={() => props.navigation.navigate(selectedMethod)}>
-        Next
-      </Button>
-    </SafeAreaView>
+        {selectedMethod ? (
+          <View>
+            <Title style={styles.title} title={selectedMethod} />
+            {selectedPicture ? (
+              <TouchableOpacity onPress={() => _navigateToCamera()}>
+                <Image
+                  style={styles.imageContainer}
+                  source={{ uri: selectedPicture }}
+                  resizeMode="cover"
+                />
+              </TouchableOpacity>
+            ) : (
+              <View style={styles.imageContainer}>
+                <TouchableOpacity onPress={() => _navigateToCamera()}>
+                  <Ionicons
+                    name={
+                      Platform.OS === "ios"
+                        ? "ios-add-circle-outline"
+                        : "md-add-circle-outline"
+                    }
+                    size={64}
+                    color={Colors.primary}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        ) : null}
+        <Button style={styles.navigationButton} onPress={() => {}}>
+          Next
+        </Button>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between"
+    marginTop: 40
+  },
+  scrollView: {
+    paddingBottom: 25
+  },
+  contentStyle: {
+    flexGrow: 1
   },
   buttonContainer: {
     marginTop: 15,
@@ -200,6 +251,19 @@ const styles = StyleSheet.create({
   address: {
     color: "#000",
     fontSize: 16
+  },
+  imageContainer: {
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 10,
+    width: Layout.window.width - 40,
+    height: Layout.window.height / 2,
+    borderRadius: 15,
+    backgroundColor: Colors.inputShade
+  },
+  navigationButton: {
+    marginVertical: 15
   }
 });
 
