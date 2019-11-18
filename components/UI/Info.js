@@ -24,7 +24,7 @@ const Info = props => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
-    marginVertical: 30,
+    marginVertical: 15,
     borderRadius: 15,
     backgroundColor: Colors.primary,
     flexDirection: "row",
