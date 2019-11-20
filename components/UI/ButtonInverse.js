@@ -7,6 +7,7 @@ import {
   View,
   Text
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import Layout from "../../constants/Layout";
 import Colors from "../../constants/Colors";
@@ -25,6 +26,13 @@ const ButtonInverse = props => {
         <StyledText bold style={{ padding: 0, color: Colors.secondary }}>
           {props.text}
         </StyledText>
+        <Ionicons
+          name={
+            Platform.OS === "ios" ? "ios-arrow-forward" : "md-arrow-forward"
+          }
+          size={32}
+          color={Colors.secondary}
+        />
       </View>
     </Wrapper>
   );
@@ -41,6 +49,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginHorizontal: 20,
     marginVertical: 10
+  },
+  viewContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });
 

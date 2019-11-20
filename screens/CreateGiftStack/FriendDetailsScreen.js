@@ -32,9 +32,7 @@ const FriendDetailsScreen = props => {
           invited to download the app or a link to open the app on their device.
         </StyledText>
       </View>
-      <Button onPress={() => props.navigation.navigate("TourDetails")}>
-        Next
-      </Button>
+      <Button onPress={() => props.navigation.pop()}>Complete</Button>
     </SafeAreaView>
   );
 };

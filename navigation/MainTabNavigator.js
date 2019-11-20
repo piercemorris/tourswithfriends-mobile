@@ -156,7 +156,7 @@ const tabNavigator =
           labelStyle: {
             fontFamily: "sf-regular"
           },
-          activeTintColor: Colors.primary,
+          activeTintColor: Colors.primary
         }
       });
 

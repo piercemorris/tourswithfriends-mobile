@@ -202,8 +202,11 @@ const LocationScreen = props => {
             )}
           </View>
         ) : null}
-        <Button style={styles.navigationButton} onPress={() => {}}>
-          Next
+        <Button
+          style={styles.navigationButton}
+          onPress={() => props.navigation.pop()}
+        >
+          Complete
         </Button>
       </ScrollView>
     </View>

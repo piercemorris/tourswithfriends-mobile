@@ -36,9 +36,7 @@ const TourDetailsScreen = props => {
           onInputChange={() => {}}
         />
       </View>
-      <Button onPress={() => props.navigation.navigate("Location")}>
-        Next
-      </Button>
+      <Button onPress={() => props.navigation.pop()}>Complete</Button>
     </SafeAreaView>
   );
 };
