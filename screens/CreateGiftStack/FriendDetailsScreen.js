@@ -9,11 +9,7 @@ import StyledText from "../../components/StyledText";
 import BackButton from "../../components/UI/BackButton";
 import Colors from "../../constants/Colors";
 
-import {
-  formReducer,
-  FORM_INPUT_UPDATE,
-  FORM_INITIALISE
-} from "../../helper/reusableFunctions";
+import { formReducer, FORM_INPUT_UPDATE } from "../../helper/reusableFunctions";
 import * as locationActions from "../../store/actions/location";
 
 const FriendDetailsScreen = props => {

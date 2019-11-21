@@ -1,11 +1,13 @@
 import {
   UPDATE_ADDRESS,
   UPDATE_LOCATION,
-  UPDATE_FRIEND_DETAILS
+  UPDATE_FRIEND_DETAILS,
+  UPDATE_TOUR_DETAILS
 } from "../actions/location";
 
 const initialState = {
   friendDetails: null,
+  tourDetails: null,
   locationOne: { location: null, address: null },
   locationTwo: { location: null, address: null },
   locationThree: { location: null, address: null }
@@ -20,6 +22,16 @@ export default (state = initialState, action) => {
           name: action.name,
           email: action.email,
           description: action.description
+        }
+      };
+    case UPDATE_TOUR_DETAILS:
+      return {
+        ...state,
+        tourDetails: {
+          title: action.title,
+          city: action.city,
+          description: action.description,
+          start: action.start
         }
       };
     case UPDATE_ADDRESS:

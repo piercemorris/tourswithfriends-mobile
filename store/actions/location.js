@@ -1,6 +1,7 @@
 export const UPDATE_ADDRESS = "UPDATE_ADDRESS";
 export const UPDATE_LOCATION = "UPDATE_LOCATION";
 export const UPDATE_FRIEND_DETAILS = "UPDATE_FRIEND_DETAILS";
+export const UPDATE_TOUR_DETAILS = "UPDATE_TOUR_DETAILS";
 
 export const updateAddress = (address, id) => {
   return dispatch => {
@@ -29,6 +30,18 @@ export const updateFriendDetails = (name, email, description) => {
       name,
       email,
       description
+    });
+  };
+};
+
+export const updateTourDetails = (title, city, description, start) => {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_TOUR_DETAILS,
+      title,
+      city,
+      description,
+      start
     });
   };
 };
