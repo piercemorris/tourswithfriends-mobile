@@ -1,37 +1,51 @@
-import { UPDATE_ADDRESS, UPDATE_LOCATION } from "../actions/location";
+import {
+  UPDATE_ADDRESS,
+  UPDATE_LOCATION,
+  UPDATE_FRIEND_DETAILS
+} from "../actions/location";
 
 const initialState = {
-  location_one: { location: null, address: null },
-  location_two: { location: null, address: null },
-  location_three: { location: null, address: null }
+  friendDetails: null,
+  locationOne: { location: null, address: null },
+  locationTwo: { location: null, address: null },
+  locationThree: { location: null, address: null }
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_FRIEND_DETAILS:
+      return {
+        ...state,
+        friendDetails: {
+          name: action.name,
+          email: action.email,
+          description: action.description
+        }
+      };
     case UPDATE_ADDRESS:
       switch (action.id) {
         case 1:
           return {
             ...state,
-            location_one: {
-              ...state.location_one,
-              ...action.address
+            locationOne: {
+              ...state.locationOne,
+              address: action.address
             }
           };
         case 2:
           return {
             ...state,
-            location_two: {
-              ...state.location_two,
-              ...action.address
+            locationTwo: {
+              ...state.locationTwo,
+              address: action.address
             }
           };
         case 3:
           return {
             ...state,
-            location_three: {
-              ...state.location_three,
-              ...action.address
+            locationThree: {
+              ...state.locationThree,
+              address: action.address
             }
           };
       }
@@ -40,27 +54,30 @@ export default (state = initialState, action) => {
         case 1:
           return {
             ...state,
-            location_one: {
-              ...state.location_one,
-              ...action.location
+            locationOne: {
+              ...state.locationOne,
+              location: action.location
             }
           };
         case 2:
           return {
             ...state,
-            location_two: {
-              ...state.location_two,
-              ...action.location
+            locationTwo: {
+              ...state.locationTwo,
+              location: action.location
             }
           };
         case 3:
           return {
             ...state,
-            location_three: {
-              ...state.location_three,
-              ...action.location
+            locationThree: {
+              ...state.locationThree,
+              action: action.location
             }
           };
       }
+    default:
+      return initialState;
+      break;
   }
 };

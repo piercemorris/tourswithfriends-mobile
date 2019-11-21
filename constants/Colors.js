@@ -11,6 +11,7 @@ export default {
   grey,
   lightGrey,
   inputShade,
+  complete: "#009E39",
   tabIconDefault: "#ccc",
   tabIconSelected: primary,
   tabBar: "#fefefe",

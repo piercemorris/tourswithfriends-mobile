@@ -18,5 +18,14 @@ export default {
     shadowOffset: { height: 5, width: 0 },
     shadowOpacity: 0.4,
     elevation: 10
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    borderWidth: 5,
+    borderRadius: 15,
+    height: 50,
+    paddingHorizontal: 20,
+    marginHorizontal: 20,
+    marginVertical: 10
   }
 };

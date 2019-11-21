@@ -12,8 +12,12 @@ import * as Font from "expo-font";
 useScreens();
 
 import authReducer from "./store/reducers/auth";
+import locationReducer from "./store/reducers/location";
 
-const rootReducer = combineReducers({ auth: authReducer });
+const rootReducer = combineReducers({
+  auth: authReducer,
+  gift: locationReducer
+});
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 

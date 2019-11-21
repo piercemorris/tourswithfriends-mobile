@@ -17,13 +17,19 @@ const Wrapper =
   Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
 
 const ButtonInverse = props => {
+  const color = props.completed ? Colors.complete : Colors.secondary;
+
   return (
     <Wrapper
-      style={{ ...styles.container, ...props.style }}
+      style={
+        props.completed
+          ? { ...styles.complete, ...props.style }
+          : { ...styles.incomplete, ...props.style }
+      }
       onPress={props.onPress}
     >
       <View style={{ ...styles.viewContainer, ...props.viewStyle }}>
-        <StyledText bold style={{ padding: 0, color: Colors.secondary }}>
+        <StyledText bold style={{ padding: 0, color }}>
           {props.text}
         </StyledText>
         <Ionicons
@@ -31,7 +37,7 @@ const ButtonInverse = props => {
             Platform.OS === "ios" ? "ios-arrow-forward" : "md-arrow-forward"
           }
           size={32}
-          color={Colors.secondary}
+          color={color}
         />
       </View>
     </Wrapper>
@@ -39,16 +45,15 @@ const ButtonInverse = props => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  complete: {
+    ...Layout.buttonContainer,
     ...Layout.shadow,
-    justifyContent: "center",
-    borderWidth: 5,
-    borderColor: Colors.secondary,
-    borderRadius: 15,
-    height: 50,
-    paddingHorizontal: 20,
-    marginHorizontal: 20,
-    marginVertical: 10
+    borderColor: Colors.complete
+  },
+  incomplete: {
+    ...Layout.buttonContainer,
+    ...Layout.shadow,
+    borderColor: Colors.secondary
   },
   viewContainer: {
     flexDirection: "row",

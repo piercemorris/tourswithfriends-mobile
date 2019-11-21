@@ -1,5 +1,6 @@
-import React from "react";
-import { SafeAreaView, View, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, View, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
 import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
@@ -8,6 +9,8 @@ import BackButton from "../../components/UI/BackButton";
 import ButtonInverse from "../../components/UI/ButtonInverse";
 
 const GiftSetScreen = props => {
+  const friendDetailsValid = useSelector(store => store.gift.friendDetails);
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -16,6 +19,7 @@ const GiftSetScreen = props => {
         <View style={styles.contentContainer}>
           <Title title="Friend Details" />
           <ButtonInverse
+            completed={friendDetailsValid}
             text="Enter Friends Details"
             onPress={() => props.navigation.navigate("FriendDetails")}
           />
