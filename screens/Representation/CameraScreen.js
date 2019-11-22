@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { View, Vibration, StyleSheet, Text } from "react-native";
 import * as Permissions from "expo-permissions";
 import { Camera } from "expo-camera";
 import * as FileSystem from "expo-file-system";
@@ -28,6 +28,7 @@ const CameraScreen = props => {
 
   _takePicture = async () => {
     if (this.camera) {
+      Vibration.vibrate(500);
       this.camera.takePictureAsync({ onPictureSaved: _onPictureSaved });
     }
   };

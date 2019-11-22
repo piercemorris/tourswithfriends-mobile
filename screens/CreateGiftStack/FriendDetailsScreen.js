@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useEffect, useCallback } from "react";
 import { View, SafeAreaView, StyleSheet, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import Input from "../../components/UI/Input";
 import Header from "../../components/UI/Header";
@@ -101,7 +102,10 @@ const FriendDetailsScreen = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <KeyboardAwareScrollView
+        style={styles.container}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+      >
         <BackButton {...props} />
         <Header title="Your friend" subtitle="Just some details" />
         <StyledText>
@@ -136,16 +140,15 @@ const FriendDetailsScreen = props => {
           This information is to send an email to your friend to either be
           invited to download the app or a link to open the app on their device.
         </StyledText>
-      </View>
-      <Button onPress={() => goBackHandler()}>Complete</Button>
+        <Button onPress={() => goBackHandler()}>Complete</Button>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "space-between"
+    flex: 1
   }
 });
 

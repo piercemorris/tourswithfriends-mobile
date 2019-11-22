@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useEffect, useCallback } from "react";
-import { View, StyleSheet, SafeAreaView, Alert } from "react-native";
+import { StyleSheet, SafeAreaView, Alert, Keyboard } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import Input from "../../components/UI/Input";
 import Header from "../../components/UI/Header";
@@ -11,6 +12,7 @@ import Colors from "../../constants/Colors";
 
 import { formReducer, FORM_INPUT_UPDATE } from "../../helper/reusableFunctions";
 import * as locationActions from "../../store/actions/location";
+import Layout from "../../constants/Layout";
 
 const TourDetailsScreen = props => {
   [error, setError] = useState(false);
@@ -115,8 +117,11 @@ const TourDetailsScreen = props => {
   }, [error, errorMessage]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAwareScrollView
+        style={styles.container}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+      >
         <BackButton {...props} />
         <Header title="Tour Details" subtitle="Describe your tour" />
         <StyledText>
@@ -141,6 +146,12 @@ const TourDetailsScreen = props => {
           required
           id="description"
           title="Tour description"
+          keyboardType="default"
+          returnKeyType="done"
+          blurOnSubmit={true}
+          onSubmitEditing={() => {
+            Keyboard.dismiss();
+          }}
           multiline={true}
           numberOfLines={3}
           textAlignVertical="top"
@@ -151,22 +162,32 @@ const TourDetailsScreen = props => {
           required
           id="start"
           title="Describe the starting location"
+          keyboardType="default"
+          returnKeyType="done"
+          blurOnSubmit={true}
+          onSubmitEditing={() => {
+            Keyboard.dismiss();
+          }}
           multiline={true}
           numberOfLines={3}
           textAlignVertical="top"
           defaultValue={tourDetails ? tourDetails.start : ""}
           onInputChange={inputChangedHandler}
         />
-      </View>
-      <Button onPress={() => goBackHandler()}>Complete</Button>
+        <Button
+          style={{ paddingTop: 10, paddingBotttom: 20 }}
+          onPress={() => goBackHandler()}
+        >
+          Complete
+        </Button>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "space-between"
+    flex: 1
   }
 });
 

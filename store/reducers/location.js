@@ -89,7 +89,7 @@ export default (state = initialState, action) => {
           };
       }
     default:
+      console.log("default reached");
       return initialState;
-      break;
   }
 };
