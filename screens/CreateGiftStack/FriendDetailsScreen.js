@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useEffect, useCallback } from "react";
-import { View, SafeAreaView, StyleSheet, Alert } from "react-native";
+import { SafeAreaView, StyleSheet, Alert, Keyboard } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -130,6 +130,11 @@ const FriendDetailsScreen = props => {
           id="description"
           required
           title="A description about your friend"
+          returnKeyType="done"
+          blurOnSubmit={true}
+          onSubmitEditing={() => {
+            Keyboard.dismiss();
+          }}
           multiline={true}
           numberOfLines={3}
           textAlignVertical="top"

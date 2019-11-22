@@ -1,27 +1,8 @@
-export const UPDATE_ADDRESS = "UPDATE_ADDRESS";
-export const UPDATE_LOCATION = "UPDATE_LOCATION";
 export const UPDATE_FRIEND_DETAILS = "UPDATE_FRIEND_DETAILS";
 export const UPDATE_TOUR_DETAILS = "UPDATE_TOUR_DETAILS";
-
-export const updateAddress = (address, id) => {
-  return dispatch => {
-    dispatch({
-      type: UPDATE_ADDRESS,
-      id,
-      address
-    });
-  };
-};
-
-export const updateLocation = (location, id) => {
-  return dispatch => {
-    dispatch({
-      type: UPDATE_LOCATION,
-      id,
-      location
-    });
-  };
-};
+export const UPDATE_LOCATION_ONE = "UPDATE_LOCATION_ONE";
+export const UPDATE_LOCATION_TWO = "UPDATE_LOCATION_TWO";
+export const UPDATE_LOCATION_THREE = "UPDATE_LOCATION_THREE";
 
 export const updateFriendDetails = (name, email, description) => {
   return dispatch => {
@@ -42,6 +23,35 @@ export const updateTourDetails = (title, city, description, start) => {
       city,
       description,
       start
+    });
+  };
+};
+
+export const updateLocation = (
+  id,
+  name,
+  location,
+  address,
+  mediaType,
+  mediaFileRef
+) => {
+  let action;
+  if (id === 1) {
+    action = UPDATE_LOCATION_ONE;
+  } else if (id === 2) {
+    action = UPDATE_LOCATION_TWO;
+  } else {
+    action = UPDATE_LOCATION_THREE;
+  }
+
+  return dispatch => {
+    dispatch({
+      type: action,
+      name,
+      location,
+      address,
+      mediaType,
+      mediaFileRef
     });
   };
 };

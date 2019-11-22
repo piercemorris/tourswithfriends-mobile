@@ -11,6 +11,9 @@ import ButtonInverse from "../../components/UI/ButtonInverse";
 const GiftSetScreen = props => {
   const friendDetailsValid = useSelector(store => store.gift.friendDetails);
   const tourDetailsValid = useSelector(store => store.gift.tourDetails);
+  const locationOne = useSelector(store => store.gift.locationOne);
+  const locationTwo = useSelector(store => store.gift.locationTwo);
+  const locationThree = useSelector(store => store.gift.locationThree);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,17 +36,32 @@ const GiftSetScreen = props => {
           <Title title="Location 1" />
           <ButtonInverse
             text="Add to location 1"
-            onPress={() => props.navigation.navigate("LocationStack")}
+            completed={locationOne}
+            onPress={() =>
+              props.navigation.navigate("LocationStack", {
+                id: 1
+              })
+            }
           />
           <Title title="Location 2" />
           <ButtonInverse
             text="Add to location 2"
-            onPress={() => props.navigation.navigate("LocationStack")}
+            completed={locationTwo}
+            onPress={() =>
+              props.navigation.navigate("LocationStack", {
+                id: 2
+              })
+            }
           />
           <Title title="Location 3" />
           <ButtonInverse
             text="Add to location 3"
-            onPress={() => props.navigation.navigate("LocationStack")}
+            completed={locationThree}
+            onPress={() =>
+              props.navigation.navigate("LocationStack", {
+                id: 3
+              })
+            }
           />
         </View>
       </View>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
 
 import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";

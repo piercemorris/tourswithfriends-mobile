@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   ScrollView,
+  Alert,
   Image
 } from "react-native";
 import { withNavigationFocus } from "react-navigation";
@@ -33,11 +34,14 @@ import {
 } from "../../helper/reusableFunctions";
 
 const LocationScreen = props => {
+  [selectedLocation, setSelectedLocation] = useState(null);
   [selectedPicture, setSelectedPicture] = useState(null);
-  [currentLocation, setCurrentLocation] = useState(null);
   [selectedAddress, setSelectedAddress] = useState(null);
-  [isLoading, setIsLoading] = useState(false);
   [selectedMethod, setSelectedMethod] = useState(0);
+  [selectedName, setSelectedName] = useState("");
+  [locationId, setLocationId] = useState(null);
+  [isLoading, setIsLoading] = useState(false);
+  [error, setError] = useState(false);
 
   const dispatch = useDispatch();
   const isFocused = useCompare(props.isFocused);
@@ -46,19 +50,14 @@ const LocationScreen = props => {
     if (isFocused === props.isFocused) {
       const address = props.navigation.getParam("address");
       if (address) setSelectedAddress(address);
+
+      const id = props.navigation.getParam("id");
+      if (id) setLocationId(id);
     }
   });
 
-  useEffect(() => {
-    dispatch(locationActions.updateAddress(selectedAddress));
-  }, [selectedAddress]);
-
-  useEffect(() => {
-    dispatch(locationActions.updateLocation(currentLocation));
-  }, [currentLocation]);
-
   _returnAddressLocation = data => {
-    setCurrentLocation(data.location);
+    setSelectedLocation(data.location);
     setSelectedAddress(data.address);
   };
 
@@ -77,7 +76,7 @@ const LocationScreen = props => {
       );
       const address = await getReverseGeocode(accurateLocation);
 
-      setCurrentLocation(accurateLocation);
+      setSelectedLocation(accurateLocation);
       setSelectedAddress(address[0]);
     } catch (ex) {}
   };
@@ -87,7 +86,7 @@ const LocationScreen = props => {
     await _getLocation();
     setIsLoading(false);
     props.navigation.navigate("SelectLocation", {
-      location: currentLocation,
+      location: selectedLocation,
       returnData: _returnAddressLocation
     });
   };
@@ -108,6 +107,38 @@ const LocationScreen = props => {
     });
   };
 
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An error occurred!", "Not all fields have been completed", [
+        { text: "Ok" }
+      ]);
+      setError(false);
+    }
+  }, [error]);
+
+  const goBackHandler = () => {
+    if (
+      selectedLocation &&
+      selectedName.length > 0 &&
+      selectedPicture &&
+      selectedAddress
+    ) {
+      dispatch(
+        locationActions.updateLocation(
+          locationId,
+          selectedName,
+          selectedLocation,
+          selectedAddress,
+          selectedMethod,
+          selectedPicture
+        )
+      );
+      props.navigation.pop();
+    } else {
+      setError(true);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -115,15 +146,15 @@ const LocationScreen = props => {
         contentContainerStyle={styles.contentStyle}
       >
         <BackButton {...props} />
-        <Header title="Location 1" />
+        <Header title={"Location " + locationId} />
         <Input
           style={{ marginTop: 20 }}
           id="name"
           title="Name"
-          onInputChange={() => {}}
+          onInputChange={text => setSelectedName(text)}
         />
         <Title title="Location Coordinates" />
-        {currentLocation && selectedAddress ? (
+        {selectedLocation && selectedAddress ? (
           <View style={styles.addressContainer}>
             <StyledText style={styles.address}>
               {selectedAddress.name}, {selectedAddress.city}
@@ -202,10 +233,7 @@ const LocationScreen = props => {
             )}
           </View>
         ) : null}
-        <Button
-          style={styles.navigationButton}
-          onPress={() => props.navigation.pop()}
-        >
+        <Button style={styles.navigationButton} onPress={() => goBackHandler()}>
           Complete
         </Button>
       </ScrollView>

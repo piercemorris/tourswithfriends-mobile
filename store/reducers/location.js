@@ -1,16 +1,17 @@
 import {
-  UPDATE_ADDRESS,
-  UPDATE_LOCATION,
   UPDATE_FRIEND_DETAILS,
-  UPDATE_TOUR_DETAILS
+  UPDATE_TOUR_DETAILS,
+  UPDATE_LOCATION_ONE,
+  UPDATE_LOCATION_TWO,
+  UPDATE_LOCATION_THREE
 } from "../actions/location";
 
 const initialState = {
   friendDetails: null,
   tourDetails: null,
-  locationOne: { location: null, address: null },
-  locationTwo: { location: null, address: null },
-  locationThree: { location: null, address: null }
+  locationOne: null,
+  locationTwo: null,
+  locationThree: null
 };
 
 export default (state = initialState, action) => {
@@ -34,60 +35,39 @@ export default (state = initialState, action) => {
           start: action.start
         }
       };
-    case UPDATE_ADDRESS:
-      switch (action.id) {
-        case 1:
-          return {
-            ...state,
-            locationOne: {
-              ...state.locationOne,
-              address: action.address
-            }
-          };
-        case 2:
-          return {
-            ...state,
-            locationTwo: {
-              ...state.locationTwo,
-              address: action.address
-            }
-          };
-        case 3:
-          return {
-            ...state,
-            locationThree: {
-              ...state.locationThree,
-              address: action.address
-            }
-          };
-      }
-    case UPDATE_LOCATION:
-      switch (action.id) {
-        case 1:
-          return {
-            ...state,
-            locationOne: {
-              ...state.locationOne,
-              location: action.location
-            }
-          };
-        case 2:
-          return {
-            ...state,
-            locationTwo: {
-              ...state.locationTwo,
-              location: action.location
-            }
-          };
-        case 3:
-          return {
-            ...state,
-            locationThree: {
-              ...state.locationThree,
-              action: action.location
-            }
-          };
-      }
+    case UPDATE_LOCATION_ONE:
+      return {
+        ...state,
+        locationOne: {
+          name: action.name,
+          location: action.location,
+          address: action.address,
+          mediaType: action.mediaType,
+          mediaFileRef: action.mediaFileRef
+        }
+      };
+    case UPDATE_LOCATION_TWO:
+      return {
+        ...state,
+        locationTwo: {
+          name: action.name,
+          location: action.location,
+          address: action.address,
+          mediaType: action.mediaType,
+          mediaFileRef: action.mediaFileRef
+        }
+      };
+    case UPDATE_LOCATION_THREE:
+      return {
+        ...state,
+        locationThree: {
+          name: action.name,
+          location: action.location,
+          address: action.address,
+          mediaType: action.mediaType,
+          mediaFileRef: action.mediaFileRef
+        }
+      };
     default:
       console.log("default reached");
       return initialState;

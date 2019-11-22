@@ -146,7 +146,6 @@ const TourDetailsScreen = props => {
           required
           id="description"
           title="Tour description"
-          keyboardType="default"
           returnKeyType="done"
           blurOnSubmit={true}
           onSubmitEditing={() => {
@@ -162,7 +161,6 @@ const TourDetailsScreen = props => {
           required
           id="start"
           title="Describe the starting location"
-          keyboardType="default"
           returnKeyType="done"
           blurOnSubmit={true}
           onSubmitEditing={() => {
