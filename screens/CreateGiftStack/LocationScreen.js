@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   View,
   StyleSheet,
@@ -34,15 +34,34 @@ import {
 } from "../../helper/reusableFunctions";
 
 const LocationScreen = props => {
-  [selectedLocation, setSelectedLocation] = useState(null);
-  [selectedPicture, setSelectedPicture] = useState(null);
-  [selectedAddress, setSelectedAddress] = useState(null);
-  [selectedMethod, setSelectedMethod] = useState(0);
-  [selectedName, setSelectedName] = useState("");
-  [locationId, setLocationId] = useState(null);
+  const updateSavedData = () => {
+    switch (locationId) {
+      case 1:
+        return useSelector(store => store.gift.locationOne);
+      case 2:
+        return useSelector(store => store.gift.locationTwo);
+      case 3:
+        return useSelector(store => store.gift.locationThree);
+    }
+  };
+
+  [locationId, setLocationId] = useState(props.navigation.getParam("id"));
+  [savedData, setSavedData] = useState(updateSavedData());
+  [selectedLocation, setSelectedLocation] = useState(
+    savedData ? savedData.location : null
+  );
+  [selectedPicture, setSelectedPicture] = useState(
+    savedData ? savedData.mediaFileRef : null
+  );
+  [selectedAddress, setSelectedAddress] = useState(
+    savedData ? savedData.address : null
+  );
+  [selectedMethod, setSelectedMethod] = useState(
+    savedData ? savedData.mediaType : 0
+  );
+  [selectedName, setSelectedName] = useState(savedData ? savedData.name : "");
   [isLoading, setIsLoading] = useState(false);
   [error, setError] = useState(false);
-
   const dispatch = useDispatch();
   const isFocused = useCompare(props.isFocused);
 
@@ -50,9 +69,6 @@ const LocationScreen = props => {
     if (isFocused === props.isFocused) {
       const address = props.navigation.getParam("address");
       if (address) setSelectedAddress(address);
-
-      const id = props.navigation.getParam("id");
-      if (id) setLocationId(id);
     }
   });
 
@@ -151,7 +167,8 @@ const LocationScreen = props => {
           style={{ marginTop: 20 }}
           id="name"
           title="Name"
-          onInputChange={text => setSelectedName(text)}
+          defaultValue={selectedName}
+          onInputChange={(id, value, valid) => setSelectedName(value)}
         />
         <Title title="Location Coordinates" />
         {selectedLocation && selectedAddress ? (
