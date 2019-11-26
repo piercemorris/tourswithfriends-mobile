@@ -3,7 +3,8 @@ import {
   UPDATE_TOUR_DETAILS,
   UPDATE_LOCATION_ONE,
   UPDATE_LOCATION_TWO,
-  UPDATE_LOCATION_THREE
+  UPDATE_LOCATION_THREE,
+  SEND_GIFT
 } from "../actions/location";
 
 const initialState = {
@@ -16,6 +17,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SEND_GIFT:
+      return { ...state };
     case UPDATE_FRIEND_DETAILS:
       return {
         ...state,
@@ -69,7 +72,6 @@ export default (state = initialState, action) => {
         }
       };
     default:
-      console.log("default reached");
       return initialState;
   }
 };
