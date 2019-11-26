@@ -122,7 +122,7 @@ const TourDetailsScreen = props => {
         style={styles.container}
         resetScrollToCoords={{ x: 0, y: 0 }}
       >
-        <BackButton {...props} />
+        <BackButton {...props} close />
         <Header title="Tour Details" subtitle="Describe your tour" />
         <StyledText>
           To package your tour, we need some details about what the tour is

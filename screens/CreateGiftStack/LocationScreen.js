@@ -161,7 +161,7 @@ const LocationScreen = props => {
         style={styles.scrollView}
         contentContainerStyle={styles.contentStyle}
       >
-        <BackButton {...props} />
+        <BackButton {...props} close />
         <Header title={"Location " + locationId} />
         <Input
           style={{ marginTop: 20 }}
@@ -260,8 +260,7 @@ const LocationScreen = props => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 40
+    flex: 1
   },
   scrollView: {
     paddingBottom: 25

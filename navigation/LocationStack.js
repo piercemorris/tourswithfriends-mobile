@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
 import RepresentationScreen from "../screens/CreateGiftStack/RepresentationScreen";
 import SelectLocationScreen from "../screens/CreateGiftStack/SelectLocationScreen";
@@ -19,7 +19,7 @@ const CreateGiftStack = createStackNavigator(
       tabBarVisible: false
     },
     defaultNavigationOptions: {
-      header: null,
+      headerShown: false,
       tabBarVisible: null
     }
   }

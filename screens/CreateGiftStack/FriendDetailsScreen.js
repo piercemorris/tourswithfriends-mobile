@@ -106,7 +106,7 @@ const FriendDetailsScreen = props => {
         style={styles.container}
         resetScrollToCoords={{ x: 0, y: 0 }}
       >
-        <BackButton {...props} />
+        <BackButton {...props} close />
         <Header title="Your friend" subtitle="Just some details" />
         <StyledText>
           To send your gift successfully we need details about your friend.

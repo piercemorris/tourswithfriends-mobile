@@ -32,7 +32,7 @@ const HomeScreen = props => {
 export default HomeScreen;
 
 HomeScreen.navigationOptions = {
-  header: null
+  headerShown: false
 };
 
 const styles = StyleSheet.create({

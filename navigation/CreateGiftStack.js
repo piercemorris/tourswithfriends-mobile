@@ -1,4 +1,7 @@
-import { createStackNavigator } from "react-navigation";
+import {
+  createStackNavigator,
+  TransitionPresets
+} from "react-navigation-stack";
 
 import FriendDetailsScreen from "../screens/CreateGiftStack/FriendDetailsScreen";
 import TourDetailsScreen from "../screens/CreateGiftStack/TourDetailsScreen";
@@ -9,17 +12,21 @@ import LocationStack from "./LocationStack";
 const CreateGiftStack = createStackNavigator(
   {
     GiftSet: GiftSetScreen,
-    FriendDetails: FriendDetailsScreen,
+    FriendDetails: { screen: FriendDetailsScreen },
     TourDetails: TourDetailsScreen,
     LocationStack: LocationStack
   },
   {
+    mode: "modal",
+    headerMode: "none",
     navigationOptions: {
       tabBarVisible: false
     },
     defaultNavigationOptions: {
-      header: null,
-      tabBarVisible: null
+      tabBarVisible: null,
+      gestureEnabled: true,
+      cardOverlayEnabled: true,
+      ...TransitionPresets.ModalPresentationIOS
     }
   }
 );

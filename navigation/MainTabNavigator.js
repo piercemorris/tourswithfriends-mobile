@@ -1,10 +1,8 @@
 import React from "react";
 import { Platform } from "react-native";
-import {
-  createStackNavigator,
-  createBottomTabNavigator
-} from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+import { createStackNavigator } from "react-navigation-stack";
 
 import CreateGiftStack from "./CreateGiftStack";
 
@@ -49,10 +47,10 @@ HomeStack.navigationOptions = {
 HomeStack.path = "";
 
 const CreateStack = createStackNavigator({
-  Create: { screen: CreateScreen, navigationOptions: { header: null } },
+  Create: { screen: CreateScreen, navigationOptions: { headerShown: false } },
   CreateStack: {
     screen: CreateGiftStack,
-    navigationOptions: { header: null }
+    navigationOptions: { headerShown: false }
   }
 });
 
@@ -80,7 +78,10 @@ CreateStack.path = "";
 
 const ReceivedStack = createStackNavigator(
   {
-    Received: { screen: ReceivedScreen, navigationOptions: { header: null } }
+    Received: {
+      screen: ReceivedScreen,
+      navigationOptions: { headerShown: false }
+    }
   },
   defaultStackNavigationOptions
 );
@@ -99,7 +100,10 @@ ReceivedStack.path = "";
 
 const AccountStack = createStackNavigator(
   {
-    Account: { screen: AccountScreen, navigationOptions: { header: null } }
+    Account: {
+      screen: AccountScreen,
+      navigationOptions: { headerShown: false }
+    }
   },
   defaultStackNavigationOptions
 );
@@ -118,7 +122,10 @@ AccountStack.path = "";
 
 const SettingsStack = createStackNavigator(
   {
-    Settings: { screen: SettingsScreen, navigationOptions: { header: null } }
+    Settings: {
+      screen: SettingsScreen,
+      navigationOptions: { headerShown: false }
+    }
   },
   defaultStackNavigationOptions
 );
