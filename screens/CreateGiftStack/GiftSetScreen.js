@@ -41,7 +41,6 @@ const GiftSetScreen = props => {
 
   const goBackHandler = () => {
     setIsSending(true);
-    setTimeout(() => {
       if (
         friendDetailsValid &&
         tourDetailsValid &&
@@ -49,14 +48,15 @@ const GiftSetScreen = props => {
         locationTwo &&
         locationThree
       ) {
-        dispatch(locationActions.sendGift());
-        setIsSending(false);
-        props.navigation.popToTop();
+        dispatch(locationActions.sendGift(friendDetailsValid, tourDetailsValid, locationOne, locationTwo, locationThree));
+        if (locationThree === null) {
+          setIsSending(false);
+          props.navigation.popToTop();
+        }
       } else {
         setIsSending(false);
         setComplete(false);
       }
-    }, 5000);
   };
 
   return (

@@ -18,7 +18,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SEND_GIFT:
-      return { ...state };
+      return { ...initialState };
     case UPDATE_FRIEND_DETAILS:
       return {
         ...state,

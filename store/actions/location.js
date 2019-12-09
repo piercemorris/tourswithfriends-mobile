@@ -1,3 +1,5 @@
+import Firebase from "firebase";
+
 export const UPDATE_FRIEND_DETAILS = "UPDATE_FRIEND_DETAILS";
 export const UPDATE_TOUR_DETAILS = "UPDATE_TOUR_DETAILS";
 export const UPDATE_LOCATION_ONE = "UPDATE_LOCATION_ONE";
@@ -5,8 +7,43 @@ export const UPDATE_LOCATION_TWO = "UPDATE_LOCATION_TWO";
 export const UPDATE_LOCATION_THREE = "UPDATE_LOCATION_THREE";
 export const SEND_GIFT = "SEND_GIFT";
 
-export const sendGift = () => {
-  return dispatch => {
+import * as assetOps from '../../firebase/uploadAsset';
+
+export const sendGift = (friendDetails, tourDetails, locationOne, locationTwo, locationThree) => {
+  return async dispatch => {
+
+    console.log(locationOne);
+
+    const filenameOne = locationOne.mediaFileRef.split("/").pop();
+    const downloadURLOne = await assetOps.uploadImage(locationOne.mediaFileRef, filenameOne);
+
+    const filenameTwo = locationTwo.mediaFileRef.split("/").pop();
+    const downloadURLTwo = await assetOps.uploadImage(locationTwo.mediaFileRef, filenameTwo);
+
+    const filenameThree = locationThree.mediaFileRef.split("/").pop();
+    const downloadURLThree = await assetOps.uploadImage(locationThree.mediaFileRef, filenameThree);
+
+
+    const gift = {
+      friendDetails,
+      tourDetails,
+      locationOne: {
+        ...locationOne,
+        mediaFileRef: downloadURLOne
+      },      
+      locationTwo: {
+        ...locationTwo,
+        mediaFileRef: downloadURLTwo
+      },
+      locationThree: {
+        ...locationThree,
+        mediaFileRef: downloadURLThree
+      }
+    };
+
+    
+    console.log(gift);
+
     dispatch({
       type: SEND_GIFT
     });
