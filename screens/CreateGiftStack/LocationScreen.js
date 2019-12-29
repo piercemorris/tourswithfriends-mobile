@@ -250,17 +250,18 @@ const LocationScreen = props => {
             )}
           </View>
         ) : null}
-        <Button style={styles.navigationButton} onPress={() => goBackHandler()}>
+      </ScrollView>
+        <Button fill style={styles.navigationButton} onPress={() => goBackHandler()}>
           Complete
         </Button>
-      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: "space-between"
   },
   scrollView: {
     paddingBottom: 25
@@ -310,7 +311,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.inputShade
   },
   navigationButton: {
-    marginVertical: 15
+    marginTop: 0,
   }
 });
 

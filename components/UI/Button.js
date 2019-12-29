@@ -22,9 +22,9 @@ const Button = props => {
       style={{ ...styles.container, ...props.style }}
       onPress={props.onPress}
     >
-      <View style={{ ...styles.viewContainer, ...props.viewStyle }}>
+      <View style={props.fill ? { ...styles.fillContainer, ...props.viewStyle } :  { ...styles.viewContainer, ...props.viewStyle }}>
         <LinearGradient
-          style={styles.gradient}
+          style={props.fill? styles.fillGradient : styles.gradient}
           colors={[Colors.primary, Colors.secondary]}
         >
           <Text style={styles.text}>{props.children}</Text>
@@ -48,6 +48,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 15
+  },
+  fillContainer: {
+    height: 80,
+  },
+  fillGradient: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 20,
   },
   text: {
     fontFamily: Platform.OS === "ios" ? "sf-bold" : "roboto-bold",

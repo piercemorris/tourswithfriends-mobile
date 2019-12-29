@@ -12,8 +12,6 @@ import * as assetOps from '../../firebase/uploadAsset';
 export const sendGift = (friendDetails, tourDetails, locationOne, locationTwo, locationThree) => {
   return async dispatch => {
 
-    console.log(locationOne);
-
     const filenameOne = locationOne.mediaFileRef.split("/").pop();
     const downloadURLOne = await assetOps.uploadImage(locationOne.mediaFileRef, filenameOne);
 

@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useEffect, useCallback } from "react";
-import { StyleSheet, SafeAreaView, Alert, Keyboard } from "react-native";
+import { StyleSheet, View, Alert, Keyboard } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -8,11 +8,9 @@ import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
 import BackButton from "../../components/UI/BackButton";
 import StyledText from "../../components/StyledText";
-import Colors from "../../constants/Colors";
 
 import { formReducer, FORM_INPUT_UPDATE } from "../../helper/reusableFunctions";
 import * as locationActions from "../../store/actions/location";
-import Layout from "../../constants/Layout";
 
 const TourDetailsScreen = props => {
   [error, setError] = useState(false);
@@ -117,9 +115,9 @@ const TourDetailsScreen = props => {
   }, [error, errorMessage]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={styles.container}>
       <KeyboardAwareScrollView
-        style={styles.container}
+        style={{ flex: 1}}
         resetScrollToCoords={{ x: 0, y: 0 }}
       >
         <BackButton {...props} close />
@@ -172,20 +170,21 @@ const TourDetailsScreen = props => {
           defaultValue={tourDetails ? tourDetails.start : ""}
           onInputChange={inputChangedHandler}
         />
+      </KeyboardAwareScrollView>
         <Button
-          style={{ paddingTop: 10, paddingBotttom: 20 }}
+        fill
           onPress={() => goBackHandler()}
         >
           Complete
         </Button>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: "space-between"
   }
 });
 
