@@ -1,4 +1,5 @@
 import Firebase from "firebase";
+import axios from "axios";
 
 export const UPDATE_FRIEND_DETAILS = "UPDATE_FRIEND_DETAILS";
 export const UPDATE_TOUR_DETAILS = "UPDATE_TOUR_DETAILS";
@@ -6,21 +7,53 @@ export const UPDATE_LOCATION_ONE = "UPDATE_LOCATION_ONE";
 export const UPDATE_LOCATION_TWO = "UPDATE_LOCATION_TWO";
 export const UPDATE_LOCATION_THREE = "UPDATE_LOCATION_THREE";
 export const SEND_GIFT = "SEND_GIFT";
+export const SEND_GIFT_ERROR = "SEND_GIFT_ERROR";
 
-import * as assetOps from '../../firebase/uploadAsset';
+import url from "../../https/index";
+import * as assetOps from "../../firebase/uploadAsset";
 
-export const sendGift = (friendDetails, tourDetails, locationOne, locationTwo, locationThree) => {
+export const sendGift = (
+  friendDetails,
+  tourDetails,
+  locationOne,
+  locationTwo,
+  locationThree
+) => {
   return async dispatch => {
+    // attempt to create new user else retrieve uid
+    let res;
+    try {
+      res = await axios.post(url.live + "users/create", {
+        name: friendDetails.name,
+        email: friendDetails.email
+      });
+    } catch (err) {
+      console.log(err.message);
+      dispatch({
+        type: SEND_GIFT_ERROR
+      });
+    }
 
+    const user = res.data.userId;
+
+    // upload images to storage
     const filenameOne = locationOne.mediaFileRef.split("/").pop();
-    const downloadURLOne = await assetOps.uploadImage(locationOne.mediaFileRef, filenameOne);
+    const downloadURLOne = await assetOps.uploadImage(
+      locationOne.mediaFileRef,
+      filenameOne
+    );
 
     const filenameTwo = locationTwo.mediaFileRef.split("/").pop();
-    const downloadURLTwo = await assetOps.uploadImage(locationTwo.mediaFileRef, filenameTwo);
+    const downloadURLTwo = await assetOps.uploadImage(
+      locationTwo.mediaFileRef,
+      filenameTwo
+    );
 
     const filenameThree = locationThree.mediaFileRef.split("/").pop();
-    const downloadURLThree = await assetOps.uploadImage(locationThree.mediaFileRef, filenameThree);
-
+    const downloadURLThree = await assetOps.uploadImage(
+      locationThree.mediaFileRef,
+      filenameThree
+    );
 
     const gift = {
       friendDetails,
@@ -28,7 +61,7 @@ export const sendGift = (friendDetails, tourDetails, locationOne, locationTwo, l
       locationOne: {
         ...locationOne,
         mediaFileRef: downloadURLOne
-      },      
+      },
       locationTwo: {
         ...locationTwo,
         mediaFileRef: downloadURLTwo
@@ -39,8 +72,9 @@ export const sendGift = (friendDetails, tourDetails, locationOne, locationTwo, l
       }
     };
 
-    
-    console.log(gift);
+    await Firebase.database()
+      .ref(user + "/")
+      .push(gift);
 
     dispatch({
       type: SEND_GIFT

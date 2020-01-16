@@ -4,7 +4,8 @@ import {
   View,
   StyleSheet,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -39,24 +40,39 @@ const GiftSetScreen = props => {
     setComplete(true);
   }, [complete]);
 
+  useEffect(() => {
+    if (isSending && !locationOne && !locationTwo && !locationThree) {
+      updateState();
+    }
+  }, [isSending, locationOne]);
+
+  const updateState = () => {
+    setIsSending(false);
+    props.navigation.popToTop();
+  };
+
   const goBackHandler = () => {
     setIsSending(true);
-      if (
-        friendDetailsValid &&
-        tourDetailsValid &&
-        locationOne &&
-        locationTwo &&
-        locationThree
-      ) {
-        dispatch(locationActions.sendGift(friendDetailsValid, tourDetailsValid, locationOne, locationTwo, locationThree));
-        if (locationThree === null) {
-          setIsSending(false);
-          props.navigation.popToTop();
-        }
-      } else {
-        setIsSending(false);
-        setComplete(false);
-      }
+    if (
+      friendDetailsValid &&
+      tourDetailsValid &&
+      locationOne &&
+      locationTwo &&
+      locationThree
+    ) {
+      dispatch(
+        locationActions.sendGift(
+          friendDetailsValid,
+          tourDetailsValid,
+          locationOne,
+          locationTwo,
+          locationThree
+        )
+      );
+    } else {
+      setIsSending(false);
+      setComplete(false);
+    }
   };
 
   return (
