@@ -55,6 +55,8 @@ export const sendGift = (
       filenameThree
     );
 
+    const sentByUser = await Firebase.auth().currentUser;
+
     const gift = {
       friendDetails,
       tourDetails,
@@ -69,6 +71,10 @@ export const sendGift = (
       locationThree: {
         ...locationThree,
         mediaFileRef: downloadURLThree
+      },
+      sentFrom: {
+        uid: sentByUser.uid,
+        name: sentByUser.displayName ? sentByUser.displayName : sentByUser.email
       }
     };
 

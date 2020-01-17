@@ -13,10 +13,12 @@ useScreens();
 
 import authReducer from "./store/reducers/auth";
 import locationReducer from "./store/reducers/location";
+import receivedReducer from "./store/reducers/received";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  gift: locationReducer
+  gift: locationReducer,
+  received: receivedReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
