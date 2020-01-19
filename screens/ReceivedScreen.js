@@ -15,7 +15,7 @@ import * as receivedGiftActions from "../store/actions/received";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 
-const ReceivedScreen = () => {
+const ReceivedScreen = props => {
   const dispatch = useDispatch();
   const loadingGifts = useSelector(store => store.received.loadingGifts);
   const receivedGifts = useSelector(store => store.received.receivedGifts);
@@ -37,6 +37,7 @@ const ReceivedScreen = () => {
               data={receivedGifts}
               renderItem={item => (
                 <InformationBlock
+                  navigation={props.navigation}
                   name={item.item.name}
                   city={item.item.city}
                   user={item.item.user}

@@ -9,7 +9,9 @@ import StyledText from "../StyledText";
 const InformationBlock = props => {
   if (!props.empty) {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate("ReceivedStack")}
+      >
         <LinearGradient
           style={styles.container}
           colors={[Colors.primary, Colors.secondary]}

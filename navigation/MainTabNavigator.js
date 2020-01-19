@@ -5,6 +5,7 @@ import { createMaterialBottomTabNavigator } from "react-navigation-material-bott
 import { createStackNavigator } from "react-navigation-stack";
 
 import CreateGiftStack from "./CreateGiftStack";
+import ReceivedGiftStack from "./ReceivedGiftStack";
 
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
@@ -81,19 +82,32 @@ const ReceivedStack = createStackNavigator(
     Received: {
       screen: ReceivedScreen,
       navigationOptions: { headerShown: false }
+    },
+    ReceivedStack: {
+      screen: ReceivedGiftStack,
+      navigationOptions: { headerShown: false }
     }
   },
   defaultStackNavigationOptions
 );
 
-ReceivedStack.navigationOptions = {
-  tabBarLabel: "Received",
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === "ios" ? "ios-gift" : "md-gift"}
-    />
-  )
+ReceivedStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  let routeName = navigation.state.routes[navigation.state.index].routeName;
+
+  if (routeName === "ReceivedStack") {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible,
+    tabBarLabel: "Received",
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === "ios" ? "ios-gift" : "md-gift"}
+      />
+    )
+  };
 };
 
 ReceivedStack.path = "";
