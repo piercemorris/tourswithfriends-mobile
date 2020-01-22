@@ -38,6 +38,7 @@ const ReceivedScreen = props => {
               renderItem={item => (
                 <InformationBlock
                   navigation={props.navigation}
+                  id={item.item.id}
                   name={item.item.name}
                   city={item.item.city}
                   user={item.item.user}

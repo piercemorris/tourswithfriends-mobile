@@ -10,7 +10,14 @@ const InformationBlock = props => {
   if (!props.empty) {
     return (
       <TouchableOpacity
-        onPress={() => props.navigation.navigate("ReceivedStack")}
+        onPress={() =>
+          props.navigation.navigate("ReceivedStack", {
+            id: props.id,
+            name: props.name,
+            city: props.city,
+            user: props.user
+          })
+        }
       >
         <LinearGradient
           style={styles.container}

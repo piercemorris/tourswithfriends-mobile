@@ -16,15 +16,11 @@ const ReceivedGiftStack = createStackNavigator(
       tabBarVisible: false
     },
     defaultNavigationOptions: {
-      tabBarVisible: null,
-      gestureEnabled: true
-    }
-  },
-  {
-    defaultNavigationOptions: {
       cardStyle: {
         backgroundColor: Colors.white
-      }
+      },
+      tabBarVisible: null,
+      gestureEnabled: true
     }
   }
 );

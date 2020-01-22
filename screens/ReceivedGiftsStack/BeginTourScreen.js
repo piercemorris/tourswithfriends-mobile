@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
 
 import Header from "../../components/UI/Header";
@@ -8,11 +8,16 @@ import BackButton from "../../components/UI/BackButton";
 import BulletPoint from "../../components/UI/BulletPoint";
 
 const BeginTourScreen = props => {
+  const [id] = useState(props.navigation.getParam("id"));
+  const [name] = useState(props.navigation.getParam("name"));
+  const [city] = useState(props.navigation.getParam("city"));
+  const [user] = useState(props.navigation.getParam("user"));
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <BackButton {...props} />
-        <Header title="Title of Tour" subtitle="By Tour Creator" />
+        <Header title={name} subtitle={"In " + city} />
       </View>
     </SafeAreaView>
   );
