@@ -4,6 +4,7 @@ import {
 } from "react-navigation-stack";
 
 import BeginTourScreen from "../screens/ReceivedGiftsStack/BeginTourScreen";
+import Colors from "../constants/Colors";
 
 const ReceivedGiftStack = createStackNavigator(
   {
@@ -17,6 +18,13 @@ const ReceivedGiftStack = createStackNavigator(
     defaultNavigationOptions: {
       tabBarVisible: null,
       gestureEnabled: true
+    }
+  },
+  {
+    defaultNavigationOptions: {
+      cardStyle: {
+        backgroundColor: Colors.white
+      }
     }
   }
 );

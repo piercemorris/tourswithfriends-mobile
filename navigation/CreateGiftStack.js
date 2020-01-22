@@ -8,6 +8,7 @@ import TourDetailsScreen from "../screens/CreateGiftStack/TourDetailsScreen";
 import GiftSetScreen from "../screens/CreateGiftStack/GiftSetScreen";
 
 import LocationStack from "./LocationStack";
+import Colors from "../constants/Colors";
 
 const CreateGiftStack = createStackNavigator(
   {
@@ -23,6 +24,9 @@ const CreateGiftStack = createStackNavigator(
       tabBarVisible: false
     },
     defaultNavigationOptions: {
+      cardStyle: {
+        backgroundColor: Colors.white
+      },
       tabBarVisible: null,
       gestureEnabled: true,
       cardOverlayEnabled: true,
