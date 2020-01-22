@@ -25,12 +25,19 @@ const defaultStackNavigationOptions = {
   headerBackTitleStyle: {
     fontFamily: Platform.OS === "ios" ? "sf-regular" : "roboto-regular"
   },
-  headerTintColor: Platform.OS === "android" ? "white" : Colors.primary
+  headerTintColor: Platform.OS === "android" ? "white" : Colors.primary,
+
+  defaultNavigationOptions: {
+    headerShown: false,
+    cardStyle: {
+      backgroundColor: Colors.white
+    }
+  }
 };
 
 const HomeStack = createStackNavigator(
   {
-    Home: { screen: HomeScreen, navigationOptions: {} }
+    Home: HomeScreen
   },
   defaultStackNavigationOptions
 );
@@ -47,13 +54,15 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = "";
 
-const CreateStack = createStackNavigator({
-  Create: { screen: CreateScreen, navigationOptions: { headerShown: false } },
-  CreateStack: {
-    screen: CreateGiftStack,
-    navigationOptions: { headerShown: false }
-  }
-});
+const CreateStack = createStackNavigator(
+  {
+    Create: { screen: CreateScreen },
+    CreateStack: {
+      screen: CreateGiftStack
+    }
+  },
+  defaultStackNavigationOptions
+);
 
 CreateStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
@@ -75,17 +84,13 @@ CreateStack.navigationOptions = ({ navigation }) => {
   };
 };
 
-CreateStack.path = "";
-
 const ReceivedStack = createStackNavigator(
   {
     Received: {
-      screen: ReceivedScreen,
-      navigationOptions: { headerShown: false }
+      screen: ReceivedScreen
     },
     ReceivedStack: {
-      screen: ReceivedGiftStack,
-      navigationOptions: { headerShown: false }
+      screen: ReceivedGiftStack
     }
   },
   defaultStackNavigationOptions
@@ -114,10 +119,7 @@ ReceivedStack.path = "";
 
 const AccountStack = createStackNavigator(
   {
-    Account: {
-      screen: AccountScreen,
-      navigationOptions: { headerShown: false }
-    }
+    screen: AccountScreen
   },
   defaultStackNavigationOptions
 );
@@ -132,14 +134,9 @@ AccountStack.navigationOptions = {
   )
 };
 
-AccountStack.path = "";
-
 const SettingsStack = createStackNavigator(
   {
-    Settings: {
-      screen: SettingsScreen,
-      navigationOptions: { headerShown: false }
-    }
+    screen: SettingsScreen
   },
   defaultStackNavigationOptions
 );
@@ -153,8 +150,6 @@ SettingsStack.navigationOptions = {
     />
   )
 };
-
-SettingsStack.path = "";
 
 const tabScreenConfig = {
   HomeStack: { screen: HomeStack, navigationOptions: { tabBarVisible: true } },

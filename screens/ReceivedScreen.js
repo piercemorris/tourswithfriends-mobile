@@ -25,7 +25,7 @@ const ReceivedScreen = props => {
   }, [dispatch]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <Header main title="Received Gifts" />
       <Subsection text="Ready to embark" />
       {loadingGifts === false ? (
@@ -73,6 +73,9 @@ const ReceivedScreen = props => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff"
+  },
   loadingIndicator: {
     height: Layout.window.height / 5 + 15,
     width: Layout.window.width,

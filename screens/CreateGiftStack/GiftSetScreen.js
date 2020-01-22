@@ -48,6 +48,7 @@ const GiftSetScreen = props => {
 
   const updateState = () => {
     setIsSending(false);
+
     props.navigation.popToTop();
   };
 
