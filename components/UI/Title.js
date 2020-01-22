@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.primary,
-    fontSize: 18,
+    fontSize: 22,
     fontFamily: "sf-bold",
     paddingLeft: 10,
     justifyContent: "center"
