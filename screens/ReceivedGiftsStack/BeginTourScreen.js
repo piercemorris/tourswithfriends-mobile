@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, SafeAreaView, ActivityIndicator, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator,
+  Text
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import Header from "../../components/UI/Header";
@@ -35,26 +41,37 @@ const BeginTourScreen = props => {
       <View>
         <BackButton {...props} />
         <Header title={name} subtitle={"In " + city} />
-        { loadingGift === false ? 
+        {loadingGift === false ? (
           <View>
-            {
-              gift ? 
+            {gift ? (
               <View style={styles.tourDescription}>
                 <Title title="Location" />
-                <StyledText style={styles.giftText}>{gift.tourDetails.city}</StyledText>
+                <StyledText style={styles.giftText}>
+                  {gift.tourDetails.city}
+                </StyledText>
                 <Title title="Description" />
-                <StyledText style={styles.giftText}>{gift.tourDetails.description}</StyledText>
-                <Info text={`It is best to embark with the tour creator for guidance`} />
-              </View> 
-              : 
+                <StyledText style={styles.giftText}>
+                  {gift.tourDetails.description}
+                </StyledText>
+                <Info
+                  text={`It is best to embark with the tour creator for guidance`}
+                />
+              </View>
+            ) : (
               <Text>Error occured</Text>
-            }
+            )}
           </View>
-          :
-          <ActivityIndicator style={styles.loadingIndicator} color={Colors.primary} hidesWhenStopped={loadingGift}/>
-        }
+        ) : (
+          <ActivityIndicator
+            style={styles.loadingIndicator}
+            color={Colors.primary}
+            hidesWhenStopped={loadingGift}
+          />
+        )}
       </View>
-      <Button>Embark!</Button>
+      <Button onPress={() => props.navigation.navigate("TourItem")}>
+        Embark!
+      </Button>
     </SafeAreaView>
   );
 };
@@ -73,7 +90,6 @@ const styles = StyleSheet.create({
   giftText: {
     paddingLeft: 30
   }
-
 });
 
 export default BeginTourScreen;
