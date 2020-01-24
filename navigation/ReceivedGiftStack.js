@@ -4,12 +4,14 @@ import {
 } from "react-navigation-stack";
 
 import BeginTourScreen from "../screens/ReceivedGiftsStack/BeginTourScreen";
+import TourListScreen from "../screens/ReceivedGiftsStack/TourListScreen";
 import TourItemScreen from "../screens/ReceivedGiftsStack/TourItemScreen";
 import Colors from "../constants/Colors";
 
 const ReceivedGiftStack = createStackNavigator(
   {
     BeginTour: BeginTourScreen,
+    TourList: TourListScreen,
     TourItem: TourItemScreen
   },
   {

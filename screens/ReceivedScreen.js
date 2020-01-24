@@ -21,7 +21,7 @@ const ReceivedScreen = props => {
   const receivedGifts = useSelector(store => store.received.receivedGifts);
 
   useEffect(() => {
-    dispatch(receivedGiftActions.receiveGifts());
+    //dispatch(receivedGiftActions.receiveGifts());
   }, [dispatch]);
 
   return (
