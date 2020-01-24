@@ -15,21 +15,30 @@ export const receiveGift = giftId => {
     const currentUser = await Firebase.auth().currentUser;
 
     if (currentUser) {
-      const giftRef = Firebase.database().ref(`${currentUser.uid}${links.received}/${giftId}`);
-
-      giftRef.once("value").then(snapshot => {
-        dispatch({
-          type: RECEIVE_GIFT,
-          payload: snapshot.val()
-        });
-      }).catch(
-        dispatch({
-          type: LOADING_GIFT_FAIL
-        })
+      const giftRef = Firebase.database().ref(
+        `${currentUser.uid}${links.received}/${giftId}`
       );
+
+      giftRef
+        .once("value")
+        .then(snapshot => {
+          dispatch({
+            type: RECEIVE_GIFT,
+            payload: snapshot.val()
+          });
+        })
+        .catch(
+          dispatch({
+            type: LOADING_GIFT_FAIL
+          })
+        );
+    } else {
+      dispatch({
+        type: LOADING_GIFT_FAIL
+      });
     }
-  }
-}
+  };
+};
 
 export const receiveGifts = () => {
   return async dispatch => {
@@ -43,26 +52,35 @@ export const receiveGifts = () => {
       const receivedGiftsRef = Firebase.database().ref(
         currentUser.uid + links.received
       );
-      receivedGiftsRef.once("value").then(snapshot => {
-        snapshot.forEach(childSnapshot => {
-          const gift = {
-            id: childSnapshot.key,
-            name: childSnapshot.val().tourDetails.title,
-            city: childSnapshot.val().tourDetails.city,
-            user: childSnapshot.val().sentFrom.name,
-            uid: childSnapshot.val().sentFrom.uid
-          };
+      receivedGiftsRef
+        .once("value")
+        .then(snapshot => {
+          snapshot.forEach(childSnapshot => {
+            const gift = {
+              id: childSnapshot.key,
+              name: childSnapshot.val().tourDetails.title,
+              city: childSnapshot.val().tourDetails.city,
+              user: childSnapshot.val().sentFrom.name,
+              uid: childSnapshot.val().sentFrom.uid
+            };
 
-          receivedGifts.push(gift);
-        });
+            receivedGifts.push(gift);
+          });
 
-        dispatch({
-          type: RECEIVE_GIFTS,
-          payload: receivedGifts
-        });
-      }).catch(dispatch({
+          dispatch({
+            type: RECEIVE_GIFTS,
+            payload: receivedGifts
+          });
+        })
+        .catch(
+          dispatch({
+            type: LOADING_GIFTS_FAIL
+          })
+        );
+    } else {
+      dispatch({
         type: LOADING_GIFTS_FAIL
-      }));
+      });
     }
   };
 };

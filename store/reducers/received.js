@@ -1,15 +1,22 @@
-import { 
+import {
   RECEIVE_GIFTS,
-  RECEIVE_GIFT, 
+  RECEIVE_GIFT,
   LOADING_GIFTS,
-  LOADING_GIFT 
+  LOADING_GIFT,
+  LOADING_GIFTS_FAIL
 } from "../actions/received";
 
-const initialState = { receivedGifts: null, loadingGifts: null, currentGift: null, loadingGift: null };
+const initialState = {
+  receivedGifts: null,
+  loadingGifts: null,
+  currentGift: null,
+  loadingGift: null
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_GIFT: return {
+    case RECEIVE_GIFT:
+      return {
         ...state,
         currentGift: action.payload,
         loadingGift: false
@@ -20,14 +27,21 @@ export default (state = initialState, action) => {
         receivedGifts: action.payload,
         loadingGifts: false
       };
-      case LOADING_GIFT: return {
+    case LOADING_GIFT:
+      return {
         ...state,
         loadingGift: true
-      }
+      };
     case LOADING_GIFTS:
       return {
         ...state,
         loadingGifts: true
+      };
+    case LOADING_GIFTS_FAIL:
+      return {
+        ...state,
+        loadingGifts: false,
+        receivedGifts: []
       };
     default:
       return state;
