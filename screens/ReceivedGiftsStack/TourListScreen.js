@@ -18,9 +18,33 @@ const TourListScreen = props => {
         subtitle={`Start in ${gift.tourDetails.start}`}
       />
       <View style={styles.buttonContainer}>
-        <LargeButton />
-        <LargeButton />
-        <LargeButton />
+        <LargeButton
+          onPress={() => {
+            props.navigation.navigate("TourItem", {
+              name: gift.locationOne.name
+            });
+          }}
+        >
+          <Text style={styles.title}>{gift.locationOne.name}</Text>
+        </LargeButton>
+        <LargeButton
+          onPress={() => {
+            props.navigation.navigate("TourItem", {
+              name: gift.locationTwo.name
+            });
+          }}
+        >
+          <Text style={styles.title}>{gift.locationTwo.name}</Text>
+        </LargeButton>
+        <LargeButton
+          onPress={() => {
+            props.navigation.navigate("TourItem", {
+              name: gift.locationThree.name
+            });
+          }}
+        >
+          <Text style={styles.title}>{gift.locationThree.name}</Text>
+        </LargeButton>
       </View>
     </SafeAreaView>
   );
@@ -32,6 +56,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1
+  },
+  title: {
+    fontFamily: "sf-bold",
+    fontSize: 28,
+    color: Colors.white
   }
 });
 

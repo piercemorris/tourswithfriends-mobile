@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Animated, Text, StyleSheet, Easing } from "react-native";
 
+import BackButton from "../../components/UI/BackButton";
+
 const TourItemScreen = props => {
   const [animComplete, setAnimComplete] = useState(false);
+  const [name] = useState(props.navigation.getParam("name"));
 
   const renderScreen = () => {
     setAnimComplete(true);
@@ -10,13 +13,14 @@ const TourItemScreen = props => {
 
   return (
     <View style={styles.container}>
+      <BackButton {...props} />
       {animComplete === false ? (
         <FadeInOutView onAnimationComplete={renderScreen}>
-          <Text style={styles.text}>Location 1</Text>
+          <Text style={styles.text}>{name}</Text>
         </FadeInOutView>
       ) : (
         <View>
-          <Text>Anim completed</Text>
+          <Text>TourItemScreen</Text>
         </View>
       )}
     </View>

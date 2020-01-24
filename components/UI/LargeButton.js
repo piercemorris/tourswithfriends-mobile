@@ -7,12 +7,18 @@ const LargeButton = props => {
     return <View style={styles.disabled}></View>;
   }
 
-  return <TouchableOpacity style={styles.container}></TouchableOpacity>;
+  return (
+    <TouchableOpacity onPress={props.onPress} style={styles.container}>
+      {props.children}
+    </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 3,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Colors.primary,
     marginHorizontal: 15,
     marginTop: 15,
