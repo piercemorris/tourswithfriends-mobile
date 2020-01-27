@@ -3,6 +3,14 @@ import { Platform } from "react-native";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
+export const numberToFormattedKm = number => {
+  return Math.ceil(number);
+};
+
+export const numberToFormattedMin = number => {
+  return Math.ceil(number);
+};
+
 export const getLocation = async () => {
   let { status } = await Permissions.askAsync(Permissions.LOCATION);
   if (status !== "granted") {

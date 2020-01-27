@@ -32,10 +32,6 @@ const BeginTourScreen = props => {
     dispatch(receivedActions.receiveGift(id));
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(gift);
-  }, [gift]);
-
   return (
     <SafeAreaView style={styles.container}>
       <View>

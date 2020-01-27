@@ -23,7 +23,8 @@ const TourListScreen = props => {
           delay={0}
           onPress={() => {
             props.navigation.navigate("TourItem", {
-              name: gift.locationOne.name
+              name: gift.locationOne.name,
+              location: gift.locationOne
             });
           }}
         >
@@ -34,7 +35,8 @@ const TourListScreen = props => {
           delay={500}
           onPress={() => {
             props.navigation.navigate("TourItem", {
-              name: gift.locationTwo.name
+              name: gift.locationTwo.name,
+              location: gift.locationTwo
             });
           }}
         >
@@ -45,7 +47,8 @@ const TourListScreen = props => {
           delay={1000}
           onPress={() => {
             props.navigation.navigate("TourItem", {
-              name: gift.locationThree.name
+              name: gift.locationThree.name,
+              location: gift.locationThree
             });
           }}
         >
