@@ -19,6 +19,8 @@ const TourListScreen = props => {
       />
       <View style={styles.buttonContainer}>
         <LargeButton
+          animated
+          delay={0}
           onPress={() => {
             props.navigation.navigate("TourItem", {
               name: gift.locationOne.name
@@ -28,6 +30,8 @@ const TourListScreen = props => {
           <Text style={styles.title}>{gift.locationOne.name}</Text>
         </LargeButton>
         <LargeButton
+          animated
+          delay={500}
           onPress={() => {
             props.navigation.navigate("TourItem", {
               name: gift.locationTwo.name
@@ -37,6 +41,8 @@ const TourListScreen = props => {
           <Text style={styles.title}>{gift.locationTwo.name}</Text>
         </LargeButton>
         <LargeButton
+          animated
+          delay={1000}
           onPress={() => {
             props.navigation.navigate("TourItem", {
               name: gift.locationThree.name

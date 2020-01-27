@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, Animated, Text, StyleSheet, Easing } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  Animated,
+  Text,
+  StyleSheet,
+  Easing
+} from "react-native";
 
 import BackButton from "../../components/UI/BackButton";
+import FadeInOutView from "../../components/Animation/FadeInOutView";
 
 const TourItemScreen = props => {
   const [animComplete, setAnimComplete] = useState(false);
@@ -12,53 +20,31 @@ const TourItemScreen = props => {
   };
 
   return (
-    <View style={styles.container}>
-      <BackButton {...props} />
+    <SafeAreaView style={styles.container}>
       {animComplete === false ? (
-        <FadeInOutView onAnimationComplete={renderScreen}>
+        <FadeInOutView
+          style={styles.animation}
+          onAnimationComplete={renderScreen}
+        >
           <Text style={styles.text}>{name}</Text>
         </FadeInOutView>
       ) : (
-        <View>
-          <Text>TourItemScreen</Text>
+        <View style={{ flex: 1 }}>
+          <BackButton {...props} />
+          <View style={styles.screenContainer}>
+            <Text>TourItemScreen</Text>
+          </View>
         </View>
       )}
-    </View>
-  );
-};
-
-const FadeInOutView = props => {
-  const [fadeAnim] = useState(new Animated.Value(0));
-
-  useEffect(() => {
-    Animated.sequence([
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        easing: Easing.linear,
-        duration: 2000
-      }),
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        easing: Easing.cubic,
-        duration: 1000
-      })
-    ]).start(() => props.onAnimationComplete());
-  }, []);
-
-  return (
-    <Animated.View // Special animatable View
-      style={{
-        ...props.style,
-        opacity: fadeAnim // Bind opacity to animated value
-      }}
-    >
-      {props.children}
-    </Animated.View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  screenContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
@@ -66,6 +52,11 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "sf-bold",
     fontSize: 28
+  },
+  animation: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
