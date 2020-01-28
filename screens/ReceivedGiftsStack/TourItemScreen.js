@@ -11,6 +11,7 @@ import {
 } from "../../helper/reusableFunctions";
 import FadeInOutView from "../../components/Animation/FadeInOutView";
 import BackButton from "../../components/UI/BackButton";
+import Button from "../../components/UI/Button";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 
@@ -118,6 +119,10 @@ const TourItemScreen = props => {
             {travelInfo ? (
               <View style={styles.textContainer}>
                 <Text style={styles.highlight}>
+                  Destination
+                  <Text style={styles.infoText}>{` ${gift.name}`}</Text>
+                </Text>
+                <Text style={styles.highlight}>
                   Distance
                   <Text style={styles.infoText}>
                     {` ${numberToFormattedKm(travelInfo.distance)}`}
@@ -131,6 +136,7 @@ const TourItemScreen = props => {
                   </Text>
                   minutes
                 </Text>
+                <Button style={{ width: "100%" }}>Go!</Button>
               </View>
             ) : null}
           </View>

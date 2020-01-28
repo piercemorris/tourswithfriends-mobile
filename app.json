@@ -18,7 +18,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "config": {
+        "googleMapsApiKey": "AIzaSyAjzHyyGtVdYT7B_v-zBfsAWIqyaq3WfAw"
+      },
+      "infoPlist": {
+        "UIBackgroundModes": ["location"]
+      }
     }
   }
 }
