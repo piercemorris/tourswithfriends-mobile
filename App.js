@@ -6,10 +6,10 @@ import ReduxThunk from "redux-thunk";
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
 import { Ionicons } from "@expo/vector-icons";
-import { useScreens } from "react-native-screens";
+import { enableScreens } from "react-native-screens";
 import { initFirebase } from "./firebase/index";
 import * as Font from "expo-font";
-useScreens();
+enableScreens();
 
 import authReducer from "./store/reducers/auth";
 import locationReducer from "./store/reducers/location";

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Camera } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
+import * as Location from "expo-location";
 
 import {
   getLocation,
@@ -20,7 +21,9 @@ const TourItemScreen = props => {
   const [name] = useState(props.navigation.getParam("name"));
   const [gift] = useState(props.navigation.getParam("location"));
   const [location, setLocation] = useState(null);
-  const [destination, setDestination] = useState({
+  const [isTrackingLocation, setIsTrackingLocation] = useState(false);
+  const [watchPositionListener, setWatchPositionListener] = useState(null);
+  const [destination] = useState({
     latitude: gift.location.latitude,
     longitude: gift.location.longitude
   });
@@ -67,6 +70,35 @@ const TourItemScreen = props => {
     });
   };
 
+  const _watchPosition = loc => {
+    mapReference.animateCamera(
+      {
+        center: {
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude
+        },
+        heading: loc.coords.heading,
+        altitude: loc.coords.altitude
+      },
+      1000
+    );
+  };
+
+  const _setWatchListener = () => {
+    setIsTrackingLocation(true);
+
+    const locationListener = Location.watchPositionAsync(
+      {
+        accuracy: Location.Accuracy.Balanced,
+        timeInterval: 5000,
+        distanceInterval: 10,
+        mayShowUserSettingsDialog: true
+      },
+      e => _watchPosition(e)
+    );
+    setWatchPositionListener(locationListener);
+  };
+
   const renderScreen = () => {
     setAnimComplete(true);
   };
@@ -101,6 +133,7 @@ const TourItemScreen = props => {
                 destination={destination}
                 strokeWidth={5}
                 strokeColor={Colors.primary}
+                resetOnChange={true}
                 mode="WALKING"
                 apikey={"AIzaSyAjzHyyGtVdYT7B_v-zBfsAWIqyaq3WfAw"}
                 onReady={details => _onDirectionsReady(details)}
@@ -136,7 +169,12 @@ const TourItemScreen = props => {
                   </Text>
                   minutes
                 </Text>
-                <Button style={{ width: "100%" }}>Go!</Button>
+                <Button
+                  onPress={() => _setWatchListener()}
+                  style={{ width: "100%" }}
+                >
+                  Go!
+                </Button>
               </View>
             ) : null}
           </View>
