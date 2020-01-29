@@ -26,11 +26,13 @@ const AuthScreen = props => {
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
+      displayName: "",
       email: "",
       password: "",
       confirmpassword: ""
     },
     inputValidities: {
+      displayName: false,
       email: false,
       password: false,
       confirmpassword: false
@@ -47,7 +49,8 @@ const AuthScreen = props => {
       ) {
         action = authActions.signUp(
           formState.inputValues.email,
-          formState.inputValues.password
+          formState.inputValues.password,
+          formState.inputValues.displayName
         );
       }
     } else if (
@@ -73,6 +76,8 @@ const AuthScreen = props => {
           formState.inputValues.confirmpassword.trim()
       ) {
         errorMessage = "Password and your confirmed password doesn't match.";
+      } else if (isSignUp && !formState.inputValidities.displayName) {
+        errorMessage = "Please fill in your first name.";
       }
     }
 
@@ -126,6 +131,14 @@ const AuthScreen = props => {
       />
       {!isLoading ? (
         <View>
+          {isSignUp ? (
+            <Input
+              required
+              id="displayName"
+              title="First name"
+              onInputChange={inputChangedHandler}
+            />
+          ) : null}
           <Input
             email
             id="email"
