@@ -12,19 +12,6 @@ import axios from "axios";
 import url from "../https/index";
 
 const CreateScreen = props => {
-  const sendNotif = async () => {
-    const user = Firebase.auth().currentUser;
-
-    try {
-      const res = axios.post(url.live + "users" + url.GIFT_NOTIF_ENDPOINT, {
-        senderUid: user.uid,
-        receiverUid: user.uid
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -62,8 +49,7 @@ const CreateScreen = props => {
         </StyledText>
         <Button
           onPress={() => {
-            sendNotif();
-            //props.navigation.navigate("CreateStack");
+            props.navigation.navigate("CreateStack");
           }}
         >
           Begin
