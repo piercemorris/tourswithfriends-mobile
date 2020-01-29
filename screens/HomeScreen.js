@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
 
 import MaskedComponent from "../components/UI/MaskedComponent";
 import Header from "../components/UI/Header";
 
+import { registerForPushNotificationsAsync } from "../helper/pushNotifications";
+
 const HomeScreen = props => {
+  _registerForPushNotifications = async () => {
+    await registerForPushNotificationsAsync();
+  };
+
+  useEffect(() => {
+    _registerForPushNotifications();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>

@@ -16,7 +16,7 @@ export const receiveGift = giftId => {
 
     if (currentUser) {
       const giftRef = Firebase.database().ref(
-        `${currentUser.uid}${links.received}/${giftId}`
+        `users/${currentUser.uid}${links.received}/${giftId}`
       );
 
       giftRef

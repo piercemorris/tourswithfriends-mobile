@@ -79,8 +79,17 @@ export const sendGift = (
     };
 
     await Firebase.database()
-      .ref(user + "/")
+      .ref("users/" + user + "/gifts/")
       .push(gift);
+
+    try {
+      res = await axios.post(url.live + "users" + url.GIFT_NOTIF_ENDPOINT, {
+        senderUid: sentByUser.uid,
+        receiverUid: user
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
 
     dispatch({
       type: SEND_GIFT
