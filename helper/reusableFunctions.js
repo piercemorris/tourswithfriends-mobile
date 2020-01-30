@@ -4,7 +4,10 @@ import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
 export const numberToFormattedKm = number => {
-  return Math.ceil(number);
+  const integer = Math.floor(number);
+  let remainder = number - integer;
+  remainder = Math.floor(remainder * 10) / 10;
+  return integer + remainder;
 };
 
 export const numberToFormattedMin = number => {
