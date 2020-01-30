@@ -12,7 +12,7 @@ import {
 } from "../../helper/reusableFunctions";
 import FadeInOutView from "../../components/Animation/FadeInOutView";
 import BackButton from "../../components/UI/BackButton";
-import Button from "../../components/UI/Button";
+import MapInfoBox from "../../components/UI/MapInfoBox";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 
@@ -56,36 +56,60 @@ const TourItemScreen = props => {
 
   _onDirectionsReady = info => {
     setTravelInfo({
+      name: name,
       distance: info.distance,
       duration: info.duration
     });
 
-    mapReference.fitToCoordinates(info.coordinates, {
-      edgePadding: {
-        right: Layout.window.width / 20,
-        left: Layout.window.width / 20,
-        top: Layout.window.height / 20,
-        bottom: Layout.window.height / 20
-      }
-    });
+    if (!isTrackingLocation) {
+      mapReference.fitToCoordinates(info.coordinates, {
+        edgePadding: {
+          right: Layout.window.width / 20,
+          left: Layout.window.width / 20,
+          top: Layout.window.height / 20,
+          bottom: Layout.window.height / 20
+        }
+      });
+    }
   };
 
   const _watchPosition = loc => {
+    const locationCoords = {
+      latitude: loc.coords.latitude,
+      longitude: loc.coords.longitude
+    };
+
+    const regionData = getRegionFrom(
+      loc.coords.latitude,
+      loc.coords.longitude,
+      500
+    );
+
+    setLocation([locationCoords, regionData]);
+
+    mapReference.followsUserLocation = true;
+
+    /*
     mapReference.animateCamera(
       {
-        center: {
-          latitude: loc.coords.latitude,
-          longitude: loc.coords.longitude
-        },
+        center: locationCoords,
         heading: loc.coords.heading,
         altitude: loc.coords.altitude
       },
       1000
-    );
+    );*/
   };
 
   const _setWatchListener = () => {
     setIsTrackingLocation(true);
+
+    mapReference.animateCamera(
+      {
+        center: location[0],
+        altitude: 500
+      },
+      1000
+    );
 
     const locationListener = Location.watchPositionAsync(
       {
@@ -118,6 +142,7 @@ const TourItemScreen = props => {
             ref={ref => setMapReference(ref)}
             style={{ flex: 1 }}
             showsUserLocation={true}
+            showsCompass={true}
             initialRegion={
               location ? { ...location[0], ...location[1] } : gift.location
             }
@@ -140,44 +165,9 @@ const TourItemScreen = props => {
               />
             ) : null}
           </MapView>
-          <BackButton
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 20
-            }}
-            {...props}
-          />
-          <View style={styles.infoBox}>
-            {travelInfo ? (
-              <View style={styles.textContainer}>
-                <Text style={styles.highlight}>
-                  Destination
-                  <Text style={styles.infoText}>{` ${gift.name}`}</Text>
-                </Text>
-                <Text style={styles.highlight}>
-                  Distance
-                  <Text style={styles.infoText}>
-                    {` ${numberToFormattedKm(travelInfo.distance)}`}
-                  </Text>
-                  km
-                </Text>
-                <Text style={styles.highlight}>
-                  Duration
-                  <Text style={styles.infoText}>
-                    {` ${numberToFormattedMin(travelInfo.duration)} `}
-                  </Text>
-                  minutes
-                </Text>
-                <Button
-                  onPress={() => _setWatchListener()}
-                  style={{ width: "100%" }}
-                >
-                  Go!
-                </Button>
-              </View>
-            ) : null}
-          </View>
+          {travelInfo && !isTrackingLocation ? (
+            <MapInfoBox info={travelInfo} onPress={() => _setWatchListener()} />
+          ) : null}
         </View>
       )}
     </View>
@@ -201,33 +191,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-  infoBox: {
-    alignSelf: "center",
-    position: "absolute",
-    bottom: 30,
-    padding: 20,
-    width: Layout.window.width - 40,
-    height: Layout.window.height / 3,
-    backgroundColor: Colors.white,
-    borderRadius: 15,
-    ...Layout.shadow
-  },
-  textContainer: {
-    flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center"
-  },
-  infoText: {
-    fontFamily: "sf-bold",
-    fontSize: 22,
-    marginTop: 15,
-    color: Colors.primary
-  },
-  highlight: {
-    fontFamily: "sf-bold",
-    fontSize: 22,
-    color: Colors.black
   }
 });
 

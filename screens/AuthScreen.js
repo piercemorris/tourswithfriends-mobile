@@ -17,6 +17,8 @@ import Button from "../components/UI/Button";
 import Colors from "../constants/Colors";
 import { formReducer, FORM_INPUT_UPDATE } from "../helper/reusableFunctions";
 
+import * as receivedActions from "../store/actions/received";
+
 const AuthScreen = props => {
   [isSignUp, setIsSignUp] = useState(false);
   [error, setError] = useState(false);
@@ -88,6 +90,7 @@ const AuthScreen = props => {
       }
       await dispatch(action);
       setIsLoading(false);
+      dispatch(receivedActions.receiveGifts());
       props.navigation.navigate("Main");
     } catch (err) {
       setIsLoading(false);

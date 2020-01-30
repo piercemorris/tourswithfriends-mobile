@@ -50,8 +50,9 @@ export const receiveGifts = () => {
 
     if (currentUser) {
       const receivedGiftsRef = Firebase.database().ref(
-        currentUser.uid + links.received
+        "users/" + currentUser.uid + links.received
       );
+
       receivedGiftsRef
         .once("value")
         .then(snapshot => {
