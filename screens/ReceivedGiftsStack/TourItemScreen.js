@@ -142,6 +142,7 @@ const TourItemScreen = props => {
             ref={ref => setMapReference(ref)}
             style={{ flex: 1 }}
             showsUserLocation={true}
+            showsBuildings={true}
             showsCompass={true}
             initialRegion={
               location ? { ...location[0], ...location[1] } : gift.location
@@ -158,7 +159,7 @@ const TourItemScreen = props => {
                 destination={destination}
                 strokeWidth={5}
                 strokeColor={Colors.primary}
-                resetOnChange={true}
+                resetOnChange={false}
                 mode="WALKING"
                 apikey={"AIzaSyAjzHyyGtVdYT7B_v-zBfsAWIqyaq3WfAw"}
                 onReady={details => _onDirectionsReady(details)}
