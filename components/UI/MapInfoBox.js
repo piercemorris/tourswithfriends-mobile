@@ -11,33 +11,64 @@ import Layout from "../../constants/Layout";
 import Colors from "../../constants/Colors";
 
 const MapInfoBox = props => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.highlight}>
-          Destination
-          <Text style={styles.text}>{` ${props.info.name}`}</Text>
-        </Text>
-        <Text style={styles.highlight}>
-          Distance
-          <Text style={styles.text}>
-            {` ${numberToFormattedKm(props.info.distance)}`}
+  if (props.isTracking) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.textContainer}>
+          <Text style={styles.highlight}>
+            Destination
+            <Text style={styles.text}>{` ${props.info.name}`}</Text>
           </Text>
-          km
-        </Text>
-        <Text style={styles.highlight}>
-          Duration
-          <Text style={styles.text}>
-            {` ${numberToFormattedMin(props.info.duration)} `}
+          <Text style={styles.highlight}>
+            <Text style={styles.text}>
+              {` ${numberToFormattedKm(props.info.distance)}`}
+            </Text>
+            km remaining
           </Text>
-          minutes
-        </Text>
-        <Button {...props} style={{ width: "100%" }}>
-          Go!
-        </Button>
+          <Text style={styles.highlight}>
+            <Text style={styles.text}>
+              {` ${numberToFormattedMin(props.info.duration)} `}
+            </Text>
+            minutes left
+          </Text>
+          <Button
+            onPress={() => props.navigateToComponent()}
+            style={{ width: "100%" }}
+          >
+            I'm close!
+          </Button>
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <View style={styles.textContainer}>
+          <Text style={styles.highlight}>
+            Destination
+            <Text style={styles.text}>{` ${props.info.name}`}</Text>
+          </Text>
+          <Text style={styles.highlight}>
+            Distance
+            <Text style={styles.text}>
+              {` ${numberToFormattedKm(props.info.distance)}`}
+            </Text>
+            km
+          </Text>
+          <Text style={styles.highlight}>
+            Duration
+            <Text style={styles.text}>
+              {` ${numberToFormattedMin(props.info.duration)} `}
+            </Text>
+            minutes
+          </Text>
+          <Button onPress={() => props.setListener()} style={{ width: "100%" }}>
+            Go!
+          </Button>
+        </View>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -76,7 +107,8 @@ MapInfoBox.propTypes = {
     distance: PropTypes.number.isRequired,
     duration: PropTypes.number.isRequired
   }),
-  onPress: PropTypes.func.isRequired
+  onPress: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 export default MapInfoBox;

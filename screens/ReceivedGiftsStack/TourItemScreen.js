@@ -86,21 +86,14 @@ const TourItemScreen = props => {
     );
 
     setLocation([locationCoords, regionData]);
-
-    mapReference.followsUserLocation = true;
-
-    /*
-    mapReference.animateCamera(
-      {
-        center: locationCoords,
-        heading: loc.coords.heading,
-        altitude: loc.coords.altitude
-      },
-      1000
-    );*/
   };
 
-  const _setWatchListener = () => {
+  const _navigateToTourComponent = () => {
+    watchPositionListener.remove();
+    props.navigation.pop();
+  };
+
+  const _setWatchListener = async () => {
     setIsTrackingLocation(true);
 
     mapReference.animateCamera(
@@ -111,7 +104,7 @@ const TourItemScreen = props => {
       1000
     );
 
-    const locationListener = Location.watchPositionAsync(
+    const locationListener = await Location.watchPositionAsync(
       {
         accuracy: Location.Accuracy.Balanced,
         timeInterval: 5000,
@@ -166,8 +159,13 @@ const TourItemScreen = props => {
               />
             ) : null}
           </MapView>
-          {travelInfo && !isTrackingLocation ? (
-            <MapInfoBox info={travelInfo} onPress={() => _setWatchListener()} />
+          {travelInfo ? (
+            <MapInfoBox
+              info={travelInfo}
+              isTracking={isTrackingLocation}
+              setListener={_setWatchListener}
+              navigateToComponent={_navigateToTourComponent}
+            />
           ) : null}
         </View>
       )}
