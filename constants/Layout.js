@@ -1,4 +1,4 @@
-import { Dimensions } from "react-native";
+import { Dimensions, Platform } from "react-native";
 
 import Colors from "./Colors";
 
@@ -27,5 +27,13 @@ export default {
     paddingHorizontal: 20,
     marginHorizontal: 20,
     marginVertical: 10
+  },
+  squareButtonContainer: {
+    marginTop: Platform.OS === "ios" ? 30 : 15,
+    width: width / 2.3 - 10,
+    height: width / 2.3 - 10,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center"
   }
 };

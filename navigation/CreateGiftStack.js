@@ -2,6 +2,7 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "react-navigation-stack";
+import { Platform } from "react-native";
 
 import FriendDetailsScreen from "../screens/CreateGiftStack/FriendDetailsScreen";
 import TourDetailsScreen from "../screens/CreateGiftStack/TourDetailsScreen";
@@ -23,15 +24,25 @@ const CreateGiftStack = createStackNavigator(
     navigationOptions: {
       tabBarVisible: false
     },
-    defaultNavigationOptions: {
-      cardStyle: {
-        backgroundColor: Colors.white
-      },
-      tabBarVisible: null,
-      gestureEnabled: true,
-      cardOverlayEnabled: true,
-      ...TransitionPresets.ModalPresentationIOS
-    }
+    defaultNavigationOptions:
+      Platform.OS === "ios"
+        ? {
+            cardStyle: {
+              backgroundColor: Colors.white
+            },
+            tabBarVisible: null,
+            gestureEnabled: true,
+            cardOverlayEnabled: true,
+            ...TransitionPresets.ModalPresentationIOS
+          }
+        : {
+            cardStyle: {
+              backgroundColor: Colors.white
+            },
+            tabBarVisible: null,
+            gestureEnabled: true,
+            cardOverlayEnabled: true
+          }
   }
 );
 

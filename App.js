@@ -11,6 +11,8 @@ import { initFirebase } from "./firebase/index";
 import * as Font from "expo-font";
 enableScreens();
 
+console.disableYellowBox = true;
+
 import authReducer from "./store/reducers/auth";
 import locationReducer from "./store/reducers/location";
 import receivedReducer from "./store/reducers/received";
@@ -44,7 +46,11 @@ export default function App(props) {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          {Platform.OS === "ios" && <StatusBar barStyle="dark-content" />}
+          {Platform.OS === "ios" ? (
+            <StatusBar barStyle="dark-content" />
+          ) : (
+            <StatusBar hidden barStyle="dark-content" />
+          )}
           <AppNavigator />
         </View>
       </Provider>

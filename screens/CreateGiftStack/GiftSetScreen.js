@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Alert,
   ActivityIndicator,
-  Platform
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  View
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import Header from "../../components/UI/Header";
 import Button from "../../components/UI/Button";
-import Title from "../../components/UI/Title";
 import StyledText from "../../components/StyledText";
 import BackButton from "../../components/UI/BackButton";
-import ButtonInverse from "../../components/UI/ButtonInverse";
+import SquareButton from "../../components/UI/SquareButton";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 import * as locationActions from "../../store/actions/location";
@@ -81,25 +80,25 @@ const GiftSetScreen = props => {
       style={styles.container}
       pointerEvents={isSending ? "none" : "auto"}
     >
-      <View>
+      <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
         <BackButton {...props} />
         <Header title="Gift Creation" subtitle="What you need to complete" />
         <View style={styles.contentContainer}>
-          <Title title="Friend Details" />
-          <ButtonInverse
+          <SquareButton
+            name="Friend Details"
+            icon="person"
             completed={friendDetailsValid}
-            text="Enter Friends Details"
             onPress={() => props.navigation.navigate("FriendDetails")}
           />
-          <Title title="Tour Details" />
-          <ButtonInverse
+          <SquareButton
+            name="Tour Details"
+            icon="paper"
             completed={tourDetailsValid}
-            text="Enter Tour Details"
             onPress={() => props.navigation.navigate("TourDetails")}
           />
-          <Title title="Location 1" />
-          <ButtonInverse
-            text="Add to location 1"
+          <SquareButton
+            name="Location 1"
+            icon="gift"
             completed={locationOne}
             onPress={() =>
               props.navigation.navigate("LocationStack", {
@@ -107,9 +106,9 @@ const GiftSetScreen = props => {
               })
             }
           />
-          <Title title="Location 2" />
-          <ButtonInverse
-            text="Add to location 2"
+          <SquareButton
+            name="Location 2"
+            icon="gift"
             completed={locationTwo}
             onPress={() =>
               props.navigation.navigate("LocationStack", {
@@ -117,9 +116,9 @@ const GiftSetScreen = props => {
               })
             }
           />
-          <Title title="Location 3" />
-          <ButtonInverse
-            text="Add to location 3"
+          <SquareButton
+            name="Location 3"
+            icon="gift"
             completed={locationThree}
             onPress={() =>
               props.navigation.navigate("LocationStack", {
@@ -128,7 +127,7 @@ const GiftSetScreen = props => {
             }
           />
         </View>
-      </View>
+      </ScrollView>
       <Button onPress={() => goBackHandler()}>Send</Button>
       {isSending && (
         <View style={styles.sendingContainer}>
@@ -150,10 +149,14 @@ const GiftSetScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: 15
   },
   contentContainer: {
-    paddingTop: 15
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly"
   },
   sendingContainer: {
     position: "absolute",

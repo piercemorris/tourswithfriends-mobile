@@ -29,6 +29,17 @@
         "NSLocationWhenInUseUsageDescription": "Use location to direct user to a tour location"
       }
     },
+    "android": {
+      "icon": "./assets/images/icon.png",
+      "adaptiveIcon": {
+        "backgroundColor": "#F6511D"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAjzHyyGtVdYT7B_v-zBfsAWIqyaq3WfAw"
+        }
+      }
+    },
     "notification": {
       "iosDisplayInForeground": true
     }

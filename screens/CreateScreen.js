@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, SafeAreaView } from "react-native";
 
 import Info from "../components/UI/Info";
 import Header from "../components/UI/Header";
@@ -7,13 +7,9 @@ import Button from "../components/UI/Button";
 import StyledText from "../components/StyledText";
 import BulletPoint from "../components/UI/BulletPoint";
 
-import Firebase from "firebase";
-import axios from "axios";
-import url from "../https/index";
-
 const CreateScreen = props => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Header
           main
@@ -55,18 +51,15 @@ const CreateScreen = props => {
           Begin
         </Button>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 22,
     flex: 1
   },
-  scrollContainer: {
-    paddingVertical: 22
-  }
+  scrollContainer: {}
 });
 
 export default CreateScreen;
