@@ -3,6 +3,7 @@ import {
   TransitionPresets
 } from "react-navigation-stack";
 
+import UncoverTourItemScreen from "../screens/ReceivedGiftsStack/UncoverTourItemScreen";
 import BeginTourScreen from "../screens/ReceivedGiftsStack/BeginTourScreen";
 import TourListScreen from "../screens/ReceivedGiftsStack/TourListScreen";
 import TourItemScreen from "../screens/ReceivedGiftsStack/TourItemScreen";
@@ -12,7 +13,8 @@ const ReceivedGiftStack = createStackNavigator(
   {
     BeginTour: BeginTourScreen,
     TourList: TourListScreen,
-    TourItem: TourItemScreen
+    TourItem: TourItemScreen,
+    UncoverTourItem: UncoverTourItemScreen
   },
   {
     headerMode: "none",

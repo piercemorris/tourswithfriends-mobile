@@ -18,6 +18,7 @@ import Layout from "../../constants/Layout";
 
 const TourItemScreen = props => {
   const [animComplete, setAnimComplete] = useState(false);
+  const [id] = useState(props.navigation.getParam("id"));
   const [name] = useState(props.navigation.getParam("name"));
   const [gift] = useState(props.navigation.getParam("location"));
   const [location, setLocation] = useState(null);
@@ -90,7 +91,9 @@ const TourItemScreen = props => {
 
   const _navigateToTourComponent = () => {
     watchPositionListener.remove();
-    props.navigation.pop();
+    props.navigation.navigate("UncoverTourItem", {
+      id: id
+    });
   };
 
   const _setWatchListener = async () => {
