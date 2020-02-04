@@ -3,14 +3,19 @@ import {
   RECEIVE_GIFT,
   LOADING_GIFTS,
   LOADING_GIFT,
-  LOADING_GIFTS_FAIL
+  LOADING_GIFTS_FAIL,
+  COMPLETED_LOCATION
 } from "../actions/received";
 
 const initialState = {
   receivedGifts: null,
   loadingGifts: null,
   currentGift: null,
-  loadingGift: null
+  loadingGift: null,
+  locationOneCompleted: false,
+  locationTwoCompleted: false,
+  locationThreeCompleted: false,
+  control: 1
 };
 
 export default (state = initialState, action) => {
@@ -43,6 +48,27 @@ export default (state = initialState, action) => {
         loadingGifts: false,
         receivedGifts: []
       };
+    case COMPLETED_LOCATION:
+      switch (action.id) {
+        case 1:
+          return {
+            ...state,
+            locationOneCompleted: true,
+            control: 2
+          };
+        case 2:
+          return {
+            ...state,
+            locationTwoCompleted: true,
+            control: 3
+          };
+        case 3:
+          return {
+            ...state,
+            locationThreeCompleted: true,
+            control: 0
+          };
+      }
     default:
       return state;
   }

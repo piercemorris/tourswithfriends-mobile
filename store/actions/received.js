@@ -7,6 +7,16 @@ export const LOADING_GIFT = "LOADING_GIFT";
 export const LOADING_GIFTS = "LOADING_GIFTS";
 export const LOADING_GIFT_FAIL = "LOADING_GIFT_FAIL";
 export const LOADING_GIFTS_FAIL = "LOADING_GIFTS_FAIL";
+export const COMPLETED_LOCATION = "COMPLETED_LOCATION";
+
+export const completedLocation = locationId => {
+  return dispatch => {
+    dispatch({
+      type: COMPLETED_LOCATION,
+      id: locationId
+    });
+  };
+};
 
 export const receiveGift = giftId => {
   return async dispatch => {

@@ -22,7 +22,7 @@ const ImageUncover = ({ name, mediaFileRef }) => {
   return (
     <View style={styles.cover}>
       <TouchableWithoutFeedback onPress={() => beginAnimation()}>
-        <View>
+        <View style={styles.imagePlaceholder}>
           <ImageBackground
             blurRadius={blurValue}
             style={styles.image}
@@ -49,12 +49,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  image: {
+  imagePlaceholder: {
     width: Layout.window.width - 40,
     height: Layout.window.height / 1.5,
+    backgroundColor: Colors.inputShade,
+    borderRadius: 15
+  },
+  image: {
+    width: "100%",
+    height: "100%",
     borderRadius: 15,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    ...Layout.shadow
   }
 });
 

@@ -10,8 +10,13 @@ import {
 import Colors from "../../constants/Colors";
 
 const LargeButton = props => {
-  if (props.disabled) {
-    return <View style={styles.disabled}></View>;
+  let appliedStyle = {};
+  if (props.completed) {
+    appliedStyle = styles.completed;
+  } else if (props.id === props.control) {
+    appliedStyle = styles.next;
+  } else if (!props.completed) {
+    appliedStyle = styles.disabled;
   }
 
   if (props.animated) {
@@ -32,7 +37,7 @@ const LargeButton = props => {
     return (
       <AnimatedTouchableOpacity
         onPress={props.onPress}
-        style={{ ...styles.container, opacity: fadeAnim }}
+        style={{ ...styles.container, ...appliedStyle, opacity: fadeAnim }}
       >
         {props.children}
       </AnimatedTouchableOpacity>
@@ -51,12 +56,19 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Colors.primary,
     marginHorizontal: 15,
     marginTop: 15,
     borderRadius: 15
   },
-  disabled: {}
+  completed: {
+    backgroundColor: Colors.complete
+  },
+  next: {
+    backgroundColor: Colors.primary
+  },
+  disabled: {
+    backgroundColor: Colors.inputShade
+  }
 });
 
 export default LargeButton;

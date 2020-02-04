@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, View, Text, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
@@ -9,6 +9,16 @@ import Colors from "../../constants/Colors";
 
 const TourListScreen = props => {
   const gift = useSelector(store => store.received.currentGift);
+  const control = useSelector(store => store.received.control);
+  const locationOneCompleted = useSelector(
+    store => store.received.locationOneCompleted
+  );
+  const locationTwoCompleted = useSelector(
+    store => store.received.locationTwoCompleted
+  );
+  const locationThreeCompleted = useSelector(
+    store => store.received.locationThreeCompleted
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,8 +29,11 @@ const TourListScreen = props => {
       />
       <View style={styles.buttonContainer}>
         <LargeButton
+          id={1}
           animated
           delay={0}
+          control={control}
+          completed={locationOneCompleted}
           onPress={() => {
             props.navigation.navigate("TourItem", {
               id: 1,
@@ -32,8 +45,11 @@ const TourListScreen = props => {
           <Text style={styles.title}>{gift.locationOne.name}</Text>
         </LargeButton>
         <LargeButton
+          id={2}
           animated
           delay={500}
+          control={control}
+          completed={locationTwoCompleted}
           onPress={() => {
             props.navigation.navigate("TourItem", {
               id: 2,
@@ -45,8 +61,11 @@ const TourListScreen = props => {
           <Text style={styles.title}>{gift.locationTwo.name}</Text>
         </LargeButton>
         <LargeButton
+          id={3}
           animated
           delay={1000}
+          control={control}
+          completed={locationThreeCompleted}
           onPress={() => {
             props.navigation.navigate("TourItem", {
               id: 3,
