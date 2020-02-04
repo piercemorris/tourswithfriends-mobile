@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { SafeAreaView, View, Text, StyleSheet } from "react-native";
 
 import Header from "../../components/UI/Header";
+import StyledText from "../../components/StyledText";
+import Colors from "../../constants/Colors";
 import MediaSwitcher from "../../components/UI/MediaSwitcher";
 
 const UncoverTourItemScreen = props => {
@@ -27,7 +29,19 @@ const UncoverTourItemScreen = props => {
     <SafeAreaView style={styles.container}>
       <Header title="Revealing" />
       {gift && (
-        <Text>{`Your friend has chosen an ${gift.locationOne.mediaType} to represent this tour place`}</Text>
+        <StyledText
+          style={{
+            paddingHorizontal: 15,
+            paddingVertical: 0,
+            marginTop: 15
+          }}
+        >
+          Your friend has chosen an{" "}
+          <StyledText bold style={{ padding: 0, color: Colors.primary }}>
+            {gift.locationOne.mediaType}
+          </StyledText>{" "}
+          to represent this tour location
+        </StyledText>
       )}
       {location ? (
         <View style={styles.mediaInfo}>
@@ -46,7 +60,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  mediaInfo: {}
+  mediaInfo: {
+    flex: 1
+  }
 });
 
 export default UncoverTourItemScreen;
