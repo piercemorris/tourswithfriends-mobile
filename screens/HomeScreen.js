@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
 
 import MaskedComponent from "../components/UI/MaskedComponent";
@@ -7,6 +8,8 @@ import Header from "../components/UI/Header";
 import { registerForPushNotificationsAsync } from "../helper/pushNotifications";
 
 const HomeScreen = props => {
+  const displayName = useSelector(store => store.auth.displayName);
+
   _registerForPushNotifications = async () => {
     await registerForPushNotificationsAsync();
   };
@@ -18,7 +21,11 @@ const HomeScreen = props => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Header main title="Welcome" subtitle="Start by selecting an action" />
+        <Header
+          main
+          title={`Welcome ${displayName ? displayName : ""}`}
+          subtitle="Start by selecting an action"
+        />
         <View style={{ alignSelf: "center" }}>
           <MaskedComponent
             navigation={props.navigation}
