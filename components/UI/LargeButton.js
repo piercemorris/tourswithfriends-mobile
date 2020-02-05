@@ -34,7 +34,7 @@ const LargeButton = props => {
       }).start(() => setFaseAnim(1));
     }, []);
 
-    if (!props.completed && !props.next) {
+    if (!props.completed && props.id !== props.control) {
       return (
         <AnimatedTouchableOpacity
           disabled
@@ -44,15 +44,16 @@ const LargeButton = props => {
           {props.children}
         </AnimatedTouchableOpacity>
       );
+    } else {
+      return (
+        <AnimatedTouchableOpacity
+          onPress={props.onPress}
+          style={{ ...styles.container, ...appliedStyle, opacity: fadeAnim }}
+        >
+          {props.children}
+        </AnimatedTouchableOpacity>
+      );
     }
-    return (
-      <AnimatedTouchableOpacity
-        onPress={props.onPress}
-        style={{ ...styles.container, ...appliedStyle, opacity: fadeAnim }}
-      >
-        {props.children}
-      </AnimatedTouchableOpacity>
-    );
   }
 };
 
