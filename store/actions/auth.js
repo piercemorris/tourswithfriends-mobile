@@ -2,7 +2,10 @@ import Firebase from "firebase";
 
 export const AUTHENTICATE = "AUTHENTICATE";
 
-import { getDisplayNameWithUid } from "../../firebase/userFunctions";
+import {
+  getDisplayNameWithUid,
+  getDisplayName
+} from "../../firebase/userFunctions";
 import * as url from "../../https/index";
 
 export const authenticate = (userId, displayName) => {
@@ -56,8 +59,9 @@ export const login = (email, password) => {
         password
       );
 
+      let displayName = "";
       if (user) {
-        const displayName = (await getDisplayName()).val();
+        displayName = (await getDisplayName()).val();
       }
 
       dispatch(authenticate(user.uid, displayName));
