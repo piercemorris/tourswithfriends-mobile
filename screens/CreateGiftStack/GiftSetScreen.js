@@ -23,7 +23,6 @@ const GiftSetScreen = props => {
   [isComplete, setIsComplete] = useState(false);
   [isSending, setIsSending] = useState(false);
   [isConfirming, setIsConfirming] = useState(false);
-  [isSendPressed, setIsSendPressed] = useState(false);
   const friendDetailsValid = useSelector(store => store.gift.friendDetails);
   const tourDetailsValid = useSelector(store => store.gift.tourDetails);
   const locationOne = useSelector(store => store.gift.locationOne);
@@ -31,6 +30,7 @@ const GiftSetScreen = props => {
   const locationThree = useSelector(store => store.gift.locationThree);
   const dispatch = useDispatch();
 
+  /*
   useEffect(() => {
     if (
       friendDetailsValid &&
@@ -55,6 +55,7 @@ const GiftSetScreen = props => {
     locationTwo,
     locationThree
   ]);
+  */
 
   const onConfirm = () => {
     setIsConfirming(false);
@@ -63,7 +64,6 @@ const GiftSetScreen = props => {
 
   const onSend = () => {
     if (isComplete) {
-      setIsSendPressed(true);
       setIsSending(true);
       dispatch(
         locationActions.sendGift(
@@ -138,32 +138,30 @@ const GiftSetScreen = props => {
       </ScrollView>
       <Button onPress={() => onSend()}>Send</Button>
       {isSending && (
-        <View style={styles.sendingContainer}>
-          <View style={styles.activityIndicator}>
-            <View>
-              <ActivityIndicator size="large" color={Colors.primary} />
-              <StyledText
-                style={{ padding: 0, marginTop: 5, color: Colors.primary }}
-                bold
-              >
-                Sending Gift!
-              </StyledText>
-            </View>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalComponents}>
+            <ActivityIndicator size="large" color={Colors.primary} />
+            <StyledText
+              style={{ padding: 0, marginTop: 5, color: Colors.primary }}
+              bold
+            >
+              Sending Gift!
+            </StyledText>
           </View>
         </View>
       )}
       {isConfirming && (
-        <View style={styles.sendingContainer}>
-          <View style={styles.activityIndicator}>
-            <View>
-              <StyledText
-                style={{ padding: 0, marginTop: 5, color: Colors.primary }}
-                bold
-              >
-                Gift successfully sent!
-              </StyledText>
-              <Button onPress={() => onConfirm()}>Ok!</Button>
-            </View>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalComponents}>
+            <StyledText
+              style={{ padding: 0, marginTop: 5, color: Colors.primary }}
+              bold
+            >
+              Gift successfully sent!
+            </StyledText>
+            <Button style={{ width: "100%" }} onPress={() => onConfirm()}>
+              Ok!
+            </Button>
           </View>
         </View>
       )}
@@ -183,7 +181,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-evenly"
   },
-  sendingContainer: {
+  modalContainer: {
     position: "absolute",
     left: 0,
     right: 0,
@@ -193,12 +191,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.loadingBackground
   },
-  activityIndicator: {
+  modalComponents: {
     backgroundColor: Colors.white,
     borderRadius: 15,
-    width: Layout.window.width - 100,
-    height: Layout.window.height / 3,
-    justifyContent: "center",
+    width: Layout.window.width - 150,
+    height: Layout.window.height / 4,
+    justifyContent: "space-evenly",
     alignItems: "center",
     padding: 15,
     ...Layout.shadow

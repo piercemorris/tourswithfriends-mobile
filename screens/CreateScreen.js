@@ -59,7 +59,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  scrollContainer: {}
+  scrollContainer: {
+    paddingBottom: 15
+  }
 });
 
 export default CreateScreen;
