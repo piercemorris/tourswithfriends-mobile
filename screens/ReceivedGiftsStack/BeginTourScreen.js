@@ -65,9 +65,11 @@ const BeginTourScreen = props => {
           />
         )}
       </View>
-      <Button onPress={() => props.navigation.navigate("TourList")}>
-        Embark!
-      </Button>
+      {gift && (
+        <Button onPress={() => props.navigation.navigate("TourList")}>
+          Embark!
+        </Button>
+      )}
     </SafeAreaView>
   );
 };

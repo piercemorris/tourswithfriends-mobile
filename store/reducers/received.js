@@ -4,7 +4,8 @@ import {
   LOADING_GIFTS,
   LOADING_GIFT,
   LOADING_GIFTS_FAIL,
-  COMPLETED_LOCATION
+  COMPLETED_LOCATION,
+  RESET_RECEIVED_GIFT
 } from "../actions/received";
 
 const initialState = {
@@ -20,6 +21,11 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case RESET_RECEIVED_GIFT:
+      return {
+        ...state,
+        currentGift: null
+      };
     case RECEIVE_GIFT:
       return {
         ...state,

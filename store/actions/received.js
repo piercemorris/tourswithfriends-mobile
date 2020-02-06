@@ -8,12 +8,21 @@ export const LOADING_GIFTS = "LOADING_GIFTS";
 export const LOADING_GIFT_FAIL = "LOADING_GIFT_FAIL";
 export const LOADING_GIFTS_FAIL = "LOADING_GIFTS_FAIL";
 export const COMPLETED_LOCATION = "COMPLETED_LOCATION";
+export const RESET_RECEIVED_GIFT = "RESET_RECEIVED_GIFT";
 
 export const completedLocation = locationId => {
   return dispatch => {
     dispatch({
       type: COMPLETED_LOCATION,
       id: locationId
+    });
+  };
+};
+
+export const resetReceivedGift = () => {
+  return dispatch => {
+    dispatch({
+      type: RESET_RECEIVED_GIFT
     });
   };
 };

@@ -13,7 +13,9 @@ const BackButton = props => {
   }
 
   return (
-    <TouchableOpacity onPress={() => props.navigation.pop()}>
+    <TouchableOpacity
+      onPress={props.onPress ? props.onPress : () => props.navigation.pop()}
+    >
       <Ionicons
         name={icon}
         size={42}
