@@ -37,40 +37,32 @@ export const sendGift = (
     const user = res.data.userId;
 
     // upload images to storage
+    const sentByUser = Firebase.auth().currentUser;
     const filenameOne = locationOne.mediaFileRef.split("/").pop();
-    const downloadURLOne = await assetOps.uploadImage(
-      locationOne.mediaFileRef,
-      filenameOne
-    );
-
     const filenameTwo = locationTwo.mediaFileRef.split("/").pop();
-    const downloadURLTwo = await assetOps.uploadImage(
-      locationTwo.mediaFileRef,
-      filenameTwo
-    );
-
     const filenameThree = locationThree.mediaFileRef.split("/").pop();
-    const downloadURLThree = await assetOps.uploadImage(
-      locationThree.mediaFileRef,
-      filenameThree
-    );
 
-    const sentByUser = await Firebase.auth().currentUser;
+    // wait for all images to upload
+    const downloadUrls = await Promise.all([
+      await assetOps.uploadImage(locationOne.mediaFileRef, filenameOne),
+      await assetOps.uploadImage(locationTwo.mediaFileRef, filenameTwo),
+      await assetOps.uploadImage(locationThree.mediaFileRef, filenameThree)
+    ]);
 
     const gift = {
       friendDetails,
       tourDetails,
       locationOne: {
         ...locationOne,
-        mediaFileRef: downloadURLOne
+        mediaFileRef: downloadUrls[0]
       },
       locationTwo: {
         ...locationTwo,
-        mediaFileRef: downloadURLTwo
+        mediaFileRef: downloadUrls[1]
       },
       locationThree: {
         ...locationThree,
-        mediaFileRef: downloadURLThree
+        mediaFileRef: downloadUrls[2]
       },
       sentFrom: {
         uid: sentByUser.uid,

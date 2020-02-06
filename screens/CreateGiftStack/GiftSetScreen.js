@@ -17,10 +17,13 @@ import SquareButton from "../../components/UI/SquareButton";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 import * as locationActions from "../../store/actions/location";
+import state from "../../helper/giftSetState";
 
 const GiftSetScreen = props => {
-  [complete, setComplete] = useState(true);
+  [isComplete, setIsComplete] = useState(false);
   [isSending, setIsSending] = useState(false);
+  [isConfirming, setIsConfirming] = useState(false);
+  [isSendPressed, setIsSendPressed] = useState(false);
   const friendDetailsValid = useSelector(store => store.gift.friendDetails);
   const tourDetailsValid = useSelector(store => store.gift.tourDetails);
   const locationOne = useSelector(store => store.gift.locationOne);
@@ -29,30 +32,6 @@ const GiftSetScreen = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!complete) {
-      Alert.alert(
-        "An error occurred!",
-        "Not all gift requirements have been completed",
-        [{ text: "Ok" }]
-      );
-    }
-    setComplete(true);
-  }, [complete]);
-
-  useEffect(() => {
-    if (isSending && !locationOne && !locationTwo && !locationThree) {
-      updateState();
-    }
-  }, [isSending, locationOne]);
-
-  const updateState = () => {
-    setIsSending(false);
-
-    props.navigation.popToTop();
-  };
-
-  const goBackHandler = () => {
-    setIsSending(true);
     if (
       friendDetailsValid &&
       tourDetailsValid &&
@@ -60,6 +39,32 @@ const GiftSetScreen = props => {
       locationTwo &&
       locationThree
     ) {
+      setIsComplete(true);
+    } else {
+      if (!isSending) {
+        setIsComplete(false);
+      } else {
+        setIsSending(false);
+        setIsConfirming(true);
+      }
+    }
+  }, [
+    tourDetailsValid,
+    friendDetailsValid,
+    locationOne,
+    locationTwo,
+    locationThree
+  ]);
+
+  const onConfirm = () => {
+    setIsConfirming(false);
+    props.navigation.pop();
+  };
+
+  const onSend = () => {
+    if (isComplete) {
+      setIsSendPressed(true);
+      setIsSending(true);
       dispatch(
         locationActions.sendGift(
           friendDetailsValid,
@@ -70,8 +75,11 @@ const GiftSetScreen = props => {
         )
       );
     } else {
-      setIsSending(false);
-      setComplete(false);
+      Alert.alert(
+        "An error occurred!",
+        "Not all gift requirements have been completed",
+        [{ text: "Ok" }]
+      );
     }
   };
 
@@ -82,7 +90,7 @@ const GiftSetScreen = props => {
     >
       <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
         <BackButton {...props} />
-        <Header title="Gift Creation" subtitle="What you need to complete" />
+        <Header title="Creating a Gift" subtitle="What you need to complete" />
         <View style={styles.contentContainer}>
           <SquareButton
             name="Friend Details"
@@ -128,17 +136,34 @@ const GiftSetScreen = props => {
           />
         </View>
       </ScrollView>
-      <Button onPress={() => goBackHandler()}>Send</Button>
+      <Button onPress={() => onSend()}>Send</Button>
       {isSending && (
         <View style={styles.sendingContainer}>
           <View style={styles.activityIndicator}>
-            <ActivityIndicator size="large" color={Colors.primary} />
-            <StyledText
-              style={{ padding: 0, marginTop: 5, color: Colors.primary }}
-              bold
-            >
-              Sending Gift!
-            </StyledText>
+            <View>
+              <ActivityIndicator size="large" color={Colors.primary} />
+              <StyledText
+                style={{ padding: 0, marginTop: 5, color: Colors.primary }}
+                bold
+              >
+                Sending Gift!
+              </StyledText>
+            </View>
+          </View>
+        </View>
+      )}
+      {isConfirming && (
+        <View style={styles.sendingContainer}>
+          <View style={styles.activityIndicator}>
+            <View>
+              <StyledText
+                style={{ padding: 0, marginTop: 5, color: Colors.primary }}
+                bold
+              >
+                Gift successfully sent!
+              </StyledText>
+              <Button onPress={() => onConfirm()}>Ok!</Button>
+            </View>
           </View>
         </View>
       )}
@@ -171,6 +196,8 @@ const styles = StyleSheet.create({
   activityIndicator: {
     backgroundColor: Colors.white,
     borderRadius: 15,
+    width: Layout.window.width - 100,
+    height: Layout.window.height / 3,
     justifyContent: "center",
     alignItems: "center",
     padding: 15,

@@ -30,6 +30,10 @@ const InformationBlock = props => {
           <StyledText bold style={styles.text}>
             {props.city}
           </StyledText>
+          <StyledText style={styles.smallText}>by</StyledText>
+          <StyledText bold style={styles.text}>
+            {props.user}
+          </StyledText>
         </LinearGradient>
       </TouchableOpacity>
     );
