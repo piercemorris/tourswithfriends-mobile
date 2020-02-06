@@ -19,8 +19,7 @@ import Colors from "../constants/Colors";
 import {
   formReducer,
   initialReducerState,
-  FORM_INPUT_UPDATE,
-  FORM_INITIALISE
+  FORM_INPUT_UPDATE
 } from "../helper/reusableFunctions";
 
 import * as receivedActions from "../store/actions/received";
