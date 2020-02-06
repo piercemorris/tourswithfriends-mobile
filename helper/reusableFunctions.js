@@ -81,6 +81,22 @@ export const getKeyByValue = (object, value) => {
 export const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 export const FORM_INITIALISE = "FORM_INITIALISE";
 
+export const initialReducerState = {
+  inputValues: {
+    displayName: "",
+    email: "",
+    password: "",
+    confirmpassword: ""
+  },
+  inputValidities: {
+    displayName: false,
+    email: false,
+    password: false,
+    confirmpassword: false
+  },
+  formIsValid: false
+};
+
 export const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {

@@ -9,13 +9,19 @@ import {
   Alert,
   ActivityIndicator
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import * as authActions from "../store/actions/auth";
 import StyledText from "../components/StyledText";
 import Input from "../components/UI/Input";
 import Button from "../components/UI/Button";
 import Colors from "../constants/Colors";
-import { formReducer, FORM_INPUT_UPDATE } from "../helper/reusableFunctions";
+import {
+  formReducer,
+  initialReducerState,
+  FORM_INPUT_UPDATE,
+  FORM_INITIALISE
+} from "../helper/reusableFunctions";
 
 import * as receivedActions from "../store/actions/received";
 
@@ -26,21 +32,10 @@ const AuthScreen = props => {
 
   const dispatch = useDispatch();
 
-  const [formState, dispatchFormState] = useReducer(formReducer, {
-    inputValues: {
-      displayName: "",
-      email: "",
-      password: "",
-      confirmpassword: ""
-    },
-    inputValidities: {
-      displayName: false,
-      email: false,
-      password: false,
-      confirmpassword: false
-    },
-    formIsValid: false
-  });
+  const [formState, dispatchFormState] = useReducer(
+    formReducer,
+    initialReducerState
+  );
 
   const authHandler = async () => {
     let action;
@@ -108,6 +103,10 @@ const AuthScreen = props => {
     }
   }, [error]);
 
+  const switchMethod = () => {
+    setIsSignUp(prevValue => !prevValue);
+  };
+
   const inputChangedHandler = useCallback(
     (inputIdentifer, inputValue, inputValidity) => {
       dispatchFormState({
@@ -121,7 +120,7 @@ const AuthScreen = props => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <StyledText
         bold
         style={{ fontSize: 34, alignSelf: "center", paddingTop: 50 }}
@@ -172,9 +171,7 @@ const AuthScreen = props => {
             <StyledText bold style={styles.alternate}>
               {isSignUp ? "Already have an account?" : "Don't have an account?"}
             </StyledText>
-            <TouchableOpacity
-              onPress={() => setIsSignUp(prevValue => !prevValue)}
-            >
+            <TouchableOpacity onPress={() => switchMethod()}>
               <StyledText bold style={styles.textButton}>
                 {isSignUp ? "Login" : "Sign up"}
               </StyledText>
@@ -188,7 +185,7 @@ const AuthScreen = props => {
           color={Colors.primary}
         />
       )}
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 
