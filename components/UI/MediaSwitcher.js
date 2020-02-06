@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 
 import mediaTypeRef from "../../helper/representationEnum";
-
 import ImageUncover from "../ReceivedGiftMedia/ImageUncover";
 
 const MediaSwitcher = ({ name, mediaType, mediaFileRef }) => {

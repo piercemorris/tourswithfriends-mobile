@@ -26,7 +26,7 @@ const RepresentationScreen = props => {
           contentContainerStyle={styles.buttonContainer}
         >
           <CircleButton disabled onPress={() => _setMethod(MethodEnum.Video)}>
-            Video Recording
+            Video
           </CircleButton>
         </ScrollView>
         <Subsection text="Image" />
@@ -64,7 +64,7 @@ const RepresentationScreen = props => {
           horizontal={true}
           contentContainerStyle={styles.buttonContainer}
         >
-          <CircleButton disabled onPress={() => _setMethod(MethodEnum.Voice)}>
+          <CircleButton onPress={() => _setMethod(MethodEnum.Voice)}>
             Voice Recording
           </CircleButton>
           <CircleButton disabled onPress={() => _setMethod(MethodEnum.Audio)}>

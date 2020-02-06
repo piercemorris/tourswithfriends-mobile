@@ -4,14 +4,10 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  TouchableOpacity,
-  Platform,
   ScrollView,
-  Alert,
-  Image
+  Alert
 } from "react-native";
 import { withNavigationFocus } from "react-navigation";
-import { Ionicons } from "@expo/vector-icons";
 
 import Input from "../../components/UI/Input";
 import Title from "../../components/UI/Title";
@@ -23,6 +19,7 @@ import StyledText from "../../components/StyledText";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 import MethodEnum from "../../helper/representationEnum";
+import RepresentationSwitcher from "../../components/UI/RepresentationSwitcher";
 import * as locationActions from "../../store/actions/location";
 
 import {
@@ -50,7 +47,7 @@ const LocationScreen = props => {
   [selectedLocation, setSelectedLocation] = useState(
     savedData ? savedData.location : null
   );
-  [selectedPicture, setSelectedPicture] = useState(
+  [selectedMediaRef, setSelectedMediaRef] = useState(
     savedData ? savedData.mediaFileRef : null
   );
   [selectedAddress, setSelectedAddress] = useState(
@@ -113,14 +110,8 @@ const LocationScreen = props => {
     });
   };
 
-  _returnPicture = pic => {
-    setSelectedPicture(pic);
-  };
-
-  _navigateToCamera = () => {
-    props.navigation.navigate("Camera", {
-      returnData: _returnPicture
-    });
+  _returnMediaRef = file => {
+    setSelectedMediaRef(file);
   };
 
   useEffect(() => {
@@ -136,7 +127,7 @@ const LocationScreen = props => {
     if (
       selectedLocation &&
       selectedName.length > 0 &&
-      selectedPicture &&
+      selectedMediaRef &&
       selectedAddress
     ) {
       dispatch(
@@ -146,7 +137,7 @@ const LocationScreen = props => {
           selectedLocation,
           selectedAddress,
           selectedMethod,
-          selectedPicture
+          selectedMediaRef
         )
       );
       props.navigation.pop();
@@ -206,13 +197,23 @@ const LocationScreen = props => {
         )}
         <Title style={styles.title} title="Representation" />
         {selectedMethod ? (
-          <View style={styles.addressContainer}>
-            <StyledText style={styles.address}>{selectedMethod}</StyledText>
-            <IconButton
-              onPress={() => _navigateToRepresentation()}
-              name="ios-color-wand"
-              color={Colors.primary}
-            />
+          <View>
+            <View style={styles.addressContainer}>
+              <StyledText style={styles.address}>{selectedMethod}</StyledText>
+              <IconButton
+                onPress={() => _navigateToRepresentation()}
+                name="ios-color-wand"
+                color={Colors.primary}
+              />
+            </View>
+            <View>
+              <RepresentationSwitcher
+                selectedMethod={selectedMethod}
+                mediaRef={selectedMediaRef}
+                navigation={props.navigation}
+                returnMediaRef={file => _returnMediaRef(file)}
+              />
+            </View>
           </View>
         ) : (
           <Button
@@ -222,38 +223,14 @@ const LocationScreen = props => {
             Select method of representation
           </Button>
         )}
-        {selectedMethod ? (
-          <View>
-            <Title style={styles.title} title={selectedMethod} />
-            {selectedPicture ? (
-              <TouchableOpacity onPress={() => _navigateToCamera()}>
-                <Image
-                  style={styles.imageContainer}
-                  source={{ uri: selectedPicture }}
-                  resizeMode="cover"
-                />
-              </TouchableOpacity>
-            ) : (
-              <View style={styles.imageContainer}>
-                <TouchableOpacity onPress={() => _navigateToCamera()}>
-                  <Ionicons
-                    name={
-                      Platform.OS === "ios"
-                        ? "ios-add-circle-outline"
-                        : "md-add-circle-outline"
-                    }
-                    size={64}
-                    color={Colors.primary}
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
-        ) : null}
       </ScrollView>
-        <Button fill style={styles.navigationButton} onPress={() => goBackHandler()}>
-          Complete
-        </Button>
+      <Button
+        fill
+        style={styles.navigationButton}
+        onPress={() => goBackHandler()}
+      >
+        Complete
+      </Button>
     </View>
   );
 };
@@ -300,18 +277,8 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: 16
   },
-  imageContainer: {
-    alignSelf: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 10,
-    width: Layout.window.width - 40,
-    height: Layout.window.height / 2,
-    borderRadius: 15,
-    backgroundColor: Colors.inputShade
-  },
   navigationButton: {
-    marginTop: 0,
+    marginTop: 0
   }
 });
 
