@@ -1,23 +1,55 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Animated
+} from "react-native";
 import { Audio } from "expo-av";
 import { Ionicons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 
 import Title from "../UI/Title";
+import RecordIcon from "../CreatingGiftMedia/RecordIcon";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 
 const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
   [audioPemission, setAudioPermission] = useState(false);
   [isRecording, setIsRecording] = useState(false);
+  [isPlaying, setIsPlaying] = useState(false);
   [isLoading, setIsLoading] = useState(false);
   [recording, setRecording] = useState(null);
   [sound, setSound] = useState(null);
+  [duration, setDuration] = useState(null);
+  [position, setPosition] = useState(null);
+  [fadeOpacity, setFadeOpacity] = useState(new Animated.Value(0));
+  const animation = Animated.loop(
+    Animated.sequence([
+      Animated.timing(fadeOpacity, {
+        toValue: 1
+      }),
+      Animated.timing(fadeOpacity, {
+        toValue: 0
+      })
+    ])
+  );
 
   useEffect(() => {
     _askForAudioPermissions();
   }, []);
+
+  useEffect(() => {
+    if (isRecording) {
+      animation.start();
+    } else {
+      animation.stop();
+      Animated.timing(fadeOpacity, {
+        toValue: 0
+      }).start();
+    }
+  }, [isRecording]);
 
   _askForAudioPermissions = async () => {
     const response = await Audio.requestPermissionsAsync();
@@ -32,7 +64,7 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
       console.log(err);
     }
 
-    const info = await FileSystem.getInfoAsync(recording.getURI());
+    // const info = await FileSystem.getInfoAsync(recording.getURI());
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -56,9 +88,7 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
   };
 
   const _stopPlaybackAndBeginRecording = async () => {
-    setIsRecording(true);
     setIsLoading(true);
-
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: true,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -83,6 +113,8 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
   const _updateScreenForSoundStatus = status => {
     console.log(status);
     if (status.isLoaded) {
+      setDuration(status.durationMillis);
+      setPosition(status.positionMillis);
     } else {
     }
   };
@@ -100,29 +132,92 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
 
   const _onRecordPressed = () => {
     if (isRecording) {
+      setIsRecording(false);
       _stopRecordingAndEnablePlayback();
     } else {
+      setIsRecording(true);
       _stopPlaybackAndBeginRecording();
     }
   };
 
   const _onPlayPausePressed = () => {
-    sound.playAsync();
+    if (!isPlaying) {
+      sound.playAsync();
+      setIsPlaying(true);
+    } else {
+      sound.pauseAsync();
+      setIsPlaying(false);
+    }
+  };
+
+  const _onResetSound = () => {
+    if (sound) {
+      setIsPlaying(true);
+      sound.replayAsync();
+    }
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Title style={styles.title} title={selectedMethod} />
-      <TouchableHighlight onPress={() => _onRecordPressed()}>
-        <Ionicons name="ios-play" size={32} color={Colors.primary} />
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => _onPlayPausePressed()}>
-        <Ionicons name="ios-play" size={32} color={Colors.primary} />
-      </TouchableHighlight>
+      <View style={styles.audioContainer}>
+        <View style={{ flexDirection: "row" }}>
+          <Animated.View
+            style={{ ...styles.recordingCircle, opacity: fadeOpacity }}
+          />
+          <TouchableOpacity onPress={() => _onRecordPressed()}>
+            <RecordIcon isRecording={isRecording} />
+          </TouchableOpacity>
+        </View>
+        {sound && (
+          <View style={styles.soundContainer}>
+            <TouchableOpacity onPress={() => _onPlayPausePressed()}>
+              <Ionicons
+                name={isPlaying ? "ios-pause" : "ios-play"}
+                size={48}
+                color={Colors.secondary}
+              />
+            </TouchableOpacity>
+            <Text style={styles.duration}>{`${position / 1000}/${duration /
+              1000}`}</Text>
+            <TouchableOpacity onPress={() => _onResetSound()}>
+              <Ionicons name="ios-refresh" size={42} color={Colors.secondary} />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {},
+  audioContainer: {
+    flex: 1,
+    justifyContent: "space-around",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: Colors.inputShade,
+    marginHorizontal: 25,
+    marginVertical: 15,
+    borderRadius: 15,
+    padding: 20
+  },
+  recordingCircle: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: Colors.secondary
+  },
+  soundContainer: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  duration: {
+    marginHorizontal: 5,
+    width: 100,
+    textAlign: "center"
+  }
+});
 
 export default CreateVoice;
