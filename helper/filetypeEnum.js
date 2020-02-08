@@ -8,7 +8,6 @@ export const filetypeEnum = Object.freeze({
 });
 
 export const getLocationFiletype = mediaRef => {
-  console.log(mediaRefEnum[mediaRef]);
   switch (mediaRefEnum[mediaRef]) {
     case mediaRefEnum.Image:
       return filetypeEnum.Image;

@@ -34,7 +34,6 @@ const UncoverTourItemScreen = props => {
   }, []);
 
   const _navigateToTourList = () => {
-    console.log(typeof id);
     switch (id) {
       case 1:
         dispatch(receivedActions.completedLocation(1));

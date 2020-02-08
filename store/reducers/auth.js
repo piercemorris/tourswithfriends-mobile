@@ -5,7 +5,6 @@ const initialState = { userId: null, displayName: null };
 export default (state = initialState, action) => {
   switch (action.type) {
     case AUTHENTICATE:
-      console.log(action.displayName);
       return {
         ...state,
         userId: action.userId,

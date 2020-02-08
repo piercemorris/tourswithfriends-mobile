@@ -34,7 +34,12 @@ const AudioPlayer = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems: "center"
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: 100,
+    borderRadius: 15,
+    backgroundColor: Colors.inputShade,
+    margin: 15
   },
   duration: {
     marginHorizontal: 5,

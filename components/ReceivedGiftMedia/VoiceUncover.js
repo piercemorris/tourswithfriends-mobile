@@ -38,7 +38,6 @@ const VoiceUncover = ({ name, mediaFileRef }) => {
   }, []);
 
   const onPlayPausePressed = () => {
-    console.log(soundObj);
     if (!isPlaying) {
       soundObj.playAsync();
       setIsPlaying(true);

@@ -196,10 +196,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: Colors.inputShade,
-    marginHorizontal: 25,
-    marginVertical: 15,
-    borderRadius: 15,
-    padding: 20
+    height: 100,
+    margin: 15,
+    borderRadius: 15
   },
   recordingCircle: {
     width: 12,
