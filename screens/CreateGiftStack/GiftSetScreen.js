@@ -30,7 +30,6 @@ const GiftSetScreen = props => {
   const locationThree = useSelector(store => store.gift.locationThree);
   const dispatch = useDispatch();
 
-  /*
   useEffect(() => {
     if (
       friendDetailsValid &&
@@ -55,7 +54,6 @@ const GiftSetScreen = props => {
     locationTwo,
     locationThree
   ]);
-  */
 
   const onConfirm = () => {
     setIsConfirming(false);

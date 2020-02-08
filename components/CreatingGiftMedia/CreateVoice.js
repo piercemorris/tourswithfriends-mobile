@@ -66,6 +66,8 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
     }
 
     const info = await FileSystem.getInfoAsync(recording.getURI());
+    returnMediaRef(info.uri);
+
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -113,7 +115,6 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
   };
 
   const _updateScreenForSoundStatus = status => {
-    console.log(status);
     if (status.isLoaded) {
       setDuration(status.durationMillis);
       setPosition(status.positionMillis);
@@ -127,7 +128,6 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
 
   const _updateScreenForRecordingStatus = status => {
     if (status.canRecord) {
-      //setIsRecording(status.isRecording);
     } else if (status.isDoneRecording) {
       setIsRecording(false);
       if (!isLoading) {

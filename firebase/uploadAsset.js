@@ -1,11 +1,13 @@
 import Firebase from "firebase";
 
-export const uploadImage = async (image, filename, uid) => {
-  const url = `images/${filename}`;
-  const imageData = await fetch(image);
-  const imageBlob = await imageData.blob();
+export const uploadAsset = async (file, filename, filetype) => {
+  const url = `${filetype}/${filename}`;
+  const fileData = await fetch(file);
+  const fileBlob = await fileData.blob();
 
-  const ref = Firebase.storage().ref().child(url);
+  const ref = Firebase.storage()
+    .ref()
+    .child(url);
 
-  return await ref.put(imageBlob).then(() => ref.getDownloadURL());
-}
+  return await ref.put(fileBlob).then(() => ref.getDownloadURL());
+};

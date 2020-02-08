@@ -11,6 +11,9 @@ export const SEND_GIFT_ERROR = "SEND_GIFT_ERROR";
 
 import url from "../../https/index";
 import * as assetOps from "../../firebase/uploadAsset";
+import { getLocationFiletype } from "../../helper/filetypeEnum";
+
+import representationEnum from "../../helper/representationEnum";
 
 export const sendGift = (
   friendDetails,
@@ -44,9 +47,21 @@ export const sendGift = (
 
     // wait for all images to upload
     const downloadUrls = await Promise.all([
-      await assetOps.uploadImage(locationOne.mediaFileRef, filenameOne),
-      await assetOps.uploadImage(locationTwo.mediaFileRef, filenameTwo),
-      await assetOps.uploadImage(locationThree.mediaFileRef, filenameThree)
+      await assetOps.uploadAsset(
+        locationOne.mediaFileRef,
+        filenameOne,
+        getLocationFiletype(locationOne.mediaType)
+      ),
+      await assetOps.uploadAsset(
+        locationTwo.mediaFileRef,
+        filenameTwo,
+        getLocationFiletype(locationTwo.mediaType)
+      ),
+      await assetOps.uploadAsset(
+        locationThree.mediaFileRef,
+        filenameThree,
+        getLocationFiletype(locationThree.mediaType)
+      )
     ]);
 
     const gift = {
