@@ -10,6 +10,8 @@ export const numberToFormattedKm = number => {
   return integer + remainder;
 };
 
+export const msToFormattedSecs = ms => Math.floor((ms / 1000) * 10) / 10;
+
 export const numberToFormattedMin = number => {
   return Math.ceil(number);
 };

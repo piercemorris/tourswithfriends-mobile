@@ -14,6 +14,7 @@ import Title from "../UI/Title";
 import RecordIcon from "../CreatingGiftMedia/RecordIcon";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
+import { msToFormattedSecs } from "../../helper/reusableFunctions";
 
 const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
   [audioPemission, setAudioPermission] = useState(false);
@@ -64,7 +65,7 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
       console.log(err);
     }
 
-    // const info = await FileSystem.getInfoAsync(recording.getURI());
+    const info = await FileSystem.getInfoAsync(recording.getURI());
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -78,7 +79,8 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
 
     const newSound = await recording.createNewLoadedSoundAsync(
       {
-        isLooping: true
+        isLooping: false,
+        progressUpdateIntervalMillis: 1000
       },
       _updateScreenForSoundStatus
     );
@@ -121,7 +123,7 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
 
   const _updateScreenForRecordingStatus = status => {
     if (status.canRecord) {
-      setIsRecording(status.isRecording);
+      //setIsRecording(status.isRecording);
     } else if (status.isDoneRecording) {
       setIsRecording(false);
       if (!isLoading) {
@@ -178,8 +180,9 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
                 color={Colors.secondary}
               />
             </TouchableOpacity>
-            <Text style={styles.duration}>{`${position / 1000}/${duration /
-              1000}`}</Text>
+            <Text style={styles.duration}>{`${msToFormattedSecs(
+              position
+            )}/${msToFormattedSecs(duration)}`}</Text>
             <TouchableOpacity onPress={() => _onResetSound()}>
               <Ionicons name="ios-refresh" size={42} color={Colors.secondary} />
             </TouchableOpacity>
