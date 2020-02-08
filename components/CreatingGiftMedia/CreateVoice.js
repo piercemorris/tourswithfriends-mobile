@@ -117,7 +117,11 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
     if (status.isLoaded) {
       setDuration(status.durationMillis);
       setPosition(status.positionMillis);
+    }
+    if (status.isPlaying) {
+      setIsPlaying(true);
     } else {
+      setIsPlaying(false);
     }
   };
 
@@ -218,6 +222,8 @@ const styles = StyleSheet.create({
   },
   duration: {
     marginHorizontal: 5,
+    fontFamily: "sf-bold",
+    fontSize: 22,
     width: 100,
     textAlign: "center"
   }

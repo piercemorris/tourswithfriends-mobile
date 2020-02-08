@@ -12,8 +12,6 @@ const RecordIcon = ({ isRecording }) => {
   const [dimension] = useState(new Animated.Value(32));
   const [radius] = useState(new Animated.Value(16));
 
-  console.log("isRecording?", isRecording);
-
   useEffect(() => {
     if (isRecording) {
       Animated.parallel([
