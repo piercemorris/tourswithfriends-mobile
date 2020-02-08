@@ -3,6 +3,7 @@ import { StyleSheet, Text } from "react-native";
 
 import mediaTypeRef from "../../helper/representationEnum";
 import ImageUncover from "../ReceivedGiftMedia/ImageUncover";
+import VoiceUncover from "../ReceivedGiftMedia/VoiceUncover";
 
 const MediaSwitcher = ({ name, mediaType, mediaFileRef }) => {
   switch (mediaTypeRef[mediaType]) {
@@ -17,7 +18,7 @@ const MediaSwitcher = ({ name, mediaType, mediaFileRef }) => {
     case mediaTypeRef["Music Alert"]:
       return <Text>Not yet implemented</Text>;
     case mediaTypeRef.Voice:
-      return <Text>Not yet implemented</Text>;
+      return <VoiceUncover name={name} mediaFileRef={mediaFileRef} />;
     case mediaTypeRef.Audio:
       return <Text>Not yet implemented</Text>;
     default:

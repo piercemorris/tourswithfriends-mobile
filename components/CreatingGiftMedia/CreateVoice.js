@@ -7,14 +7,13 @@ import {
   Animated
 } from "react-native";
 import { Audio } from "expo-av";
-import { Ionicons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 
 import Title from "../UI/Title";
+import AudioPlayer from "../UI/AudioPlayer";
 import RecordIcon from "../CreatingGiftMedia/RecordIcon";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
-import { msToFormattedSecs } from "../../helper/reusableFunctions";
 
 const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
   [audioPemission, setAudioPermission] = useState(false);
@@ -176,21 +175,13 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
           </TouchableOpacity>
         </View>
         {sound && (
-          <View style={styles.soundContainer}>
-            <TouchableOpacity onPress={() => _onPlayPausePressed()}>
-              <Ionicons
-                name={isPlaying ? "ios-pause" : "ios-play"}
-                size={48}
-                color={Colors.secondary}
-              />
-            </TouchableOpacity>
-            <Text style={styles.duration}>{`${msToFormattedSecs(
-              position
-            )}/${msToFormattedSecs(duration)}`}</Text>
-            <TouchableOpacity onPress={() => _onResetSound()}>
-              <Ionicons name="ios-refresh" size={42} color={Colors.secondary} />
-            </TouchableOpacity>
-          </View>
+          <AudioPlayer
+            isPlaying={isPlaying}
+            duration={duration}
+            position={position}
+            onPlayPausePressed={_onPlayPausePressed}
+            onResetSound={_onResetSound}
+          />
         )}
       </View>
     </View>
@@ -215,17 +206,6 @@ const styles = StyleSheet.create({
     height: 12,
     borderRadius: 6,
     backgroundColor: Colors.secondary
-  },
-  soundContainer: {
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  duration: {
-    marginHorizontal: 5,
-    fontFamily: "sf-bold",
-    fontSize: 22,
-    width: 100,
-    textAlign: "center"
   }
 });
 
