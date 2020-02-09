@@ -35,6 +35,7 @@ const ReceivedScreen = props => {
               horizontal={true}
               keyExtractor={item => item.id}
               data={receivedGifts}
+              showsHorizontalScrollIndicator={false}
               renderItem={item => (
                 <InformationBlock
                   navigation={props.navigation}
@@ -50,6 +51,7 @@ const ReceivedScreen = props => {
             <FlatList
               horizontal={true}
               keyExtractor={item => item.id}
+              showsHorizontalScrollIndicator={false}
               data={[{ id: "0" }, { id: "1" }, { id: "2" }]}
               renderItem={item => <InformationBlock empty />}
             />
