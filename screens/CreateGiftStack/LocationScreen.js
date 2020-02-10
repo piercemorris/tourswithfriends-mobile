@@ -161,7 +161,7 @@ const LocationScreen = props => {
           defaultValue={selectedName}
           onInputChange={(id, value, valid) => setSelectedName(value)}
         />
-        <Title title="Location Coordinates" />
+        <Title title="Pick Location" />
         {selectedLocation && selectedAddress ? (
           <View style={styles.addressContainer}>
             <StyledText style={styles.address}>
@@ -180,7 +180,7 @@ const LocationScreen = props => {
               viewStyle={styles.view}
               onPress={() => _getLocation()}
             >
-              Current Location
+              Current
             </Button>
             {isLoading ? (
               <ActivityIndicator color={Colors.primary} />
@@ -190,7 +190,7 @@ const LocationScreen = props => {
                 viewStyle={styles.view}
                 onPress={() => _navigateToSelectLocation()}
               >
-                Select Location
+                Select
               </Button>
             )}
           </View>
@@ -220,7 +220,7 @@ const LocationScreen = props => {
             style={styles.fullButton}
             onPress={() => _navigateToRepresentation()}
           >
-            Select method of representation
+            Representation
           </Button>
         )}
       </ScrollView>

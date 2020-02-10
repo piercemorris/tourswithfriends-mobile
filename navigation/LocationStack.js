@@ -6,8 +6,15 @@ import LocationScreen from "../screens/CreateGiftStack/LocationScreen";
 import CameraScreen from "../screens/Representation/CameraScreen";
 import ImageScreen from "../screens/Representation/ImageScreen";
 
+import TakeLocationScreen from "../screens/CreateGiftStack/CreateTourItemStack/TakeLocationScreen";
+import TakeImageScreen from "../screens/CreateGiftStack/CreateTourItemStack/TakeImageScreen";
+import TakeAudioScreen from "../screens/CreateGiftStack/CreateTourItemStack/TakeAudioScreen";
+
 const CreateGiftStack = createStackNavigator(
   {
+    TakeLocation: TakeLocationScreen,
+    TakeImage: TakeImageScreen,
+    TakeAudio: TakeAudioScreen,
     Location: LocationScreen,
     SelectLocation: SelectLocationScreen,
     Representation: RepresentationScreen,
