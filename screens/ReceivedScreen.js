@@ -68,6 +68,7 @@ const ReceivedScreen = props => {
       <FlatList
         horizontal={true}
         keyExtractor={item => item.id}
+        showsHorizontalScrollIndicator={false}
         data={[{ id: "0" }, { id: "1" }, { id: "2" }]}
         renderItem={item => <InformationBlock empty />}
       />

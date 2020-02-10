@@ -86,8 +86,18 @@ export const sendGift = (
     };
 
     await Firebase.database()
-      .ref("users/" + user + "/gifts/")
+      .ref(`users/${user}/gifts/`)
       .push(gift);
+
+    await Firebase.database()
+      .ref(`users/${user}/stats/giftsReceived`)
+      .transaction(val => (val || 0) + 1);
+
+    await Firebase.database()
+      .ref(`users/${sentByUser.uid}/stats/giftsSent`)
+      .transaction(val => (val || 0) + 1);
+
+    // update to notify the user about a failed gift send then reset
 
     try {
       res = await axios.post(url.live + "users" + url.GIFT_NOTIF_ENDPOINT, {
