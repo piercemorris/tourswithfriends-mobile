@@ -3,6 +3,8 @@ import { Platform } from "react-native";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
+import Region from "../models/Region";
+
 export const numberToFormattedKm = number => {
   const integer = Math.floor(number);
   let remainder = number - integer;
@@ -54,6 +56,8 @@ export const getRegionFrom = (lat, lon, accuracy) => {
       Math.cos(angularaccuracy) - Math.sin(lat) * Math.sin(lat)
     )
   );
+
+  return new Region(lat, lon, longitudeDelta, longitudeDelta);
 
   return (result = {
     latitude: lat,
