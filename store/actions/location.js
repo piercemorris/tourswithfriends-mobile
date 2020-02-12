@@ -141,9 +141,9 @@ export const updateLocation = (
   id,
   name,
   location,
-  address,
-  mediaType,
-  mediaFileRef
+  address
+  // mediaType,
+  //  mediaFileRef
 ) => {
   let action;
   if (id === 1) {
@@ -159,9 +159,9 @@ export const updateLocation = (
       type: action,
       name,
       location,
-      address,
-      mediaType,
-      mediaFileRef
+      address
+      // mediaType,
+      // mediaFileRef
     });
   };
 };

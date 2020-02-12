@@ -45,9 +45,9 @@ export default (state = initialState, action) => {
         locationOne: {
           name: action.name,
           location: action.location,
-          address: action.address,
-          mediaType: action.mediaType,
-          mediaFileRef: action.mediaFileRef
+          address: action.address
+          // mediaType: action.mediaType,
+          // mediaFileRef: action.mediaFileRef
         }
       };
     case UPDATE_LOCATION_TWO:
@@ -56,9 +56,9 @@ export default (state = initialState, action) => {
         locationTwo: {
           name: action.name,
           location: action.location,
-          address: action.address,
-          mediaType: action.mediaType,
-          mediaFileRef: action.mediaFileRef
+          address: action.address
+          // mediaType: action.mediaType,
+          // mediaFileRef: action.mediaFileRef
         }
       };
     case UPDATE_LOCATION_THREE:
@@ -67,9 +67,9 @@ export default (state = initialState, action) => {
         locationThree: {
           name: action.name,
           location: action.location,
-          address: action.address,
-          mediaType: action.mediaType,
-          mediaFileRef: action.mediaFileRef
+          address: action.address
+          // mediaType: action.mediaType,
+          // mediaFileRef: action.mediaFileRef
         }
       };
     default:

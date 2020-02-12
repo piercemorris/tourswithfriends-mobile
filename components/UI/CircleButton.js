@@ -46,15 +46,19 @@ const CircleButton = props => {
 
 const styles = StyleSheet.create({
   container: {
-    ...Layout.shadow
-  },
-  viewContainer: {
-    padding: 20
-  },
-  gradient: {
+    ...Layout.shadow,
+    borderColor: Colors.primary,
+    borderWidth: 5,
     height: Layout.window.width / 4,
     width: Layout.window.width / 4,
     borderRadius: Layout.window.width / 8,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  gradient: {
+    height: Layout.window.width / 5,
+    width: Layout.window.width / 5,
+    borderRadius: Layout.window.width / 10,
     justifyContent: "center",
     alignItems: "center"
   },

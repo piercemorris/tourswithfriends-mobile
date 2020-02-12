@@ -4,7 +4,6 @@ import * as Permissions from "expo-permissions";
 import { Camera } from "expo-camera";
 import * as FileSystem from "expo-file-system";
 
-import BackButton from "../../components/UI/BackButton";
 import CircleButton from "../../components/UI/CircleButton";
 
 const CameraScreen = props => {
@@ -29,7 +28,10 @@ const CameraScreen = props => {
   _takePicture = async () => {
     if (this.camera) {
       Vibration.vibrate(500);
-      this.camera.takePictureAsync({ onPictureSaved: _onPictureSaved, quality: 0.5 });
+      this.camera.takePictureAsync({
+        onPictureSaved: _onPictureSaved,
+        quality: 0.5
+      });
     }
   };
 
@@ -60,9 +62,7 @@ const CameraScreen = props => {
           }}
         >
           <View style={styles.cameraView}>
-            <View>
-              <BackButton {...props} />
-            </View>
+            <View></View>
             <View style={styles.bottomNavigator}>
               <CircleButton onPress={() => _takePicture()} />
             </View>
@@ -88,13 +88,14 @@ const styles = StyleSheet.create({
   },
   cameraView: {
     flex: 1,
-    paddingTop: 35,
+    paddingTop: 5,
     backgroundColor: "transparent",
     justifyContent: "space-between"
   },
   bottomNavigator: {
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginVertical: 35
   }
 });
 

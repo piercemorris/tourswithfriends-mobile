@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Alert, StatusBar } from "react-native";
 
 import Header from "../../../components/UI/Header";
 import Input from "../../../components/UI/Input";
@@ -8,13 +8,69 @@ import Button from "../../../components/UI/Button";
 import SmallTitle from "../../../components/UI/SmallTitle";
 import MapView from "../../../components/UI/MapView";
 
+import * as locationActions from "../../../store/actions/location";
+
 const TakeLocationScreen = props => {
+  const _updateSavedData = () => {
+    switch (locationId) {
+      case 1:
+        return useSelector(store => store.gift.locationOne);
+      case 2:
+        return useSelector(store => store.gift.locationTwo);
+      case 3:
+        return useSelector(store => store.gift.locationThree);
+    }
+  };
+
+  const savedData = useState(_updateSavedData());
   const [locationId] = useState(props.navigation.getParam("id"));
-  const [selectedName, setSelectedName] = useState("");
+  const [selectedName, setSelectedName] = useState(
+    savedData ? savedData.name : ""
+  );
+  const [selectedLocation, setSelectedLocation] = useState(
+    savedData ? savedData.location : null
+  );
+  const [selectedAddress, setSelectedAddress] = useState(
+    savedData ? savedData.address : null
+  );
+  const [error, setError] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An error occured!", "Not all fields have been completed", {
+        text: "Ok"
+      });
+      setError(false);
+    }
+  }, [error]);
+
+  const _handleUpdateLocation = (location, address) => {
+    setSelectedLocation(location);
+    setSelectedAddress(address);
+  };
+
+  const _handleNext = () => {
+    if ((selectedName, selectedLocation, selectedAddress)) {
+      dispatch(
+        locationActions.updateLocation(
+          locationId,
+          selectedName,
+          selectedLocation,
+          selectedAddress
+        )
+      );
+      props.navigation.navigate("TakeImage");
+    } else {
+      setError(true);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.main}>
+      <StatusBar barStyle="light-content" />
+      <View style={{ flex: 1 }}>
         <Header style={{ marginBottom: 10 }} title={`Location ${locationId}`} />
         <Input
           id="name"
@@ -23,13 +79,9 @@ const TakeLocationScreen = props => {
           onInputChange={(id, value, valid) => setSelectedName(value)}
         />
         <SmallTitle title="Select Location" />
-        <MapView />
+        <MapView onUpdateLocation={_handleUpdateLocation} />
       </View>
-      <Button
-        fill
-        style={styles.navigationButton}
-        onPress={() => props.navigation.navigate("TakeImage")}
-      >
+      <Button fill style={styles.navigationButton} onPress={_handleNext}>
         Next Step
       </Button>
     </View>
@@ -41,9 +93,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 25,
     justifyContent: "space-between"
-  },
-  main: {
-    flex: 1
   }
 });
 

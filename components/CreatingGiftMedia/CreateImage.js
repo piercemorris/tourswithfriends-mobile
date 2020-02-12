@@ -12,21 +12,21 @@ import Title from "../UI/Title";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 
-const CreateImage = ({ mediaRef, returnMediaRef, navigation }) => {
+const CreateImage = ({ imageRef, returnImageRef, navigation }) => {
   _navigateToCamera = () => {
     navigation.navigate("Camera", {
-      returnData: returnMediaRef
+      returnData: returnImageRef
     });
   };
 
   return (
     <View>
-      <Title style={styles.title} title={selectedMethod} />
-      {mediaRef ? (
+      <Title style={styles.title} title="Take an image" />
+      {imageRef ? (
         <TouchableOpacity onPress={() => _navigateToCamera()}>
           <Image
             style={styles.imageContainer}
-            source={{ uri: mediaRef }}
+            source={{ uri: imageRef }}
             resizeMode="cover"
           />
         </TouchableOpacity>

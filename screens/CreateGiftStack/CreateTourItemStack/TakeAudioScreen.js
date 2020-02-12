@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 
 const TakeAudioScreen = props => {
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
       <Text>TakeAudioScreen</Text>
     </View>
   );

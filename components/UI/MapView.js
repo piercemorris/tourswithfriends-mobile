@@ -42,6 +42,7 @@ const CustomMapView = props => {
 
     setSelectedAddress(address[0]);
     setSelectedLocation(markerLocation);
+    props.onUpdateLocation(markerLocation, address[0]);
   };
 
   return (
