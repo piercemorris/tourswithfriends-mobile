@@ -2,7 +2,7 @@ const primary = "#F6511D";
 const secondary = "#EC0B43";
 const grey = "#3C3C43";
 const lightGrey = "#3C3C4399";
-const inputShade = "#E2E2E2";
+const inputShade = "#E6E6E6";
 const loadingBackground = "#F5FCFF88";
 
 export default {

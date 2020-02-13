@@ -12,7 +12,7 @@ import * as locationActions from "../../../store/actions/location";
 
 const TakeLocationScreen = props => {
   const _updateSavedData = () => {
-    switch (locationId) {
+    switch (id) {
       case 1:
         return useSelector(store => store.gift.locationOne);
       case 2:
@@ -22,8 +22,8 @@ const TakeLocationScreen = props => {
     }
   };
 
-  const savedData = useState(_updateSavedData());
-  const [locationId] = useState(props.navigation.getParam("id"));
+  const [savedData] = useState(_updateSavedData());
+  const [id] = useState(props.navigation.getParam("id"));
   const [selectedName, setSelectedName] = useState(
     savedData ? savedData.name : ""
   );
@@ -55,13 +55,15 @@ const TakeLocationScreen = props => {
     if ((selectedName, selectedLocation, selectedAddress)) {
       dispatch(
         locationActions.updateLocation(
-          locationId,
+          id,
           selectedName,
           selectedLocation,
           selectedAddress
         )
       );
-      props.navigation.navigate("TakeImage");
+      props.navigation.navigate("TakeImage", {
+        id: id
+      });
     } else {
       setError(true);
     }
@@ -71,7 +73,7 @@ const TakeLocationScreen = props => {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={{ flex: 1 }}>
-        <Header style={{ marginBottom: 10 }} title={`Location ${locationId}`} />
+        <Header style={{ marginBottom: 10 }} title={`Location ${id}`} />
         <Input
           id="name"
           title="Name"

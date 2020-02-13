@@ -4,6 +4,9 @@ import {
   UPDATE_LOCATION_ONE,
   UPDATE_LOCATION_TWO,
   UPDATE_LOCATION_THREE,
+  UPDATE_IMAGE_ONE,
+  UPDATE_IMAGE_TWO,
+  UPDATE_IMAGE_THREE,
   SEND_GIFT
 } from "../actions/location";
 
@@ -46,8 +49,6 @@ export default (state = initialState, action) => {
           name: action.name,
           location: action.location,
           address: action.address
-          // mediaType: action.mediaType,
-          // mediaFileRef: action.mediaFileRef
         }
       };
     case UPDATE_LOCATION_TWO:
@@ -57,8 +58,6 @@ export default (state = initialState, action) => {
           name: action.name,
           location: action.location,
           address: action.address
-          // mediaType: action.mediaType,
-          // mediaFileRef: action.mediaFileRef
         }
       };
     case UPDATE_LOCATION_THREE:
@@ -68,8 +67,33 @@ export default (state = initialState, action) => {
           name: action.name,
           location: action.location,
           address: action.address
-          // mediaType: action.mediaType,
-          // mediaFileRef: action.mediaFileRef
+        }
+      };
+    case UPDATE_IMAGE_ONE:
+      return {
+        ...state,
+        locationOne: {
+          ...state.locationOne,
+          image: action.image,
+          clue: action.clue
+        }
+      };
+    case UPDATE_IMAGE_TWO:
+      return {
+        ...state,
+        locationTwo: {
+          ...state.locationTwo,
+          image: action.image,
+          clue: action.clue
+        }
+      };
+    case UPDATE_IMAGE_THREE:
+      return {
+        ...state,
+        locationThree: {
+          ...state.locationThree,
+          image: action.image,
+          clue: action.clue
         }
       };
     default:

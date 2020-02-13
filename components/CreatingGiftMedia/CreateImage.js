@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import Title from "../UI/Title";
+import SmallTitle from "../UI/SmallTitle";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 
@@ -21,7 +21,7 @@ const CreateImage = ({ imageRef, returnImageRef, navigation }) => {
 
   return (
     <View>
-      <Title style={styles.title} title="Take an image" />
+      <SmallTitle style={styles.title} title="Take an image" />
       {imageRef ? (
         <TouchableOpacity onPress={() => _navigateToCamera()}>
           <Image

@@ -3,9 +3,15 @@ import axios from "axios";
 
 export const UPDATE_FRIEND_DETAILS = "UPDATE_FRIEND_DETAILS";
 export const UPDATE_TOUR_DETAILS = "UPDATE_TOUR_DETAILS";
+
 export const UPDATE_LOCATION_ONE = "UPDATE_LOCATION_ONE";
 export const UPDATE_LOCATION_TWO = "UPDATE_LOCATION_TWO";
 export const UPDATE_LOCATION_THREE = "UPDATE_LOCATION_THREE";
+
+export const UPDATE_IMAGE_ONE = "UPDATE_IMAGE_ONE";
+export const UPDATE_IMAGE_TWO = "UPDATE_IMAGE_TWO";
+export const UPDATE_IMAGE_THREE = "UPDATE_IMAGE_THREE";
+
 export const SEND_GIFT = "SEND_GIFT";
 export const SEND_GIFT_ERROR = "SEND_GIFT_ERROR";
 
@@ -137,14 +143,26 @@ export const updateTourDetails = (title, city, description, start) => {
   };
 };
 
-export const updateLocation = (
-  id,
-  name,
-  location,
-  address
-  // mediaType,
-  //  mediaFileRef
-) => {
+export const updateImageAndClue = (id, image, clue) => {
+  let action;
+  if (id === 1) {
+    action = UPDATE_IMAGE_ONE;
+  } else if (id === 2) {
+    action = UPDATE_IMAGE_TWO;
+  } else {
+    action = UPDATE_IMAGE_THREE;
+  }
+
+  return dispatch => {
+    dispatch({
+      type: action,
+      image,
+      clue
+    });
+  };
+};
+
+export const updateLocation = (id, name, location, address) => {
   let action;
   if (id === 1) {
     action = UPDATE_LOCATION_ONE;
@@ -160,8 +178,6 @@ export const updateLocation = (
       name,
       location,
       address
-      // mediaType,
-      // mediaFileRef
     });
   };
 };
