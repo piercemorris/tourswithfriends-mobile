@@ -9,11 +9,9 @@ import {
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 
-import Title from "../UI/Title";
 import AudioPlayer from "../UI/AudioPlayer";
 import RecordIcon from "../CreatingGiftMedia/RecordIcon";
 import Colors from "../../constants/Colors";
-import Layout from "../../constants/Layout";
 
 const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
   [audioPemission, setAudioPermission] = useState(false);
@@ -164,24 +162,29 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Title style={styles.title} title={selectedMethod} />
       <View style={styles.audioContainer}>
-        <View style={{ flexDirection: "row" }}>
-          <Animated.View
-            style={{ ...styles.recordingCircle, opacity: fadeOpacity }}
-          />
-          <TouchableOpacity onPress={() => _onRecordPressed()}>
-            <RecordIcon isRecording={isRecording} />
-          </TouchableOpacity>
-        </View>
-        {sound && (
-          <AudioPlayer
-            isPlaying={isPlaying}
-            duration={duration}
-            position={position}
-            onPlayPausePressed={_onPlayPausePressed}
-            onResetSound={_onResetSound}
-          />
+        {!sound ? (
+          <View style={{ flexDirection: "row" }}>
+            <Animated.View
+              style={{ ...styles.recordingCircle, opacity: fadeOpacity }}
+            />
+            <TouchableOpacity onPress={() => _onRecordPressed()}>
+              <RecordIcon isRecording={isRecording} />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={{ alignItems: "center" }}>
+            <AudioPlayer
+              isPlaying={isPlaying}
+              duration={duration}
+              position={position}
+              onPlayPausePressed={_onPlayPausePressed}
+              onResetSound={_onResetSound}
+            />
+            <TouchableOpacity onPress={() => setSound(null)}>
+              <Text style={styles.textButton}>Retake?</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     </View>
@@ -189,14 +192,11 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
   audioContainer: {
     flex: 1,
     justifyContent: "space-around",
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: Colors.inputShade,
-    height: 100,
     margin: 15,
     borderRadius: 15
   },
@@ -205,6 +205,11 @@ const styles = StyleSheet.create({
     height: 12,
     borderRadius: 6,
     backgroundColor: Colors.secondary
+  },
+  textButton: {
+    fontFamily: "sf-bold",
+    fontSize: 18,
+    color: Colors.secondary
   }
 });
 

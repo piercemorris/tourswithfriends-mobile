@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { View, Animated, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
+import Layout from "../../constants/Layout";
 
 const DURATION = 100;
-const CIRCLE_DIM = 32;
-const SQUARE_DIM = 24;
+const CIRCLE_DIM = Layout.window.width / 3;
+const SQUARE_DIM = Layout.window.width / 3.75;
 const CIRCLE_RAD = CIRCLE_DIM / 2;
 const SQUARE_RAD = 5;
 
 const RecordIcon = ({ isRecording }) => {
-  const [dimension] = useState(new Animated.Value(32));
-  const [radius] = useState(new Animated.Value(16));
+  const [dimension] = useState(new Animated.Value(CIRCLE_DIM));
+  const [radius] = useState(new Animated.Value(CIRCLE_RAD));
 
   useEffect(() => {
     if (isRecording) {
@@ -54,11 +55,11 @@ const RecordIcon = ({ isRecording }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 48,
-    height: 48,
-    borderRadius: 48 / 2,
+    width: Layout.window.width / 2.25,
+    height: Layout.window.width / 2.25,
+    borderRadius: Layout.window.width / 4.5,
     borderColor: Colors.primary,
-    borderWidth: 3,
+    borderWidth: 8,
     justifyContent: "center",
     alignItems: "center"
   },
