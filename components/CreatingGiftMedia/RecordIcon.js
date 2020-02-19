@@ -7,7 +7,7 @@ const DURATION = 100;
 const CIRCLE_DIM = Layout.window.width / 3;
 const SQUARE_DIM = Layout.window.width / 3.75;
 const CIRCLE_RAD = CIRCLE_DIM / 2;
-const SQUARE_RAD = 5;
+const SQUARE_RAD = 15;
 
 const RecordIcon = ({ isRecording }) => {
   const [dimension] = useState(new Animated.Value(CIRCLE_DIM));

@@ -18,6 +18,7 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
   [isRecording, setIsRecording] = useState(false);
   [isPlaying, setIsPlaying] = useState(false);
   [isLoading, setIsLoading] = useState(false);
+  [isSeeking, setIsSeeking] = useState(false);
   [recording, setRecording] = useState(null);
   [sound, setSound] = useState(null);
   [duration, setDuration] = useState(null);
@@ -79,7 +80,7 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
     const newSound = await recording.createNewLoadedSoundAsync(
       {
         isLooping: false,
-        progressUpdateIntervalMillis: 1000
+        progressUpdateIntervalMillis: 200
       },
       _updateScreenForSoundStatus
     );
@@ -145,6 +146,9 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
 
   const _onPlayPausePressed = () => {
     if (!isPlaying) {
+      if (position === duration) {
+        sound.setPositionAsync(0);
+      }
       sound.playAsync();
       setIsPlaying(true);
     } else {
@@ -157,6 +161,22 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
     if (sound) {
       setIsPlaying(true);
       sound.replayAsync();
+    }
+  };
+
+  const _onSeekSliderValueChanged = () => {
+    if (sound !== null && !isSeeking) {
+      setIsSeeking(true);
+      sound.pauseAsync();
+    }
+  };
+
+  const _onSeekSliderComplete = async value => {
+    if (sound !== null) {
+      setIsSeeking(false);
+      console.log(value);
+      const seekPosition = value * duration;
+      await sound.setPositionAsync(seekPosition);
     }
   };
 
@@ -178,6 +198,8 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
               isPlaying={isPlaying}
               duration={duration}
               position={position}
+              onSeekSliderValueChanged={_onSeekSliderValueChanged}
+              onSeekSliderComplete={_onSeekSliderComplete}
               onPlayPausePressed={_onPlayPausePressed}
               onResetSound={_onResetSound}
             />

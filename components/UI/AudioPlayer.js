@@ -1,14 +1,17 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Slider } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "../../constants/Colors";
 import { msToFormattedSecs } from "../../helper/reusableFunctions";
+import Layout from "../../constants/Layout";
 
 const AudioPlayer = ({
   isPlaying,
   duration,
   position,
+  onSeekSliderValueChanged,
+  onSeekSliderComplete,
   onPlayPausePressed,
   onResetSound
 }) => {
@@ -21,9 +24,13 @@ const AudioPlayer = ({
           color={Colors.secondary}
         />
       </TouchableOpacity>
-      <Text style={styles.duration}>{`${msToFormattedSecs(
-        position
-      )}/${msToFormattedSecs(duration)}`}</Text>
+      <Slider
+        style={{ flex: 1, marginHorizontal: 15 }}
+        value={position / duration}
+        minimumTrackTintColor={Colors.secondary}
+        onValueChange={() => onSeekSliderValueChanged()}
+        onSlidingComplete={position => onSeekSliderComplete(position)}
+      />
       <TouchableOpacity onPress={() => onResetSound()}>
         <Ionicons name="ios-refresh" size={42} color={Colors.secondary} />
       </TouchableOpacity>
@@ -31,15 +38,23 @@ const AudioPlayer = ({
   );
 };
 
+/**      <Text style={styles.duration}>{`${msToFormattedSecs(
+        position
+      )}/${msToFormattedSecs(duration)}`}</Text>
+ 
+ */
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
     height: 100,
+    width: Layout.window.width - 40,
     borderRadius: 15,
     backgroundColor: Colors.inputShade,
-    margin: 15
+    margin: 15,
+    paddingHorizontal: 15
   },
   duration: {
     marginHorizontal: 5,
