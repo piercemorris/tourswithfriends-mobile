@@ -13,7 +13,10 @@ const TakeAudioScreen = props => {
   };
 
   const _handleNext = () => {
-    props.navigation.pop();
+    if (selectedAudio) {
+      props.navigation.pop(2);
+      props.navigation.pop();
+    }
   };
 
   return (

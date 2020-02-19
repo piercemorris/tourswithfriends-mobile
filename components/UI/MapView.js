@@ -13,8 +13,10 @@ import Layout from "../../constants/Layout";
 
 const CustomMapView = props => {
   const [accurateLocation, setAccurateLocation] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(
+    props.markerLocation
+  );
+  const [selectedAddress, setSelectedAddress] = useState(props.markerAddress);
 
   useEffect(() => {
     _getCurrentLocation();

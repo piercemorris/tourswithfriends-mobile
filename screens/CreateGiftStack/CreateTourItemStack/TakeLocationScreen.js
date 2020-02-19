@@ -11,8 +11,8 @@ import MapView from "../../../components/UI/MapView";
 import * as locationActions from "../../../store/actions/location";
 
 const TakeLocationScreen = props => {
-  const _updateSavedData = () => {
-    switch (id) {
+  const _updateSavedData = locationId => {
+    switch (locationId) {
       case 1:
         return useSelector(store => store.gift.locationOne);
       case 2:
@@ -22,10 +22,10 @@ const TakeLocationScreen = props => {
     }
   };
 
-  const [savedData] = useState(_updateSavedData());
   const [id] = useState(props.navigation.getParam("id"));
+  const [savedData] = useState(_updateSavedData(id));
   const [selectedName, setSelectedName] = useState(
-    savedData ? savedData.name : ""
+    savedData ? savedData.name : null
   );
   const [selectedLocation, setSelectedLocation] = useState(
     savedData ? savedData.location : null
@@ -52,7 +52,7 @@ const TakeLocationScreen = props => {
   };
 
   const _handleNext = () => {
-    if ((selectedName, selectedLocation, selectedAddress)) {
+    if (selectedName && selectedLocation && selectedAddress) {
       dispatch(
         locationActions.updateLocation(
           id,
@@ -81,7 +81,11 @@ const TakeLocationScreen = props => {
           onInputChange={(id, value, valid) => setSelectedName(value)}
         />
         <SmallTitle title="Select Location" />
-        <MapView onUpdateLocation={_handleUpdateLocation} />
+        <MapView
+          markerLocation={selectedLocation ? selectedLocation : null}
+          markerAddress={selectedAddress ? selectedAddress : null}
+          onUpdateLocation={_handleUpdateLocation}
+        />
       </View>
       <Button fill style={styles.navigationButton} onPress={_handleNext}>
         Next Step

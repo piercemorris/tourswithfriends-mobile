@@ -12,9 +12,9 @@ import TakeAudioScreen from "../screens/CreateGiftStack/CreateTourItemStack/Take
 
 const CreateGiftStack = createStackNavigator(
   {
-    TakeAudio: TakeAudioScreen, //change to last TAKE screen
     TakeLocation: TakeLocationScreen,
     TakeImage: TakeImageScreen,
+    TakeAudio: TakeAudioScreen,
     Location: LocationScreen,
     SelectLocation: SelectLocationScreen,
     Representation: RepresentationScreen,

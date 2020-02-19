@@ -48,7 +48,7 @@ const TakeImageScreen = props => {
   };
 
   const _handleNext = () => {
-    if ((selectedClue, selectedImage)) {
+    if (selectedClue && selectedImage) {
       dispatch(
         locationActions.updateImageAndClue(id, selectedImage, selectedClue)
       );

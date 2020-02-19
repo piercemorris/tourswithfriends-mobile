@@ -13,7 +13,7 @@ import AudioPlayer from "../UI/AudioPlayer";
 import RecordIcon from "../CreatingGiftMedia/RecordIcon";
 import Colors from "../../constants/Colors";
 
-const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
+const CreateVoice = ({ returnMediaRef }) => {
   [audioPemission, setAudioPermission] = useState(false);
   [isRecording, setIsRecording] = useState(false);
   [isPlaying, setIsPlaying] = useState(false);
@@ -49,6 +49,12 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
       }).start();
     }
   }, [isRecording]);
+
+  useEffect(() => {
+    if (sound) {
+      returnMediaRef(sound);
+    }
+  }, [sound]);
 
   _askForAudioPermissions = async () => {
     const response = await Audio.requestPermissionsAsync();
@@ -174,7 +180,6 @@ const CreateVoice = ({ mediaRef, returnMediaRef, navigation }) => {
   const _onSeekSliderComplete = async value => {
     if (sound !== null) {
       setIsSeeking(false);
-      console.log(value);
       const seekPosition = value * duration;
       await sound.setPositionAsync(seekPosition);
     }
