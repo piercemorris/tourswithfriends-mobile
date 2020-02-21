@@ -12,6 +12,10 @@ export const UPDATE_IMAGE_ONE = "UPDATE_IMAGE_ONE";
 export const UPDATE_IMAGE_TWO = "UPDATE_IMAGE_TWO";
 export const UPDATE_IMAGE_THREE = "UPDATE_IMAGE_THREE";
 
+export const UPDATE_AUDIO_ONE = "UPDATE_AUDIO_ONE";
+export const UPDATE_AUDIO_TWO = "UPDATE_AUDIO_TWO";
+export const UPDATE_AUDIO_THREE = "UPDATE_AUDIO_THREE";
+
 export const SEND_GIFT = "SEND_GIFT";
 export const SEND_GIFT_ERROR = "SEND_GIFT_ERROR";
 
@@ -178,6 +182,24 @@ export const updateLocation = (id, name, location, address) => {
       name,
       location,
       address
+    });
+  };
+};
+
+export const updateAudio = (id, audio) => {
+  let action;
+  if (id === 1) {
+    action = UPDATE_AUDIO_ONE;
+  } else if (id === 2) {
+    action = UPDATE_AUDIO_TWO;
+  } else {
+    action = UPDATE_AUDIO_THREE;
+  }
+
+  return dispatch => {
+    dispatch({
+      type: action,
+      audio
     });
   };
 };

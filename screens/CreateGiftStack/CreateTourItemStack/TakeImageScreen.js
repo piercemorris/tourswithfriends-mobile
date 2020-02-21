@@ -11,8 +11,8 @@ import CreateImage from "../../../components/CreatingGiftMedia/CreateImage";
 import * as locationActions from "../../../store/actions/location";
 
 const TakeImageScreen = props => {
-  const _updateSavedData = () => {
-    switch (id) {
+  const _updateSavedData = locationId => {
+    switch (locationId) {
       case 1:
         return useSelector(store => store.gift.locationOne);
       case 2:
@@ -22,8 +22,8 @@ const TakeImageScreen = props => {
     }
   };
 
-  const [savedData] = useState(_updateSavedData());
   const [id] = useState(props.navigation.getParam("id"));
+  const [savedData] = useState(_updateSavedData(id));
   const [selectedClue, setSelectedClue] = useState(
     savedData ? savedData.clue : null
   );

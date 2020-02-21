@@ -51,9 +51,7 @@ const CreateVoice = ({ returnMediaRef }) => {
   }, [isRecording]);
 
   useEffect(() => {
-    if (sound) {
-      returnMediaRef(sound);
-    }
+    returnMediaRef(sound);
   }, [sound]);
 
   _askForAudioPermissions = async () => {

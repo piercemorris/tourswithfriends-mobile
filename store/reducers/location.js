@@ -7,6 +7,9 @@ import {
   UPDATE_IMAGE_ONE,
   UPDATE_IMAGE_TWO,
   UPDATE_IMAGE_THREE,
+  UPDATE_AUDIO_ONE,
+  UPDATE_AUDIO_TWO,
+  UPDATE_AUDIO_THREE,
   SEND_GIFT
 } from "../actions/location";
 
@@ -20,7 +23,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   console.log(action.type);
-  console.log(state);
   switch (action.type) {
     case SEND_GIFT:
       return { ...initialState };
@@ -47,6 +49,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         locationOne: {
+          ...state.locationOne,
           name: action.name,
           location: action.location,
           address: action.address
@@ -56,6 +59,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         locationTwo: {
+          ...state.locationTwo,
           name: action.name,
           location: action.location,
           address: action.address
@@ -65,6 +69,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         locationThree: {
+          ...state.locationThree,
           name: action.name,
           location: action.location,
           address: action.address
@@ -95,6 +100,30 @@ export default (state = initialState, action) => {
           ...state.locationThree,
           image: action.image,
           clue: action.clue
+        }
+      };
+    case UPDATE_AUDIO_ONE:
+      return {
+        ...state,
+        locationOne: {
+          ...state.locationOne,
+          audio: action.audio
+        }
+      };
+    case UPDATE_AUDIO_TWO:
+      return {
+        ...state,
+        locationTwo: {
+          ...state.locationTwo,
+          audio: action.audio
+        }
+      };
+    case UPDATE_AUDIO_THREE:
+      return {
+        ...state,
+        locationThree: {
+          ...state.locationThree,
+          audio: action.audio
         }
       };
     default:
