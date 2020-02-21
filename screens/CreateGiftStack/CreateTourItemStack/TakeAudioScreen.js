@@ -9,10 +9,24 @@ import CreateVoice from "../../../components/CreatingGiftMedia/CreateVoice";
 import * as locationActions from "../../../store/actions/location";
 
 const TakeAudioScreen = props => {
+  const _updateSavedData = locationId => {
+    switch (locationId) {
+      case 1:
+        return useSelector(store => store.gift.locationOne);
+      case 2:
+        return useSelector(store => store.gift.locationTwo);
+      case 3:
+        return useSelector(store => store.gift.locationThree);
+    }
+  };
+
   const dispatch = useDispatch();
   const [id] = useState(props.navigation.getParam("id"));
+  const [savedData] = useState(_updateSavedData(id));
   const [error, setError] = useState(false);
-  const [selectedAudio, setSelectedAudio] = useState(null);
+  const [selectedAudio, setSelectedAudio] = useState(
+    savedData ? savedData.audio : null
+  );
 
   const _returnAudio = audio => {
     setSelectedAudio(audio);
@@ -43,7 +57,10 @@ const TakeAudioScreen = props => {
       <View style={styles.mainContainer}>
         <Header style={{ marginBottom: 10 }} title="Audio message" />
         <View style={styles.audioContainer}>
-          <CreateVoice returnMediaRef={_returnAudio} />
+          <CreateVoice
+            audioRef={selectedAudio ? selectedAudio : null}
+            returnMediaRef={_returnAudio}
+          />
         </View>
       </View>
       <Button fill style={styles.navigationButton} onPress={_handleNext}>

@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Animated
+  Animated,
+  Picker
 } from "react-native";
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
@@ -13,14 +14,14 @@ import AudioPlayer from "../UI/AudioPlayer";
 import RecordIcon from "../CreatingGiftMedia/RecordIcon";
 import Colors from "../../constants/Colors";
 
-const CreateVoice = ({ returnMediaRef }) => {
+const CreateVoice = ({ audioRef, returnMediaRef }) => {
   [audioPemission, setAudioPermission] = useState(false);
   [isRecording, setIsRecording] = useState(false);
   [isPlaying, setIsPlaying] = useState(false);
   [isLoading, setIsLoading] = useState(false);
   [isSeeking, setIsSeeking] = useState(false);
   [recording, setRecording] = useState(null);
-  [sound, setSound] = useState(null);
+  [sound, setSound] = useState(audioRef);
   [duration, setDuration] = useState(null);
   [position, setPosition] = useState(null);
   [fadeOpacity, setFadeOpacity] = useState(new Animated.Value(0));
@@ -37,6 +38,7 @@ const CreateVoice = ({ returnMediaRef }) => {
 
   useEffect(() => {
     _askForAudioPermissions();
+    updateSound();
   }, []);
 
   useEffect(() => {
@@ -51,8 +53,44 @@ const CreateVoice = ({ returnMediaRef }) => {
   }, [isRecording]);
 
   useEffect(() => {
-    returnMediaRef(sound);
+    if (sound) {
+    }
   }, [sound]);
+
+  /*
+  const _saveAudio = async () => {
+    const time = Date.now();
+    const newLocation = `${FileSystem.documentDirectory}audio/${time}.mp4`;
+
+    console.log(sound);
+    try {
+      await FileSystem.moveAsync({
+        from: sound.status.uri,
+        to: newLocation
+      });
+
+      returnMediaRef(newLocation);
+    } catch (ex) {
+      console.error(ex);
+    }
+  };
+  */
+
+  const updateSound = async () => {
+    if (audioRef) {
+      console.log("AUDIO FILE:", audioRef);
+      const newSound = await Audio.Sound.createAsync(
+        { uri: audioRef },
+        {
+          isLooping: false,
+          progressUpdateIntervalMillis: 200
+        },
+        _updateScreenForSoundStatus
+      );
+
+      setSound(newSound.sound);
+    }
+  };
 
   _askForAudioPermissions = async () => {
     const response = await Audio.requestPermissionsAsync();
