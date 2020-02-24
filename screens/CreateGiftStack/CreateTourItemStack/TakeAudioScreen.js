@@ -43,6 +43,7 @@ const TakeAudioScreen = props => {
 
   const _handleNext = () => {
     if (selectedAudio) {
+      console.log(selectedAudio);
       dispatch(locationActions.updateAudio(id, selectedAudio));
       props.navigation.pop(2);
       props.navigation.pop();

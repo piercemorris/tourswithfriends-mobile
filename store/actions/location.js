@@ -49,45 +49,45 @@ export const sendGift = (
 
     const user = res.data.userId;
 
-    // upload images to storage
+    // get filenames for images and audio
+    console.log("Getting filenames");
     const sentByUser = Firebase.auth().currentUser;
-    const filenameOne = locationOne.mediaFileRef.split("/").pop();
-    const filenameTwo = locationTwo.mediaFileRef.split("/").pop();
-    const filenameThree = locationThree.mediaFileRef.split("/").pop();
+    const filenameImageOne = locationOne.image.split("/").pop();
+    const filenameImageTwo = locationTwo.image.split("/").pop();
+    const filenameImageThree = locationThree.image.split("/").pop();
+    const filenameAudioOne = locationOne.audio.split("/").pop();
+    const filenameAudioTwo = locationTwo.audio.split("/").pop();
+    const filenameAudioThree = locationThree.audio.split("/").pop();
 
     // wait for all images to upload
+    console.log("Uploading assets");
     const downloadUrls = await Promise.all([
-      await assetOps.uploadAsset(
-        locationOne.mediaFileRef,
-        filenameOne,
-        getLocationFiletype(locationOne.mediaType)
-      ),
-      await assetOps.uploadAsset(
-        locationTwo.mediaFileRef,
-        filenameTwo,
-        getLocationFiletype(locationTwo.mediaType)
-      ),
-      await assetOps.uploadAsset(
-        locationThree.mediaFileRef,
-        filenameThree,
-        getLocationFiletype(locationThree.mediaType)
-      )
+      assetOps.uploadAsset(locationOne.image, filenameImageOne, "image"),
+      assetOps.uploadAsset(locationOne.audio, filenameAudioOne, "voice"),
+      assetOps.uploadAsset(locationTwo.image, filenameImageTwo, "image"),
+      assetOps.uploadAsset(locationTwo.audio, filenameAudioTwo, "voice"),
+      assetOps.uploadAsset(locationThree.image, filenameImageThree, "image"),
+      assetOps.uploadAsset(locationThree.audio, filenameAudioThree, "voice")
     ]);
+    console.log("Finished uploading assets");
 
     const gift = {
       friendDetails,
       tourDetails,
       locationOne: {
         ...locationOne,
-        mediaFileRef: downloadUrls[0]
+        image: downloadUrls[0],
+        audio: downloadUrls[1]
       },
       locationTwo: {
         ...locationTwo,
-        mediaFileRef: downloadUrls[1]
+        image: downloadUrls[2],
+        audio: downloadUrls[3]
       },
       locationThree: {
         ...locationThree,
-        mediaFileRef: downloadUrls[2]
+        image: downloadUrls[4],
+        audio: downloadUrls[5]
       },
       sentFrom: {
         uid: sentByUser.uid,

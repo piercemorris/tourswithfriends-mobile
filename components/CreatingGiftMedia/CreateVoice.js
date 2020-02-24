@@ -22,6 +22,7 @@ const CreateVoice = ({ audioRef, returnMediaRef }) => {
   [isSeeking, setIsSeeking] = useState(false);
   [recording, setRecording] = useState(null);
   [sound, setSound] = useState(audioRef);
+  [soundURI, setSoundURI] = useState(null);
   [duration, setDuration] = useState(null);
   [position, setPosition] = useState(null);
   [fadeOpacity, setFadeOpacity] = useState(new Animated.Value(0));
@@ -58,14 +59,15 @@ const CreateVoice = ({ audioRef, returnMediaRef }) => {
   }, [sound]);
 
   /*
-  const _saveAudio = async () => {
+  const _saveAudio = async uri => {
     const time = Date.now();
-    const newLocation = `${FileSystem.documentDirectory}audio/${time}.mp4`;
+    const type = uri.split(".").pop();
+    const newLocation = `${FileSystem.documentDirectory}audio/${time}.${type}`;
+    console.log(newLocation);
 
-    console.log(sound);
     try {
       await FileSystem.moveAsync({
-        from: sound.status.uri,
+        from: uri,
         to: newLocation
       });
 
@@ -89,6 +91,7 @@ const CreateVoice = ({ audioRef, returnMediaRef }) => {
       );
 
       setSound(newSound.sound);
+      setSoundURI(newSound.status.uri);
     }
   };
 
@@ -128,6 +131,7 @@ const CreateVoice = ({ audioRef, returnMediaRef }) => {
     );
 
     setSound(newSound.sound);
+    //await _saveAudio(newSound.status.uri);
     setIsLoading(false);
   };
 
