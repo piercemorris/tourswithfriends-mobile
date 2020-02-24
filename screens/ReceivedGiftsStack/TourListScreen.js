@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, View, Text, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { useSelector } from "react-redux";
 
 import Header from "../../components/UI/Header";
@@ -34,15 +40,20 @@ const TourListScreen = props => {
           delay={0}
           control={control}
           completed={locationOneCompleted}
-          onPress={() => {
-            props.navigation.navigate("TourItem", {
-              id: 1,
-              name: gift.locationOne.name,
-              location: gift.locationOne
-            });
-          }}
+          image={gift.locationThree.image}
         >
-          <Text style={styles.title}>{gift.locationOne.name}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("TourItem", {
+                id: 1,
+                name: gift.locationOne.name,
+                location: gift.locationOne,
+                image: gift.locationOne.image
+              });
+            }}
+          >
+            <Text style={styles.title}>{gift.locationOne.name}</Text>
+          </TouchableOpacity>
         </LargeButton>
         <LargeButton
           id={2}
@@ -50,15 +61,20 @@ const TourListScreen = props => {
           delay={500}
           control={control}
           completed={locationTwoCompleted}
-          onPress={() => {
-            props.navigation.navigate("TourItem", {
-              id: 2,
-              name: gift.locationTwo.name,
-              location: gift.locationTwo
-            });
-          }}
+          image={gift.locationTwo.image}
         >
-          <Text style={styles.title}>{gift.locationTwo.name}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("TourItem", {
+                id: 2,
+                name: gift.locationTwo.name,
+                location: gift.locationTwo,
+                image: gift.locationTwo.image
+              });
+            }}
+          >
+            <Text style={styles.title}>{gift.locationTwo.name}</Text>
+          </TouchableOpacity>
         </LargeButton>
         <LargeButton
           id={3}
@@ -66,15 +82,20 @@ const TourListScreen = props => {
           delay={1000}
           control={control}
           completed={locationThreeCompleted}
-          onPress={() => {
-            props.navigation.navigate("TourItem", {
-              id: 3,
-              name: gift.locationThree.name,
-              location: gift.locationThree
-            });
-          }}
+          image={gift.locationThree.image}
         >
-          <Text style={styles.title}>{gift.locationThree.name}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("TourItem", {
+                id: 3,
+                name: gift.locationThree.name,
+                location: gift.locationThree,
+                image: gift.locationThree.image
+              });
+            }}
+          >
+            <Text style={styles.title}>{gift.locationThree.name}</Text>
+          </TouchableOpacity>
         </LargeButton>
       </View>
     </SafeAreaView>

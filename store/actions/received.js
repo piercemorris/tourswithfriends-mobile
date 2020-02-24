@@ -1,5 +1,6 @@
 import Firebase from "firebase";
 import links from "../../https/index";
+import * as FileSystem from "expo-file-system";
 
 export const RECEIVE_GIFT = "RECEIVE_GIFT";
 export const RECEIVE_GIFTS = "RECEIVE_GIFTS";
@@ -40,10 +41,54 @@ export const receiveGift = giftId => {
 
       giftRef
         .once("value")
-        .then(snapshot => {
+        .then(async snapshot => {
+          const localFileUrls = await Promise.all([
+            FileSystem.downloadAsync(
+              snapshot.val().locationOne.image,
+              `${FileSystem.cacheDirectory}locationOneImage.jpg`
+            ).then(res => res.uri),
+            FileSystem.downloadAsync(
+              snapshot.val().locationOne.image,
+              `${FileSystem.cacheDirectory}locationTwoImage.jpg`
+            ).then(res => res.uri),
+            FileSystem.downloadAsync(
+              snapshot.val().locationOne.image,
+              `${FileSystem.cacheDirectory}locationThreeImage.jpg`
+            ).then(res => res.uri),
+            FileSystem.downloadAsync(
+              snapshot.val().locationOne.audio,
+              `${FileSystem.cacheDirectory}locationOneAudio.mp3`
+            ).then(res => res.uri),
+            FileSystem.downloadAsync(
+              snapshot.val().locationOne.audio,
+              `${FileSystem.cacheDirectory}locationTwoAudio.mp3`
+            ).then(res => res.uri),
+            FileSystem.downloadAsync(
+              snapshot.val().locationOne.audio,
+              `${FileSystem.cacheDirectory}locationThreeAudio.mp3`
+            ).then(res => res.uri)
+          ]);
+
           dispatch({
             type: RECEIVE_GIFT,
-            payload: snapshot.val()
+            payload: {
+              ...snapshot.val(),
+              locationOne: {
+                ...snapshot.val().locationOne,
+                image: localFileUrls[0],
+                audio: localFileUrls[3]
+              },
+              locationTwo: {
+                ...snapshot.val().locationTwo,
+                image: localFileUrls[1],
+                audio: localFileUrls[4]
+              },
+              locationThree: {
+                ...snapshot.val().locationThree,
+                image: localFileUrls[2],
+                audio: localFileUrls[5]
+              }
+            }
           });
         })
         .catch(

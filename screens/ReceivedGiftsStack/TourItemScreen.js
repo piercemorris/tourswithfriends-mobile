@@ -149,6 +149,7 @@ const TourItemScreen = props => {
               title={gift.name}
               description={gift.address.postalCode}
             />
+            <BackButton {...props} />
             {location ? (
               <MapViewDirections
                 origin={location[0]}

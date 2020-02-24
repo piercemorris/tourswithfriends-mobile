@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
-  TouchableOpacity,
-  View,
-  Text,
+  ImageBackground,
   StyleSheet,
   Animated,
-  Easing
+  Easing,
+  View
 } from "react-native";
-import Colors from "../../constants/Colors";
 
 const LargeButton = props => {
   let appliedStyle = {};
@@ -20,10 +18,7 @@ const LargeButton = props => {
   }
 
   if (props.animated) {
-    const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
-      TouchableOpacity
-    );
-    const [fadeAnim, setFaseAnim] = useState(new Animated.Value(0));
+    const [fadeAnim] = useState(new Animated.Value(0));
 
     useEffect(() => {
       Animated.timing(fadeAnim, {
@@ -31,49 +26,39 @@ const LargeButton = props => {
         easing: Easing.linear,
         duration: 1000,
         delay: props.delay
-      }).start(() => setFaseAnim(1));
+      }).start();
     }, []);
 
-    if (!props.completed && props.id !== props.control) {
-      return (
-        <AnimatedTouchableOpacity
-          disabled
-          onPress={props.onPress}
-          style={{ ...styles.container, ...appliedStyle, opacity: fadeAnim }}
+    return (
+      <Animated.View
+        disabled
+        style={{ ...styles.container, ...appliedStyle, opacity: fadeAnim }}
+      >
+        <ImageBackground
+          blurRadius={100}
+          style={styles.imageBackground}
+          source={{ uri: props.image }}
+          imageStyle={{ borderRadius: 15 }}
         >
           {props.children}
-        </AnimatedTouchableOpacity>
-      );
-    } else {
-      return (
-        <AnimatedTouchableOpacity
-          onPress={props.onPress}
-          style={{ ...styles.container, ...appliedStyle, opacity: fadeAnim }}
-        >
-          {props.children}
-        </AnimatedTouchableOpacity>
-      );
-    }
+        </ImageBackground>
+      </Animated.View>
+    );
   }
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 3,
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop: 10,
     marginHorizontal: 15,
-    marginTop: 15,
     borderRadius: 15
   },
-  completed: {
-    backgroundColor: Colors.complete
-  },
-  next: {
-    backgroundColor: Colors.primary
-  },
-  disabled: {
-    backgroundColor: Colors.inputShade
+  imageBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15
   }
 });
 

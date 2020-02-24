@@ -80,7 +80,6 @@ const CreateVoice = ({ audioRef, returnMediaRef }) => {
 
   const updateSound = async () => {
     if (audioRef) {
-      console.log("AUDIO FILE:", audioRef);
       const newSound = await Audio.Sound.createAsync(
         { uri: audioRef },
         {

@@ -50,7 +50,6 @@ export const sendGift = (
     const user = res.data.userId;
 
     // get filenames for images and audio
-    console.log("Getting filenames");
     const sentByUser = Firebase.auth().currentUser;
     const filenameImageOne = locationOne.image.split("/").pop();
     const filenameImageTwo = locationTwo.image.split("/").pop();
@@ -60,7 +59,6 @@ export const sendGift = (
     const filenameAudioThree = locationThree.audio.split("/").pop();
 
     // wait for all images to upload
-    console.log("Uploading assets");
     const downloadUrls = await Promise.all([
       assetOps.uploadAsset(locationOne.image, filenameImageOne, "image"),
       assetOps.uploadAsset(locationOne.audio, filenameAudioOne, "voice"),
@@ -69,7 +67,6 @@ export const sendGift = (
       assetOps.uploadAsset(locationThree.image, filenameImageThree, "image"),
       assetOps.uploadAsset(locationThree.audio, filenameAudioThree, "voice")
     ]);
-    console.log("Finished uploading assets");
 
     const gift = {
       friendDetails,
