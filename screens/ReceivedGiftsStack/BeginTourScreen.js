@@ -35,11 +35,11 @@ const BeginTourScreen = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View style={styles.contain}>
         <BackButton {...props} />
         <Header title={name} subtitle={"In " + city} />
         {loadingGift === false ? (
-          <View>
+          <View style={styles.contain}>
             {gift ? (
               <View style={styles.tourDescription}>
                 <Title title="Location" />
@@ -55,7 +55,11 @@ const BeginTourScreen = props => {
                 />
               </View>
             ) : (
-              <Text>Error occured</Text>
+              <View style={styles.error}>
+                <Text style={styles.errorText}>
+                  An error occurred loading gift data :(
+                </Text>
+              </View>
             )}
           </View>
         ) : (
@@ -80,12 +84,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between"
   },
+  contain: {
+    flex: 1
+  },
   tourDescription: {
     paddingVertical: 15
   },
   loadingIndicator: {
     alignSelf: "center"
   },
+  error: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  errorText: {},
   giftText: {
     paddingLeft: 30
   }

@@ -5,7 +5,8 @@ import {
   LOADING_GIFT,
   LOADING_GIFTS_FAIL,
   COMPLETED_LOCATION,
-  RESET_RECEIVED_GIFT
+  RESET_RECEIVED_GIFT,
+  LOADING_GIFT_FAIL
 } from "../actions/received";
 
 const initialState = {
@@ -47,6 +48,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loadingGifts: true
+      };
+    case LOADING_GIFT_FAIL:
+      return {
+        ...state,
+        loadingGift: false
       };
     case LOADING_GIFTS_FAIL:
       return {
