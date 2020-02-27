@@ -10,7 +10,9 @@ import {
   UPDATE_AUDIO_ONE,
   UPDATE_AUDIO_TWO,
   UPDATE_AUDIO_THREE,
-  SEND_GIFT
+  SEND_GIFT,
+  SEND_GIFT_STATUS,
+  SEND_GIFT_ERROR
 } from "../actions/location";
 
 const initialState = {
@@ -18,7 +20,8 @@ const initialState = {
   tourDetails: null,
   locationOne: null,
   locationTwo: null,
-  locationThree: null
+  locationThree: null,
+  sendingStatus: null
 };
 
 export default (state = initialState, action) => {
@@ -26,6 +29,11 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case SEND_GIFT:
       return { ...initialState };
+    case SEND_GIFT_STATUS:
+      return { 
+        ...state, 
+        sendingStatus: action.percent
+      }
     case UPDATE_FRIEND_DETAILS:
       return {
         ...state,

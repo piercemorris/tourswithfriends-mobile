@@ -17,12 +17,13 @@ export const UPDATE_AUDIO_TWO = "UPDATE_AUDIO_TWO";
 export const UPDATE_AUDIO_THREE = "UPDATE_AUDIO_THREE";
 
 export const SEND_GIFT = "SEND_GIFT";
+export const SEND_GIFT_STATUS = "SEND_GIFT_STATUS";
 export const SEND_GIFT_ERROR = "SEND_GIFT_ERROR";
 
 import url from "../../https/index";
 import * as assetOps from "../../firebase/uploadAsset";
 import { getLocationFiletype } from "../../helper/filetypeEnum";
-
+import { allProgress } from "../../helper/promiseAllCallback";
 import representationEnum from "../../helper/representationEnum";
 
 export const sendGift = (
@@ -59,14 +60,19 @@ export const sendGift = (
     const filenameAudioThree = locationThree.audio.split("/").pop();
 
     // wait for all images to upload
-    const downloadUrls = await Promise.all([
+    const downloadUrls = await allProgress([
       assetOps.uploadAsset(locationOne.image, filenameImageOne, "image"),
       assetOps.uploadAsset(locationOne.audio, filenameAudioOne, "voice"),
       assetOps.uploadAsset(locationTwo.image, filenameImageTwo, "image"),
       assetOps.uploadAsset(locationTwo.audio, filenameAudioTwo, "voice"),
       assetOps.uploadAsset(locationThree.image, filenameImageThree, "image"),
       assetOps.uploadAsset(locationThree.audio, filenameAudioThree, "voice")
-    ]);
+    ],
+      percent => dispatch({
+        type: SEND_GIFT_STATUS,
+        percent: percent
+      })
+    );
 
     const gift = {
       friendDetails,

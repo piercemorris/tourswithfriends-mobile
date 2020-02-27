@@ -4,8 +4,10 @@ import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
+  Platform,
   Alert,
-  View
+  View,
+  ProgressViewIOS
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -28,6 +30,7 @@ const GiftSetScreen = props => {
   const locationOne = useSelector(store => store.gift.locationOne);
   const locationTwo = useSelector(store => store.gift.locationTwo);
   const locationThree = useSelector(store => store.gift.locationThree);
+  const sendingStatus = useSelector(store => store.gift.sendingStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -138,13 +141,24 @@ const GiftSetScreen = props => {
       {isSending && (
         <View style={styles.modalContainer}>
           <View style={styles.modalComponents}>
-            <ActivityIndicator size="large" color={Colors.primary} />
             <StyledText
-              style={{ padding: 0, marginTop: 5, color: Colors.primary }}
+              style={styles.modalText}
               bold
             >
               Sending Gift!
             </StyledText>
+            { Platform.OS === "ios" ?
+            <View>
+              <ActivityIndicator style={{marginBottom: 25}} size="small" color={Colors.primary} />
+              <ProgressViewIOS 
+                progressTintColor={Colors.primary} 
+                progress={sendingStatus ? sendingStatus : 100}
+                progressViewStyle="bar"              
+              />
+            </View>
+              :
+              <ActivityIndicator size="large" color={Colors.primary} />
+            }
           </View>
         </View>
       )}
@@ -152,7 +166,7 @@ const GiftSetScreen = props => {
         <View style={styles.modalContainer}>
           <View style={styles.modalComponents}>
             <StyledText
-              style={{ padding: 0, marginTop: 5, color: Colors.primary }}
+              style={styles.modalText}
               bold
             >
               Gift successfully sent!
@@ -195,9 +209,14 @@ const styles = StyleSheet.create({
     width: Layout.window.width - 150,
     height: Layout.window.height / 4,
     justifyContent: "space-evenly",
-    alignItems: "center",
     padding: 15,
     ...Layout.shadow
+  },
+  modalText: {
+    padding: 0, 
+    marginTop: 5, 
+    color: Colors.primary,
+    alignSelf: "center" 
   }
 });
 

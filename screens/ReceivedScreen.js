@@ -30,10 +30,6 @@ const ReceivedScreen = props => {
     setIsRefreshing(false);
   }, [isRefreshing]);
 
-  useEffect(() => {
-    dispatch(receivedGiftActions.receiveGifts());
-  }, [dispatch]);
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView

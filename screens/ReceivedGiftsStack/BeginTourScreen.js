@@ -70,7 +70,6 @@ const BeginTourScreen = props => {
             <Text style={{alignSelf: "center", fontFamily: "sf-bold", fontSize: 18}}>Loading your unique gift!</Text>
             {Platform.OS === "ios" ?
               <ProgressViewIOS 
-                style={{ height: 50 }}
                 progressTintColor={Colors.primary}
                 progress={loadingPercent ? loadingPercent : 0} 
                 progressViewStyle="bar" 
