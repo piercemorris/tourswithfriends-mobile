@@ -5,7 +5,9 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
-  ActivityIndicator
+  ActivityIndicator,
+  ProgressViewIOS,
+  Platform
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -27,6 +29,7 @@ const BeginTourScreen = props => {
   const [user] = useState(props.navigation.getParam("user"));
   const gift = useSelector(store => store.received.currentGift);
   const loadingGift = useSelector(store => store.received.loadingGift);
+  const loadingPercent = useSelector(store => store.received.loadingGiftStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,11 +66,23 @@ const BeginTourScreen = props => {
             )}
           </View>
         ) : (
-          <ActivityIndicator
-            style={styles.loadingIndicator}
-            color={Colors.primary}
-            hidesWhenStopped={loadingGift}
-          />
+          <View style={styles.center}>
+            <Text style={{alignSelf: "center", fontFamily: "sf-bold", fontSize: 18}}>Loading your unique gift!</Text>
+            {Platform.OS === "ios" ?
+              <ProgressViewIOS 
+                style={{ height: 50 }}
+                progressTintColor={Colors.primary}
+                progress={loadingPercent ? loadingPercent : 0} 
+                progressViewStyle="bar" 
+              /> 
+              :
+              <ActivityIndicator
+                style={styles.loadingIndicator}
+                color={Colors.primary}
+                hidesWhenStopped={loadingGift}
+              />
+            }
+          </View>
         )}
       </View>
       {gift && (
@@ -86,6 +101,11 @@ const styles = StyleSheet.create({
   },
   contain: {
     flex: 1
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 50,
   },
   tourDescription: {
     paddingVertical: 15

@@ -6,10 +6,13 @@ export const RECEIVE_GIFT = "RECEIVE_GIFT";
 export const RECEIVE_GIFTS = "RECEIVE_GIFTS";
 export const LOADING_GIFT = "LOADING_GIFT";
 export const LOADING_GIFTS = "LOADING_GIFTS";
+export const LOADING_GIFT_STATUS = "LOADING_GIFT_STATUS";
 export const LOADING_GIFT_FAIL = "LOADING_GIFT_FAIL";
 export const LOADING_GIFTS_FAIL = "LOADING_GIFTS_FAIL";
 export const COMPLETED_LOCATION = "COMPLETED_LOCATION";
 export const RESET_RECEIVED_GIFT = "RESET_RECEIVED_GIFT";
+
+import { allProgress } from "../../helper/promiseAllCallback";
 
 export const completedLocation = locationId => {
   return dispatch => {
@@ -42,7 +45,8 @@ export const receiveGift = giftId => {
       giftRef
         .once("value")
         .then(async snapshot => {
-          const localFileUrls = await Promise.all([
+
+          const localFileUrls = await allProgress([
             FileSystem.downloadAsync(
               snapshot.val().locationOne.image,
               `${FileSystem.cacheDirectory}locationOneImage.jpg`
@@ -67,7 +71,13 @@ export const receiveGift = giftId => {
               snapshot.val().locationOne.audio,
               `${FileSystem.cacheDirectory}locationThreeAudio.mp3`
             ).then(res => res.uri)
-          ]);
+          ],
+            percent => dispatch({
+              type: LOADING_GIFT_STATUS,
+              percent: percent
+            })
+          );
+
 
           dispatch({
             type: RECEIVE_GIFT,
@@ -91,10 +101,13 @@ export const receiveGift = giftId => {
             }
           });
         })
-        .catch(
+        .catch((ex) => {
+          console.log(ex);
+          console.log("LOADING GIFTS FAILED?")
           dispatch({
             type: LOADING_GIFT_FAIL
           })
+        }
         );
     } else {
       dispatch({

@@ -3,6 +3,7 @@ import {
   RECEIVE_GIFT,
   LOADING_GIFTS,
   LOADING_GIFT,
+  LOADING_GIFT_STATUS,
   LOADING_GIFTS_FAIL,
   COMPLETED_LOCATION,
   RESET_RECEIVED_GIFT,
@@ -14,6 +15,7 @@ const initialState = {
   loadingGifts: null,
   currentGift: null,
   loadingGift: null,
+  loadingGiftStatus: null,
   locationOneCompleted: false,
   locationTwoCompleted: false,
   locationThreeCompleted: false,
@@ -49,6 +51,11 @@ export default (state = initialState, action) => {
         ...state,
         loadingGifts: true
       };
+      case LOADING_GIFT_STATUS:
+        return {
+          ...state,
+          loadingGiftStatus: action.percent
+        }
     case LOADING_GIFT_FAIL:
       return {
         ...state,
