@@ -91,7 +91,7 @@ const TourItemScreen = props => {
 
   const _navigateToTourComponent = () => {
     watchPositionListener.remove();
-    props.navigation.navigate("UncoverTourItem", {
+    props.navigation.navigate("ImageReveal", {
       id: id
     });
   };

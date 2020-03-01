@@ -67,20 +67,29 @@ const BeginTourScreen = props => {
           </View>
         ) : (
           <View style={styles.center}>
-            <Text style={{alignSelf: "center", fontFamily: "sf-bold", fontSize: 18}}>Loading your unique gift!</Text>
-            {Platform.OS === "ios" ?
-              <ProgressViewIOS 
+            <Text
+              style={{
+                alignSelf: "center",
+                fontFamily: "sf-bold",
+                fontSize: 18
+              }}
+            >
+              Loading your unique gift!
+            </Text>
+            {Platform.OS === "ios" ? (
+              <ProgressViewIOS
+                style={{ marginVertical: 15 }}
                 progressTintColor={Colors.primary}
-                progress={loadingPercent ? loadingPercent : 0} 
-                progressViewStyle="bar" 
-              /> 
-              :
+                progress={loadingPercent ? loadingPercent : 0}
+                progressViewStyle="bar"
+              />
+            ) : (
               <ActivityIndicator
                 style={styles.loadingIndicator}
                 color={Colors.primary}
                 hidesWhenStopped={loadingGift}
               />
-            }
+            )}
           </View>
         )}
       </View>
@@ -104,7 +113,7 @@ const styles = StyleSheet.create({
   center: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 50,
+    paddingHorizontal: 50
   },
   tourDescription: {
     paddingVertical: 15

@@ -52,7 +52,7 @@ const TourListScreen = props => {
               });
             }}
           >
-            <Text style={styles.title}>{gift.locationOne.name}</Text>
+            <Text style={styles.title}>LOCATION 1</Text>
           </TouchableOpacity>
         </LargeButton>
         <LargeButton
@@ -73,7 +73,7 @@ const TourListScreen = props => {
               });
             }}
           >
-            <Text style={styles.title}>{gift.locationTwo.name}</Text>
+            <Text style={styles.title}>LOCATION 2</Text>
           </TouchableOpacity>
         </LargeButton>
         <LargeButton
@@ -94,7 +94,7 @@ const TourListScreen = props => {
               });
             }}
           >
-            <Text style={styles.title}>{gift.locationThree.name}</Text>
+            <Text style={styles.title}>LOCATION 3</Text>
           </TouchableOpacity>
         </LargeButton>
       </View>

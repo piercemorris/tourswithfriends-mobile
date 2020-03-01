@@ -24,5 +24,6 @@ export default {
   noticeText: "#fff",
   loadingBackground,
   white: "#FFF",
+  whiteTransparent: "#FFFFFF99",
   black: "#000"
 };
