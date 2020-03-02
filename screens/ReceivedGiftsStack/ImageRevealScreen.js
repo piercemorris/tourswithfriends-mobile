@@ -98,7 +98,9 @@ const ImageRevealScreen = props => {
           </ImageBackground>
         </View>
       ) : null}
-      <Button onPress={() => props.navigation.navigate("AudioReveal")}>
+      <Button onPress={() => props.navigation.navigate("AudioReveal", {
+        audio: location.audio
+      })}>
         I've found the spot!
       </Button>
     </SafeAreaView>
