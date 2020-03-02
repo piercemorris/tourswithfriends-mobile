@@ -30,7 +30,7 @@ const CameraScreen = props => {
       Vibration.vibrate(500);
       this.camera.takePictureAsync({
         onPictureSaved: _onPictureSaved,
-        quality: 0.5
+        quality: 0.25
       });
     }
   };
