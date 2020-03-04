@@ -4,9 +4,11 @@ import { View, Text, StyleSheet, StatusBar, Alert } from "react-native";
 
 import Header from "../../../components/UI/Header";
 import Button from "../../../components/UI/Button";
+import StyledText from "../../../components/StyledText";
 import CreateVoice from "../../../components/CreatingGiftMedia/CreateVoice";
 
 import * as locationActions from "../../../store/actions/location";
+import Colors from "../../../constants/Colors";
 
 const TakeAudioScreen = props => {
   const _updateSavedData = locationId => {
@@ -56,6 +58,17 @@ const TakeAudioScreen = props => {
       <StatusBar barStyle="light-content" />
       <View style={styles.mainContainer}>
         <Header style={{ marginBottom: 10 }} title="Audio message" />
+        <StyledText>
+          Create a personal voice message for your friend! Talk to them as if
+          you're leaving a voice mail. Think to yourself{" "}
+          <Text style={styles.highlight}>
+            why you chose this particular place
+          </Text>
+          , and why this would mean something to your friend. More importantly,{" "}
+          <Text style={styles.highlight}>
+            what would you like to tell them?
+          </Text>
+        </StyledText>
         <View style={styles.audioContainer}>
           <CreateVoice
             audioRef={selectedAudio ? selectedAudio : null}
@@ -83,7 +96,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  }
+  },
+  highlight: { fontFamily: "sf-bold", color: Colors.primary }
 });
 
 export default TakeAudioScreen;
