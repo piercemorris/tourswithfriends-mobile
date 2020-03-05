@@ -129,8 +129,10 @@ const TourItemScreen = props => {
         <FadeInOutView
           style={styles.animation}
           onAnimationComplete={renderScreen}
+          durationOne={1000}
+          durationTwo={500}
         >
-          <Text style={styles.text}>{name}</Text>
+          <Text style={styles.text}>{`Location ${id}`}</Text>
         </FadeInOutView>
       ) : (
         <View style={{ flex: 1 }}>

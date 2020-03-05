@@ -11,6 +11,7 @@ export const LOADING_GIFT_FAIL = "LOADING_GIFT_FAIL";
 export const LOADING_GIFTS_FAIL = "LOADING_GIFTS_FAIL";
 export const COMPLETED_LOCATION = "COMPLETED_LOCATION";
 export const RESET_RECEIVED_GIFT = "RESET_RECEIVED_GIFT";
+export const RESET_TOUR = "RESET_TOUR";
 
 import { allProgress } from "../../helper/promiseAllCallback";
 
@@ -30,6 +31,14 @@ export const resetReceivedGift = () => {
     });
   };
 };
+
+export const resetTour = () => {
+  return dispatch => {
+    dispatch({
+      type: RESET_TOUR
+    })
+  }
+}
 
 export const receiveGift = giftId => {
   return async dispatch => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Audio } from "expo-av";
 
 import Header from "../../components/UI/Header";
@@ -9,12 +9,16 @@ import StyledText from "../../components/StyledText";
 import Colors from "../../constants/Colors";
 import AudioPlayer from "../../components/UI/AudioPlayer";
 
+import * as receivedActions from "../../store/actions/received";
+
 const AudioRevealScreen = props => {
+  const [id] = useState(props.navigation.getParam("id"));
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  [isSeeking, setIsSeeking] = useState(false);
+  const [isSeeking, setIsSeeking] = useState(false);
   const [duration, setDuration] = useState(null);
   const [position, setPosition] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     _updateSound();
@@ -84,6 +88,23 @@ const AudioRevealScreen = props => {
     }
   };
 
+  const _handleComplete = () => {
+    switch (id) {
+      case 1:
+        dispatch(receivedActions.completedLocation(1));
+        break;
+      case 2:
+        dispatch(receivedActions.completedLocation(2));
+        break;
+      case 3:
+        dispatch(receivedActions.completedLocation(3));
+        break;
+      default:
+        break;
+    }
+    props.navigation.pop(3)
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -100,7 +121,7 @@ const AudioRevealScreen = props => {
           /> : null
         }
       </View>
-      <Button onPress={() => props.navigation.pop(3)}>Completed!</Button>
+      <Button onPress={_handleComplete}>Completed!</Button>
     </SafeAreaView>
   );
 };

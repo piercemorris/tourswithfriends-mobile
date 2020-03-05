@@ -6,29 +6,36 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Header from "../../components/UI/Header";
 import BackButton from "../../components/UI/BackButton";
 import LargeButton from "../../components/UI/LargeButton";
 import Colors from "../../constants/Colors";
 
+import * as receivedActions from "../../store/actions/received";
+
 const TourListScreen = props => {
+  const dispatch = useDispatch();
   const gift = useSelector(store => store.received.currentGift);
   const control = useSelector(store => store.received.control);
-  const locationOneCompleted = useSelector(
-    store => store.received.locationOneCompleted
-  );
-  const locationTwoCompleted = useSelector(
-    store => store.received.locationTwoCompleted
-  );
-  const locationThreeCompleted = useSelector(
-    store => store.received.locationThreeCompleted
-  );
+
+  const shouldDisplayName = id => {
+    if (id < control) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const _handleBack = () => {
+    dispatch(receivedActions.resetTour());
+    props.navigation.pop();
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <BackButton {...props} />
+      <BackButton onPress={_handleBack} />
       <Header
         title="Tour Breakdown"
         subtitle={`Start in ${gift.tourDetails.start}`}
@@ -39,7 +46,6 @@ const TourListScreen = props => {
           animated
           delay={0}
           control={control}
-          completed={locationOneCompleted}
           image={gift.locationThree.image}
         >
           <TouchableOpacity
@@ -52,7 +58,7 @@ const TourListScreen = props => {
               });
             }}
           >
-            <Text style={styles.title}>LOCATION 1</Text>
+            <Text style={styles.title}>{shouldDisplayName(1) ? gift.locationOne.name : "Location 1"}</Text>
           </TouchableOpacity>
         </LargeButton>
         <LargeButton
@@ -60,7 +66,6 @@ const TourListScreen = props => {
           animated
           delay={500}
           control={control}
-          completed={locationTwoCompleted}
           image={gift.locationTwo.image}
         >
           <TouchableOpacity
@@ -73,7 +78,7 @@ const TourListScreen = props => {
               });
             }}
           >
-            <Text style={styles.title}>LOCATION 2</Text>
+            <Text style={styles.title}>{shouldDisplayName(2) ? gift.locationTwo.name : "Location 2"}</Text>
           </TouchableOpacity>
         </LargeButton>
         <LargeButton
@@ -81,7 +86,6 @@ const TourListScreen = props => {
           animated
           delay={1000}
           control={control}
-          completed={locationThreeCompleted}
           image={gift.locationThree.image}
         >
           <TouchableOpacity
@@ -94,7 +98,7 @@ const TourListScreen = props => {
               });
             }}
           >
-            <Text style={styles.title}>LOCATION 3</Text>
+            <Text style={styles.title}>{shouldDisplayName(3) ? gift.locationThree.name : "Location 3"}</Text>
           </TouchableOpacity>
         </LargeButton>
       </View>

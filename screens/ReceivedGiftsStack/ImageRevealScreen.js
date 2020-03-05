@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   SafeAreaView,
   View,
@@ -15,11 +15,7 @@ import Button from "../../components/UI/Button";
 import StyledText from "../../components/StyledText";
 import Colors from "../../constants/Colors";
 
-import * as receivedActions from "../../store/actions/received";
-import Layout from "../../constants/Layout";
-
 const ImageRevealScreen = props => {
-  const dispatch = useDispatch();
   const gift = useSelector(store => store.received.currentGift);
   const [id] = useState(props.navigation.getParam("id"));
   const [location, setLocation] = useState(null);
@@ -41,25 +37,6 @@ const ImageRevealScreen = props => {
         break;
     }
   }, []);
-
-  /*
-  const _navigateToTourList = () => {
-    switch (id) {
-      case 1:
-        dispatch(receivedActions.completedLocation(1));
-        break;
-      case 2:
-        dispatch(receivedActions.completedLocation(2));
-        break;
-      case 3:
-        dispatch(receivedActions.completedLocation(3));
-        break;
-      default:
-        break;
-    }
-    props.navigation.pop(2);
-  };
-  */
 
   return (
     <SafeAreaView style={styles.container}>
@@ -99,6 +76,7 @@ const ImageRevealScreen = props => {
         </View>
       ) : null}
       <Button onPress={() => props.navigation.navigate("AudioReveal", {
+        id: id,
         audio: location.audio
       })}>
         I've found the spot!

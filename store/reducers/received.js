@@ -6,8 +6,9 @@ import {
   LOADING_GIFT_STATUS,
   LOADING_GIFTS_FAIL,
   COMPLETED_LOCATION,
+  LOADING_GIFT_FAIL,
   RESET_RECEIVED_GIFT,
-  LOADING_GIFT_FAIL
+  RESET_TOUR,
 } from "../actions/received";
 
 const initialState = {
@@ -16,9 +17,6 @@ const initialState = {
   currentGift: null,
   loadingGift: null,
   loadingGiftStatus: null,
-  locationOneCompleted: false,
-  locationTwoCompleted: false,
-  locationThreeCompleted: false,
   control: 1
 };
 
@@ -72,21 +70,23 @@ export default (state = initialState, action) => {
         case 1:
           return {
             ...state,
-            locationOneCompleted: true,
             control: 2
           };
         case 2:
           return {
             ...state,
-            locationTwoCompleted: true,
             control: 3
           };
         case 3:
           return {
             ...state,
-            locationThreeCompleted: true,
-            control: 0
+            control: 4
           };
+      }
+    case RESET_TOUR:
+      return {
+        ...state,
+        control: 1
       }
     default:
       return state;

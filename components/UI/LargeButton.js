@@ -8,15 +8,6 @@ import {
 } from "react-native";
 
 const LargeButton = props => {
-  let appliedStyle = {};
-  if (props.completed) {
-    appliedStyle = styles.completed;
-  } else if (props.id === props.control) {
-    appliedStyle = styles.next;
-  } else if (!props.completed) {
-    appliedStyle = styles.disabled;
-  }
-
   if (props.animated) {
     const [fadeAnim] = useState(new Animated.Value(0));
 
@@ -32,10 +23,10 @@ const LargeButton = props => {
     return (
       <Animated.View
         disabled
-        style={{ ...styles.container, ...appliedStyle, opacity: fadeAnim }}
+        style={{ ...styles.container, opacity: fadeAnim }}
       >
         <ImageBackground
-          blurRadius={100}
+          blurRadius={ props.id < props.control ? 0 : 100}
           style={styles.imageBackground}
           source={{ uri: props.image }}
           imageStyle={{ borderRadius: 15 }}
