@@ -69,6 +69,7 @@ const TourListScreen = props => {
           image={gift.locationTwo.image}
         >
           <TouchableOpacity
+            disabled={control < 2}
             onPress={() => {
               props.navigation.navigate("TourItem", {
                 id: 2,
@@ -89,6 +90,7 @@ const TourListScreen = props => {
           image={gift.locationThree.image}
         >
           <TouchableOpacity
+          disabled={control < 3}
             onPress={() => {
               props.navigation.navigate("TourItem", {
                 id: 3,
