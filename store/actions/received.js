@@ -36,9 +36,9 @@ export const resetTour = () => {
   return dispatch => {
     dispatch({
       type: RESET_TOUR
-    })
-  }
-}
+    });
+  };
+};
 
 export const receiveGift = giftId => {
   return async dispatch => {
@@ -54,39 +54,41 @@ export const receiveGift = giftId => {
       giftRef
         .once("value")
         .then(async snapshot => {
-
-          const localFileUrls = await allProgress([
-            FileSystem.downloadAsync(
-              snapshot.val().locationOne.image,
-              `${FileSystem.cacheDirectory}locationOneImage.jpg`
-            ).then(res => res.uri),
-            FileSystem.downloadAsync(
-              snapshot.val().locationOne.image,
-              `${FileSystem.cacheDirectory}locationTwoImage.jpg`
-            ).then(res => res.uri),
-            FileSystem.downloadAsync(
-              snapshot.val().locationOne.image,
-              `${FileSystem.cacheDirectory}locationThreeImage.jpg`
-            ).then(res => res.uri),
-            FileSystem.downloadAsync(
-              snapshot.val().locationOne.audio,
-              `${FileSystem.cacheDirectory}locationOneAudio.mp3`
-            ).then(res => res.uri),
-            FileSystem.downloadAsync(
-              snapshot.val().locationOne.audio,
-              `${FileSystem.cacheDirectory}locationTwoAudio.mp3`
-            ).then(res => res.uri),
-            FileSystem.downloadAsync(
-              snapshot.val().locationOne.audio,
-              `${FileSystem.cacheDirectory}locationThreeAudio.mp3`
-            ).then(res => res.uri)
-          ],
-            percent => dispatch({
-              type: LOADING_GIFT_STATUS,
-              percent: percent
-            })
+          const localFileUrls = await allProgress(
+            [
+              FileSystem.downloadAsync(
+                snapshot.val().locationOne.image,
+                `${FileSystem.cacheDirectory}locationOneImage.jpg`
+              ).then(res => res.uri),
+              FileSystem.downloadAsync(
+                snapshot.val().locationTwo.image,
+                `${FileSystem.cacheDirectory}locationTwoImage.jpg`
+              ).then(res => res.uri),
+              FileSystem.downloadAsync(
+                snapshot.val().locationThree.image,
+                `${FileSystem.cacheDirectory}locationThreeImage.jpg`
+              ).then(res => res.uri),
+              FileSystem.downloadAsync(
+                snapshot.val().locationOne.audio,
+                `${FileSystem.cacheDirectory}locationOneAudio.mp3`
+              ).then(res => res.uri),
+              FileSystem.downloadAsync(
+                snapshot.val().locationTwo.audio,
+                `${FileSystem.cacheDirectory}locationTwoAudio.mp3`
+              ).then(res => res.uri),
+              FileSystem.downloadAsync(
+                snapshot.val().locationThree.audio,
+                `${FileSystem.cacheDirectory}locationThreeAudio.mp3`
+              ).then(res => res.uri)
+            ],
+            percent =>
+              dispatch({
+                type: LOADING_GIFT_STATUS,
+                percent: percent
+              })
           );
 
+          console.log(localFileUrls);
 
           dispatch({
             type: RECEIVE_GIFT,
@@ -110,14 +112,13 @@ export const receiveGift = giftId => {
             }
           });
         })
-        .catch((ex) => {
+        .catch(ex => {
           console.log(ex);
-          console.log("LOADING GIFTS FAILED?")
+          console.log("LOADING GIFTS FAILED?");
           dispatch({
             type: LOADING_GIFT_FAIL
-          })
-        }
-        );
+          });
+        });
     } else {
       dispatch({
         type: LOADING_GIFT_FAIL

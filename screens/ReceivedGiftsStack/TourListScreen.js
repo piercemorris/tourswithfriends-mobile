@@ -26,12 +26,13 @@ const TourListScreen = props => {
     } else {
       return false;
     }
-  }
+  };
 
   const _handleBack = () => {
     dispatch(receivedActions.resetTour());
     props.navigation.pop();
-  }
+  };
+  console.log(gift);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +47,7 @@ const TourListScreen = props => {
           animated
           delay={0}
           control={control}
-          image={gift.locationThree.image}
+          image={gift.locationOne.image}
         >
           <TouchableOpacity
             onPress={() => {
@@ -58,7 +59,9 @@ const TourListScreen = props => {
               });
             }}
           >
-            <Text style={styles.title}>{shouldDisplayName(1) ? gift.locationOne.name : "Location 1"}</Text>
+            <Text style={styles.title}>
+              {shouldDisplayName(1) ? gift.locationOne.name : "Location 1"}
+            </Text>
           </TouchableOpacity>
         </LargeButton>
         <LargeButton
@@ -79,7 +82,9 @@ const TourListScreen = props => {
               });
             }}
           >
-            <Text style={styles.title}>{shouldDisplayName(2) ? gift.locationTwo.name : "Location 2"}</Text>
+            <Text style={styles.title}>
+              {shouldDisplayName(2) ? gift.locationTwo.name : "Location 2"}
+            </Text>
           </TouchableOpacity>
         </LargeButton>
         <LargeButton
@@ -90,7 +95,7 @@ const TourListScreen = props => {
           image={gift.locationThree.image}
         >
           <TouchableOpacity
-          disabled={control < 3}
+            disabled={control < 3}
             onPress={() => {
               props.navigation.navigate("TourItem", {
                 id: 3,
@@ -100,7 +105,9 @@ const TourListScreen = props => {
               });
             }}
           >
-            <Text style={styles.title}>{shouldDisplayName(3) ? gift.locationThree.name : "Location 3"}</Text>
+            <Text style={styles.title}>
+              {shouldDisplayName(3) ? gift.locationThree.name : "Location 3"}
+            </Text>
           </TouchableOpacity>
         </LargeButton>
       </View>
