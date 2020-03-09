@@ -30,14 +30,19 @@ export const addFriend = friendUID => {
       const currentFriendList = (
         await getCurrentFriendList(currentUser.uid)
       ).val();
-      // returns object array
 
       if (currentFriendList) {
-        // find then check for collision
-        await addAddFriendToRecents(currentUser.uid, friendUID);
+        if (!Object.keys(currentFriendList).find(key => key === friendUID)) {
+          await addAddFriendToRecents(currentUser.uid, friendUID);
+          dispatch({
+            type: ADD_FRIEND
+          })
+        }
       } else {
-        // add user
         await addAddFriendToRecents(currentUser.uid, friendUID);
+        dispatch({
+          type: ADD_FRIEND
+        })
       }
     }
   };
@@ -46,11 +51,21 @@ export const addFriend = friendUID => {
 export const retrieveFriends = () => {
   return async dispatch => {
     const currentUser = Firebase.auth().currentUser;
-    const friends = (await getCurrentFriendList(currentUser.uid)).val();
+    const data = (await getCurrentFriendList(currentUser.uid)).val();
+
+    let friendList = [];
+    const friends = Object.entries(data);
+
+    friends.forEach(([key, value]) => {
+      friendList.push({
+        id: key,
+        data: value
+      });
+    });
 
     dispatch({
       type: RETRIEVE_FRIENDS,
-      payload: friends
+      payload: friendList
     });
   };
 };

@@ -7,28 +7,35 @@ import {
   ScrollView,
   FlatList,
   View,
+  Text
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import Header from "../components/UI/Header";
 import Subsection from "../components/UI/Subsection";
 import InformationBlock from "../components/UI/InformationBlock";
-import * as receivedGiftActions from "../store/actions/received";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
+
+import * as receivedGiftActions from "../store/actions/received";
+import * as friendActions from "../store/actions/friends";
 
 const ReceivedScreen = props => {
   const dispatch = useDispatch();
   const loadingGifts = useSelector(store => store.received.loadingGifts);
   const receivedGifts = useSelector(store => store.received.receivedGifts);
+  const friendList = useSelector(store => store.friends.friendList);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
 
+    dispatch(friendActions.retrieveFriends());
     dispatch(receivedGiftActions.receiveGifts());
     setIsRefreshing(false);
   }, [isRefreshing]);
+
+  console.log(friendList)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,6 +83,15 @@ const ReceivedScreen = props => {
           />
         )}
         <Subsection text="Recent friends" />
+        {
+          friendList.length > 0 ? 
+          <FlatList 
+            horizontal={true}
+            keyExtractor={item => item.id}
+            data={friendList}
+            showsHorizontalScrollIndicator={true}
+            renderItem={item => <Text>{item.item.data.displayName}</Text>}
+          /> :
         <FlatList
           horizontal={true}
           keyExtractor={item => item.id}
@@ -83,6 +99,7 @@ const ReceivedScreen = props => {
           data={[{ id: "0" }, { id: "1" }, { id: "2" }]}
           renderItem={item => <InformationBlock empty />}
         />
+        }
       </ScrollView>
     </SafeAreaView>
   );
