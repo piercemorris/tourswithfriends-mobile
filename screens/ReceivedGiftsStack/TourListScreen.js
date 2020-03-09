@@ -32,7 +32,6 @@ const TourListScreen = props => {
     dispatch(receivedActions.resetTour());
     props.navigation.pop();
   };
-  console.log(gift);
 
   return (
     <SafeAreaView style={styles.container}>

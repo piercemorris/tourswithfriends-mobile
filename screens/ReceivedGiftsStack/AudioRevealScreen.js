@@ -38,7 +38,7 @@ const AudioRevealScreen = props => {
 
       setSound(newSound.sound);
     }
-  } 
+  };
 
   const _updateScreenForSoundStatus = status => {
     if (status.isLoaded) {
@@ -51,7 +51,7 @@ const AudioRevealScreen = props => {
     } else {
       setIsPlaying(false);
     }
-  }
+  };
 
   const _onSeekSliderValueChanged = () => {
     if (sound !== null && !isSeeking) {
@@ -102,14 +102,19 @@ const AudioRevealScreen = props => {
       default:
         break;
     }
-    props.navigation.pop(3)
-  }
+    props.navigation.pop(3);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Header title="Audio Message" />
-        {sound ? 
+        <StyledText>
+          You're friend has recorded this special audio message with you in
+          mind. Look at the target location and understand why they've picked
+          this place, for you.
+        </StyledText>
+        {sound ? (
           <AudioPlayer
             isPlaying={isPlaying}
             duration={duration}
@@ -118,8 +123,12 @@ const AudioRevealScreen = props => {
             onSeekSliderComplete={_onSeekSliderCompleted}
             onPlayPausePressed={_onPlayPausedPressed}
             onResetSound={_onResetSound}
-          /> : null
-        }
+          />
+        ) : null}
+        <StyledText>
+          Once you've finished listening, press the button below and complete
+          this tour location.
+        </StyledText>
       </View>
       <Button onPress={_handleComplete}>Completed!</Button>
     </SafeAreaView>

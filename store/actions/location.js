@@ -26,6 +26,12 @@ import { getLocationFiletype } from "../../helper/filetypeEnum";
 import { allProgress } from "../../helper/promiseAllCallback";
 import representationEnum from "../../helper/representationEnum";
 
+const getUserDisplayName = uid => {
+  return Firebase.database()
+    .ref(`users/${uid}`)
+    .once("value");
+};
+
 export const sendGift = (
   friendDetails,
   tourDetails,
@@ -52,6 +58,9 @@ export const sendGift = (
 
     // get filenames for images and audio
     const sentByUser = Firebase.auth().currentUser;
+    const displayName = (await getUserDisplayName(sentByUser.uid)).val()
+      .displayName;
+
     const filenameImageOne = locationOne.image.split("/").pop();
     const filenameImageTwo = locationTwo.image.split("/").pop();
     const filenameImageThree = locationThree.image.split("/").pop();
@@ -60,18 +69,20 @@ export const sendGift = (
     const filenameAudioThree = locationThree.audio.split("/").pop();
 
     // wait for all images to upload
-    const downloadUrls = await allProgress([
-      assetOps.uploadAsset(locationOne.image, filenameImageOne, "image"),
-      assetOps.uploadAsset(locationOne.audio, filenameAudioOne, "voice"),
-      assetOps.uploadAsset(locationTwo.image, filenameImageTwo, "image"),
-      assetOps.uploadAsset(locationTwo.audio, filenameAudioTwo, "voice"),
-      assetOps.uploadAsset(locationThree.image, filenameImageThree, "image"),
-      assetOps.uploadAsset(locationThree.audio, filenameAudioThree, "voice")
-    ],
-      percent => dispatch({
-        type: SEND_GIFT_STATUS,
-        percent: percent
-      })
+    const downloadUrls = await allProgress(
+      [
+        assetOps.uploadAsset(locationOne.image, filenameImageOne, "image"),
+        assetOps.uploadAsset(locationOne.audio, filenameAudioOne, "voice"),
+        assetOps.uploadAsset(locationTwo.image, filenameImageTwo, "image"),
+        assetOps.uploadAsset(locationTwo.audio, filenameAudioTwo, "voice"),
+        assetOps.uploadAsset(locationThree.image, filenameImageThree, "image"),
+        assetOps.uploadAsset(locationThree.audio, filenameAudioThree, "voice")
+      ],
+      percent =>
+        dispatch({
+          type: SEND_GIFT_STATUS,
+          percent: percent
+        })
     );
 
     const gift = {
@@ -94,7 +105,7 @@ export const sendGift = (
       },
       sentFrom: {
         uid: sentByUser.uid,
-        name: sentByUser.displayName ? sentByUser.displayName : sentByUser.email
+        name: displayName ? displayName : sentByUser.email
       }
     };
 

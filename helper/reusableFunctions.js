@@ -1,9 +1,18 @@
+import Firebase from "firebase";
 import { useRef, useEffect } from "react";
 import { Platform } from "react-native";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
 import Region from "../models/Region";
+
+export const addNewFriend = () => {
+  // get uid of user
+  // check if uid exists in uid (opt) not blocked by user
+  // get data associated with uid
+  // add uid to recent => /users/{uid}/recent/{friend uid}
+  // add data under new friend uid => /users/{uid}/recent/{friend uid}/{{displayName, ...}}
+};
 
 export const numberToFormattedKm = number => {
   const integer = Math.floor(number);
