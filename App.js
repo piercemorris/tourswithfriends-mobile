@@ -16,11 +16,13 @@ console.disableYellowBox = true;
 import authReducer from "./store/reducers/auth";
 import locationReducer from "./store/reducers/location";
 import receivedReducer from "./store/reducers/received";
+import friendsReducer from "./store/reducers/friends";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   gift: locationReducer,
-  received: receivedReducer
+  received: receivedReducer,
+  friends: friendsReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
