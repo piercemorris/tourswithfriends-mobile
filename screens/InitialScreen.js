@@ -18,7 +18,6 @@ const InitialScreen = props => {
   useEffect(() => {
     if (user) {
       dispatch(receivedActions.receiveGifts());
-      dispatch(friendActions.addFriend("4T3RAsH1I9WADInrNrcJl1KSMvb2"));
       dispatch(friendActions.retrieveFriends());
       setUser(null);
     }

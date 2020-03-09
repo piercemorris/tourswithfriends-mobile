@@ -1,7 +1,7 @@
 import { ADD_FRIEND, RETRIEVE_FRIENDS } from "../actions/friends";
 
 const initialState = {
-  friendList: null
+  friendList: []
 };
 
 export default (state = initialState, action) => {

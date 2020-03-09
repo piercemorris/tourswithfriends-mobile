@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Header from "../components/UI/Header";
 import Subsection from "../components/UI/Subsection";
 import InformationBlock from "../components/UI/InformationBlock";
+import FriendBlock from "../components/UI/FriendBlock";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 
@@ -35,14 +36,13 @@ const ReceivedScreen = props => {
     setIsRefreshing(false);
   }, [isRefreshing]);
 
-  console.log(friendList)
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
         }
+        contentContainerStyle={{height: "100%"}}
       >
         <Header main title="Received Gifts" />
         <Subsection text="Ready to embark" />
@@ -90,7 +90,7 @@ const ReceivedScreen = props => {
             keyExtractor={item => item.id}
             data={friendList}
             showsHorizontalScrollIndicator={true}
-            renderItem={item => <Text>{item.item.data.displayName}</Text>}
+            renderItem={item => <FriendBlock name={item.item.data.displayName} />}
           /> :
         <FlatList
           horizontal={true}
