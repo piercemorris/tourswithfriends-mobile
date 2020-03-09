@@ -1,4 +1,5 @@
 import Firebase from "firebase";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 export const UPDATE_FRIEND_DETAILS = "UPDATE_FRIEND_DETAILS";
@@ -25,6 +26,8 @@ import * as assetOps from "../../firebase/uploadAsset";
 import { getLocationFiletype } from "../../helper/filetypeEnum";
 import { allProgress } from "../../helper/promiseAllCallback";
 import representationEnum from "../../helper/representationEnum";
+
+import * as friendActions from "./friends";
 
 const getUserDisplayName = uid => {
   return Firebase.database()
@@ -131,6 +134,9 @@ export const sendGift = (
     } catch (err) {
       console.error(err.message);
     }
+
+    const sendDispatch = useDispatch();
+    sendDispatch(friendActions.addFriend(user));
 
     dispatch({
       type: SEND_GIFT

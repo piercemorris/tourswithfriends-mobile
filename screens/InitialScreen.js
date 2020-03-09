@@ -5,6 +5,7 @@ import Firebase from "firebase";
 
 import * as authActions from "../store/actions/auth";
 import * as receivedActions from "../store/actions/received";
+import * as friendActions from "../store/actions/friends";
 
 import Colors from "../constants/Colors";
 
@@ -17,6 +18,8 @@ const InitialScreen = props => {
   useEffect(() => {
     if (user) {
       dispatch(receivedActions.receiveGifts());
+      dispatch(friendActions.addFriend("4T3RAsH1I9WADInrNrcJl1KSMvb2"));
+      dispatch(friendActions.retrieveFriends());
       setUser(null);
     }
 
