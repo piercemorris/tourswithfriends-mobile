@@ -7,7 +7,13 @@ import Title from "../components/UI/Title";
 import InputContainer from "../components/UI/InputContainer";
 import StatText from "../components/UI/StatText";
 
+import * as statActions from "../store/actions/statistics";
+
 const AccountScreen = props => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {}, []);
+
   return (
     <SafeAreaView>
       <Header main title="Account" subtitle="Details" />

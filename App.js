@@ -17,12 +17,14 @@ import authReducer from "./store/reducers/auth";
 import locationReducer from "./store/reducers/location";
 import receivedReducer from "./store/reducers/received";
 import friendsReducer from "./store/reducers/friends";
+import statisticsReducer from "./store/reducers/statistics";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   gift: locationReducer,
   received: receivedReducer,
-  friends: friendsReducer
+  friends: friendsReducer,
+  stats: statisticsReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
