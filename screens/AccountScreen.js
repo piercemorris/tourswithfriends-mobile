@@ -11,21 +11,25 @@ import * as statActions from "../store/actions/statistics";
 
 const AccountScreen = props => {
   const dispatch = useDispatch();
+  const sent = useSelector(store => store.stats.sent);
+  const received = useSelector(store => store.stats.received);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(statActions.loadStats());
+  }, []);
 
   return (
     <SafeAreaView>
       <Header main title="Account" subtitle="Details" />
       <View style={styles.accountSection}>
-        <InputContainer title="Name" text="Pierce Morris" />
-        <InputContainer title="Email" text="pierce.morris1998@gmail.com" />
+        <InputContainer title="Name" text="Name" />
+        <InputContainer title="Email" text="email@email.com" />
         <InputContainer title="Password" text="••••••••••••••" />
       </View>
       <Header main title="Statistics" subtitle="A breakdown of your activity" />
       <View style={styles.statsSection}>
-        <StatText number="20" text="Gifts Recevied" />
-        <StatText number="12" text="Gifts Sentt" />
+        <StatText number={sent} text="Gifts Recevied" />
+        <StatText number={received} text="Gifts Sentt" />
       </View>
     </SafeAreaView>
   );
