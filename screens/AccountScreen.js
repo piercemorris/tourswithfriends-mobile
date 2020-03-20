@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 
@@ -11,8 +11,7 @@ import * as statActions from "../store/actions/statistics";
 
 const AccountScreen = props => {
   const dispatch = useDispatch();
-  const sent = useSelector(store => store.stats.sent);
-  const received = useSelector(store => store.stats.received);
+  const stats = useSelector(store => store.stats);
 
   useEffect(() => {
     dispatch(statActions.loadStats());
@@ -28,8 +27,14 @@ const AccountScreen = props => {
       </View>
       <Header main title="Statistics" subtitle="A breakdown of your activity" />
       <View style={styles.statsSection}>
-        <StatText number={sent} text="Gifts Recevied" />
-        <StatText number={received} text="Gifts Sentt" />
+        {stats ? (
+          <View>
+            <StatText number={stats.sent} text="Gifts Recevied" />
+            <StatText number={stats.received} text="Gifts Sent" />
+          </View>
+        ) : (
+          <Text>No stats available!</Text>
+        )}
       </View>
     </SafeAreaView>
   );
