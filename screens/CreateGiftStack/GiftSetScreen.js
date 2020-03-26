@@ -141,34 +141,32 @@ const GiftSetScreen = props => {
       {isSending && (
         <View style={styles.modalContainer}>
           <View style={styles.modalComponents}>
-            <StyledText
-              style={styles.modalText}
-              bold
-            >
+            <StyledText style={styles.modalText} bold>
               Sending Gift!
             </StyledText>
-            { Platform.OS === "ios" ?
-            <View>
-              <ActivityIndicator style={{marginBottom: 25}} size="small" color={Colors.primary} />
-              <ProgressViewIOS 
-                progressTintColor={Colors.primary} 
-                progress={sendingStatus ? sendingStatus : 100}
-                progressViewStyle="bar"              
-              />
-            </View>
-              :
+            {Platform.OS === "ios" ? (
+              <View>
+                <ActivityIndicator
+                  style={{ marginBottom: 25 }}
+                  size="small"
+                  color={Colors.primary}
+                />
+                <ProgressViewIOS
+                  progressTintColor={Colors.primary}
+                  progress={sendingStatus ? sendingStatus : 0}
+                  progressViewStyle="bar"
+                />
+              </View>
+            ) : (
               <ActivityIndicator size="large" color={Colors.primary} />
-            }
+            )}
           </View>
         </View>
       )}
       {isConfirming && (
         <View style={styles.modalContainer}>
           <View style={styles.modalComponents}>
-            <StyledText
-              style={styles.modalText}
-              bold
-            >
+            <StyledText style={styles.modalText} bold>
               Gift successfully sent!
             </StyledText>
             <Button style={{ width: "100%" }} onPress={() => onConfirm()}>
@@ -213,10 +211,10 @@ const styles = StyleSheet.create({
     ...Layout.shadow
   },
   modalText: {
-    padding: 0, 
-    marginTop: 5, 
+    padding: 0,
+    marginTop: 5,
     color: Colors.primary,
-    alignSelf: "center" 
+    alignSelf: "center"
   }
 });
 

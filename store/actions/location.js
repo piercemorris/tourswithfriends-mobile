@@ -124,8 +124,6 @@ export const sendGift = (
       .ref(`users/${sentByUser.uid}/stats/giftsSent`)
       .transaction(val => (val || 0) + 1);
 
-    // update to notify the user about a failed gift send then reset
-
     try {
       res = await axios.post(url.live + "users" + url.GIFT_NOTIF_ENDPOINT, {
         senderUid: sentByUser.uid,
@@ -135,8 +133,8 @@ export const sendGift = (
       console.error(err.message);
     }
 
-    const sendDispatch = useDispatch();
-    sendDispatch(friendActions.addFriend(user));
+    // const sendDispatch = useDispatch();
+    // sendDispatch(friendActions.addFriend(user));
 
     dispatch({
       type: SEND_GIFT
